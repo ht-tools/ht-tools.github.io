@@ -3,20 +3,46 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+}
   
-  .circle {
-    border: 1px solid #000000;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
-  
-  .action {
-    margin: 10px;
-  }
-  
-  button {
-    cursor: pointer;
-  }
-  
+.circle {
+  border: 1px solid #000000;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.action {
+  margin: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.columnHeadings {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px;
+  style: inline;
+}
+
+input {
+  float: left;
+}
+
+label {
+  display: block;
+  margin-left: 28px;
+}
+
+.cell {
+  justify-content: center;
+  align-items: center;
+}
+table, th, td {
+  border: 1px solid black;
+}
+

@@ -8,18 +8,184 @@
   <link rel="stylesheet" href="./styles.css">
   <script src="./scripts.js" defer></script>
 </head>
-<body>
+<body onload="loadVariables()">
   <div class="container">
     <h1>Hot Tub Tools</h1>
     <p class="subheading">
-      | <a href="./setup.html">Setup</a> | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./faq.html">FAQ</a> |
+      | <a href="./setup.html">Setup</a> | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
     </p>
-    <div class="circle" id="circleID"></div>
+    <h2>Status as of [CURRENT DATE/TIME TBD]:</h2>
+    <table>
+      <tr>
+        <th>CYA</th>
+        <th>FC</th>
+        <th>CC</th>
+        <th>pH</th>
+        <th>TA</th>
+        <th>CH</th>
+        
+      </tr>
+      <tr>
+        <td class="cell">  <div class="circle" id="circleCYA1"></div></td>
+        <td><div class="circle" id="circleFC1"></div></td>
+        <td><div class="circle" id="circleCC1"></div></td>
+        <td><div class="circle" id="circlePH1"></div></td>
+        <td><div class="circle" id="circleTA1"></div></td>
+        <td><div class="circle" id="circleCH1"></div></td>
+        
+      </tr>
+    </table>
+    <div class="action">
+      <button onclick="refresh()">Refresh</button>
+    </div>
+    <br>
+    <h3><div class="circle" id="circleCYA2"></div> Cyanuric Acid (CYA)</h3>
+    <table>
+      <tr>
+        <td>Test Result (15 days ago)<br>
+          <input type="number" id="cya" name="cya" value="50"> ppm<br>
+          <div class="action"><button onclick="test-cya()">Update</button></div>
+        </td>
+        <td>Now<br><br>35 ppm</td>
+      </tr>
+      <tr>
+        <td>CYA Decay<br><br>1 ppm/day</td>
+        <td>Ideal: 30-50ppm<br>
+          
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">Use Dichlor to raise CYA. Otherwise, use Bleach.</td>
+        
+      </tr>
+    </table>
+    <br>
+    <br>
+    <h3><div class="circle" id="circleFC2"></div> Free Chlorine (FC)</h3>
+    <table>
+      <tr>
+        <td>Test Result (3 days ago)<br>
+          <input type="number" id="fc" name="fc" value="5"> ppm<br>
+          <div class="action"><button onclick="test-fc()">Update</button></div>
+        </td>
+        <td>Now<br><br>0 ppm</td>
+      </tr>
+      <tr>
+        <td>CD<br><br>5 ppm/day</td>
+        <td>Target (Ideal: 2-5ppm)<br>
+          <input type="number" id="fc-target" name="fc-target" value="5"/> ppm<br>
+          <div class="action"><button onclick="fc-target()">Update</button></div>
+        </td>
+      </tr>
+      <tr>
+        <td>Add TBD oz Dichlor<br>
+          <div class="action"><button onclick="add-dichlor()">Added</button></div>
+        </td>
+        <td>Add TBD fl oz Bleach<br>
+          <div class="action"><button onclick="add-bleach()">Added</button></div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <h3><div class="circle" id="circleCC2"></div> Combined Chlorine (CC)</h3>
+    <table>
+      <tr>
+        <td>Test Result (5 days ago)<br>
+          <input type="number" id="cc" name="cc" value="0"> ppm<br>
+          <div class="action"><button onclick="test-cc()">Update</button></div>
+        </td>
+        <td>Target<br><br>0 ppm</td>
+      </tr>
+      <tr>
+        <td>Add TBD oz Dichlor<br>
+          <div class="action"><button onclick="add-dichlor()">Added</button></div>
+        </td>
+        <td>Add TBD fl oz Bleach<br>
+          <div class="action"><button onclick="add-bleach()">Added</button></div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <h3><div class="circle" id="circlePH2"></div> pH</h3>
+    <table>
+      <tr>
+        <td>Test Result (7 days ago)<br>
+          <input type="number" id="ph" name="ph" value="7.5"><br>
+          <div class="action"><button onclick="test-ph()">Update</button></div>
+        </td>
+        <td>Target 7.6<br><br>(Ideal: 7.4-7.8)</td>
+      </tr>
+      <tr>
+        <td>Acid Demand<br>
+          <input type="number" id="ad" name="ad" value="0"> drops<br>
+          <div class="action"><button onclick="test-ad()">Update</button></div></td>
+        <td>Base Demand<br>
+          <input type="number" id="bd" name="bd" value="0"> drops<br>
+          <div class="action"><button onclick="test-bd()">Update</button></div></td>
+      </tr>
+      <tr>
+        <td>Add TBD oz pH/TA Down<br>
+          <div class="action"><button onclick="add-ph-ta-down()">Added</button></div>
+        </td>
+        <td>Add TBD oz pH Up<br>
+          <div class="action"><button onclick="add-ph-up()">Added</button></div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <h3><div class="circle" id="circleTA2"></div> Total Alkalinity (TA)</h3>
+    <table>
+      <tr>
+        <td>Test Result (25 days ago)<br>
+          <input type="number" id="ta" name="ta" value="50"> ppm<br>
+          <div class="action"><button onclick="test-ta()">Update</button></div>
+        </td>
+        <td>Target (Ideal: 50-70ppm)<br>
+          <input type="number" id="ta-target" name="ta-target" value="50"/> ppm<br>
+          <div class="action"><button onclick="ta-target()">Update</button></div></td>
+      </tr>
+      <tr>
+        <td>Add TBD oz pH/TA Down<br>
+          <div class="action"><button onclick="add-ph-ta-down()">Added</button></div>
+        </td>
+        <td>Add TBD oz TA Up<br>
+          <div class="action"><button onclick="add-ta-up()">Added</button></div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <h3><div class="circle" id="circleCH2"></div> Calcium Hardness (CH)</h3>
+    <table>
+      <tr>
+        <td>Test Result (25 days ago)<br>
+          <input type="number" id="ch" name="ch" value="150"> ppm<br>
+          <div class="action"><button onclick="test-ch()">Update</button></div>
+        </td>
+        <td>Target (Ideal: 150-250ppm)<br>
+          <input type="number" id="ch-target" name="ch-target" value="150"/> ppm<br>
+          <div class="action"><button onclick="ch-target()">Update</button></div></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Add TBD oz Calcium<br>
+          <div class="action"><button onclick="add-ch()">Added</button></div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    
     <div class="action">
       <button onclick="paint('red')">Red</button>
       <button onclick="paint('green')">Green</button>
       <button onclick="paint('yellow')">Yellow</button>
     </div>
+    <br>
+    
   </div>
 </body>
 </html>

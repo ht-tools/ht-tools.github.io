@@ -12,8 +12,86 @@
   <div class="container">
     <h1>Hot Tub Tools</h1>
     <p class="subheading">
-      | Setup | <a href="./dandr.html">Drain & Refill</a> | <a href="./index.html">Maintain</a> | <a href="./faq.html">FAQ</a> |
+      | Setup | <a href="./dandr.html">Drain & Refill</a> | <a href="./index.html">Maintain</a> | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
     </p>
+  </div>
+  <div>
+    <form>
+      <table>
+        <tr>
+          <th>Chemical</th>
+          <th>Label Strength (%)</th>
+        </tr>
+        <tr>
+          <td>Dichlor (Sodium Dichloro-s-Triazinetrione Dihydrate)</td>
+          <td><input type="number" id="dichlor" name="dichlor"></td>
+        </tr>
+        <tr>
+          <td>Bleach (Sodium Hypochlorite / liquid pool chlorine)</td>
+          <td><input type="number" id="bleach" name="bleach"></td>
+        </tr>
+        <tr>
+          <td>pH/TA Down (Sodium Bisulfate)</td>
+          <td><input type="number" id="ph-ta-down" name="ph-ta-down"></td>
+        </tr>
+        <tr>
+          <td>TA Up (Sodium Bicarbonate "Baking Soda")</td>
+          <td><input type="number" id="ta-up" name="ta-up"></td>
+        </tr>
+        <tr>
+          <td>pH Up (Sodium Carbonate "Soda Ash")</td>
+          <td><input type="number" id="ph-up" name="ph-up"></td>
+        </tr>
+        <tr>
+          <td>Calcium Chloride</td>
+          <td><input type="number" id="calcium" name="calcium"></td>
+        </tr>
+        <tr>
+          <td>Boric Acid</td>
+          <td><input type="number" id="boric-acid" name="boric-acid"></td>
+        </tr>
+      </table> 
+      <br>
+      <table>
+        <tr>
+          <th>Spa Parameter</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Spa Volume (gallons)</td>
+          <td><input type="number" id="volume" name="volume"></td>
+        </tr>
+        <tr>
+          <td>Max time between Drain & Refills (months)</td>
+          <td><input type="number" id="dandr-duration" name="dandr-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between Free Chlorine (FC) Tests (days)</td>
+          <td><input type="number" id="fc-duration" name="fc-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between Combined Chlorine (CC) Tests (days)</td>
+          <td><input type="number" id="cc-duration" name="cc-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between pH Tests (days)</td>
+          <td><input type="number" id="ph-duration" name="ph-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between Total Alkalinity (TA) Tests (days)</td>
+          <td><input type="number" id="ta-duration" name="ta-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between Calcium Hardness (CH) Tests (days)</td>
+          <td><input type="number" id="ch-duration" name="ch-duration"></td>
+        </tr>
+        <tr>
+          <td>Max time between Cyanuric Acid (CYA) Tests (days)</td>
+          <td><input type="number" id="ch-duration" name="ch-duration"></td>
+        </tr>
+      </table>
+      <input type="submit" value="Save">
+    </form>
   </div>
 </body>
 </html>

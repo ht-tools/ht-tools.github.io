@@ -7,8 +7,8 @@
         {
             "type": "msedge",
             "request": "launch",
-            "name": "Open dandr.html",
-            "file": "c:\\Users\\Chris user\\OneDrive\\Documents\\GitHub\\ht-tools.github.io\\dandr.html"
+            "name": "Open index.html",
+            "file": "c:\\Users\\Chris user\\OneDrive\\Documents\\GitHub\\ht-tools.github.io\\index.html"
         }
     ]
 }
