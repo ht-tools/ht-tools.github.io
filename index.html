@@ -12,9 +12,9 @@
   <div class="container">
     <h1>Hot Tub Tools</h1>
     <p class="subheading">
-      | <a href="./setup.html">Setup</a> | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
+      | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
     </p>
-    <h2>Status as of [CURRENT DATE/TIME TBD]:</h2>
+    <h2>Status as of:</h2><h2 id="datetime"></h2>
     <table>
       <tr>
         <th>CYA</th>
@@ -39,24 +39,21 @@
       <button onclick="refresh()">Refresh</button>
     </div>
     <br>
+    <!--CYA-->
     <h3><div class="circle" id="circleCYA2"></div> Cyanuric Acid (CYA)</h3>
     <table>
       <tr>
-        <td>Test Result (15 days ago)<br>
-          <input type="number" id="cya" name="cya" value="50"> ppm<br>
-          <div class="action"><button onclick="test-cya()">Update</button></div>
+        <td>Test Result <div class="inline" id="cyaDaysAgo"></div><br>
+          <input type="number" id="cyaTestInput"> ppm<br>
+          <div class="action"><button onclick="testCYA()">Update</button></div>
         </td>
-        <td>Now<br><br>35 ppm</td>
+        <td>Current Prediction:<br><br><div id="predictedCYA"></div></td>
       </tr>
       <tr>
-        <td>CYA Decay<br><br>1 ppm/day</td>
+        <td>CYA Decay<br><br><div id="cyaDecay"></div></td>
         <td>Ideal: 30-50ppm<br>
           
         </td>
-      </tr>
-      <tr>
-        <td colspan="2">Use Dichlor to raise CYA. Otherwise, use Bleach.</td>
-        
       </tr>
     </table>
     <br>
@@ -65,25 +62,28 @@
     <table>
       <tr>
         <td>Test Result (3 days ago)<br>
-          <input type="number" id="fc" name="fc" value="5"> ppm<br>
-          <div class="action"><button onclick="test-fc()">Update</button></div>
+          <input type="number" id="fc"> ppm<br>
+          <div class="action"><button onclick="testFC()">Update</button></div>
         </td>
         <td>Now<br><br>0 ppm</td>
       </tr>
       <tr>
         <td>CD<br><br>5 ppm/day</td>
-        <td>Target (Ideal: 2-5ppm)<br>
-          <input type="number" id="fc-target" name="fc-target" value="5"/> ppm<br>
-          <div class="action"><button onclick="fc-target()">Update</button></div>
+        <td>Target (Ideal: 3-5ppm)<br>
+          <input type="number" id="fc-target"/> ppm<br>
+          <div class="action"><button onclick="fcTarget()">Update</button></div>
         </td>
       </tr>
       <tr>
         <td>Add TBD oz Dichlor<br>
-          <div class="action"><button onclick="add-dichlor()">Added</button></div>
+          <div class="action"><button onclick="addDichlor()">Added</button></div>
         </td>
         <td>Add TBD fl oz Bleach<br>
-          <div class="action"><button onclick="add-bleach()">Added</button></div>
+          <div class="action"><button onclick="addBleach()">Added</button></div>
         </td>
+      </tr>
+      <tr>
+        <td colspan="2">Use Dichlor to raise CYA. Otherwise, use Bleach.</td>
       </tr>
     </table>
     <br>
@@ -92,18 +92,21 @@
     <table>
       <tr>
         <td>Test Result (5 days ago)<br>
-          <input type="number" id="cc" name="cc" value="0"> ppm<br>
-          <div class="action"><button onclick="test-cc()">Update</button></div>
+          <input type="number" id="cc"> ppm<br>
+          <div class="action"><button onclick="testCC()">Update</button></div>
         </td>
         <td>Target<br><br>0 ppm</td>
       </tr>
       <tr>
         <td>Add TBD oz Dichlor<br>
-          <div class="action"><button onclick="add-dichlor()">Added</button></div>
+          <div class="action"><button onclick="addDichlor()">Added</button></div>
         </td>
         <td>Add TBD fl oz Bleach<br>
-          <div class="action"><button onclick="add-bleach()">Added</button></div>
+          <div class="action"><button onclick="addBleach()">Added</button></div>
         </td>
+      </tr>
+      <tr>
+        <td colspan="2">Use Dichlor to raise CYA. Otherwise, use Bleach.</td>
       </tr>
     </table>
     <br>
@@ -112,25 +115,25 @@
     <table>
       <tr>
         <td>Test Result (7 days ago)<br>
-          <input type="number" id="ph" name="ph" value="7.5"><br>
-          <div class="action"><button onclick="test-ph()">Update</button></div>
+          <input type="number" id="ph"><br>
+          <div class="action"><button onclick="testPH()">Update</button></div>
         </td>
         <td>Target 7.6<br><br>(Ideal: 7.4-7.8)</td>
       </tr>
       <tr>
         <td>Acid Demand<br>
-          <input type="number" id="ad" name="ad" value="0"> drops<br>
-          <div class="action"><button onclick="test-ad()">Update</button></div></td>
+          <input type="number" id="ad"> drops<br>
+          <div class="action"><button onclick="testAD()">Update</button></div></td>
         <td>Base Demand<br>
-          <input type="number" id="bd" name="bd" value="0"> drops<br>
-          <div class="action"><button onclick="test-bd()">Update</button></div></td>
+          <input type="number" id="bd"> drops<br>
+          <div class="action"><button onclick="testBD()">Update</button></div></td>
       </tr>
       <tr>
         <td>Add TBD oz pH/TA Down<br>
-          <div class="action"><button onclick="add-ph-ta-down()">Added</button></div>
+          <div class="action"><button onclick="addPhTaDown()">Added</button></div>
         </td>
         <td>Add TBD oz pH Up<br>
-          <div class="action"><button onclick="add-ph-up()">Added</button></div>
+          <div class="action"><button onclick="addPhUp()">Added</button></div>
         </td>
       </tr>
     </table>
@@ -140,19 +143,19 @@
     <table>
       <tr>
         <td>Test Result (25 days ago)<br>
-          <input type="number" id="ta" name="ta" value="50"> ppm<br>
-          <div class="action"><button onclick="test-ta()">Update</button></div>
+          <input type="number" id="ta"> ppm<br>
+          <div class="action"><button onclick="testTA()">Update</button></div>
         </td>
-        <td>Target (Ideal: 50-70ppm)<br>
-          <input type="number" id="ta-target" name="ta-target" value="50"/> ppm<br>
-          <div class="action"><button onclick="ta-target()">Update</button></div></td>
+        <td>Target (Ideal: 50-80ppm)<br>
+          <input type="number" id="ta-target"/> ppm<br>
+          <div class="action"><button onclick="taTarget()">Update</button></div></td>
       </tr>
       <tr>
         <td>Add TBD oz pH/TA Down<br>
-          <div class="action"><button onclick="add-ph-ta-down()">Added</button></div>
+          <div class="action"><button onclick="addPhTaDown()">Added</button></div>
         </td>
         <td>Add TBD oz TA Up<br>
-          <div class="action"><button onclick="add-ta-up()">Added</button></div>
+          <div class="action"><button onclick="addTaUp()">Added</button></div>
         </td>
       </tr>
     </table>
@@ -162,30 +165,96 @@
     <table>
       <tr>
         <td>Test Result (25 days ago)<br>
-          <input type="number" id="ch" name="ch" value="150"> ppm<br>
-          <div class="action"><button onclick="test-ch()">Update</button></div>
+          <input type="number" id="ch"> ppm<br>
+          <div class="action"><button onclick="testCH()">Update</button></div>
         </td>
         <td>Target (Ideal: 150-250ppm)<br>
-          <input type="number" id="ch-target" name="ch-target" value="150"/> ppm<br>
-          <div class="action"><button onclick="ch-target()">Update</button></div></td>
+          <input type="number" id="ch-target"/> ppm<br>
+          <div class="action"><button onclick="chTarget()">Update</button></div></td>
       </tr>
       <tr>
         <td></td>
         <td>Add TBD oz Calcium<br>
-          <div class="action"><button onclick="add-ch()">Added</button></div>
+          <div class="action"><button onclick="addCH()">Added</button></div>
         </td>
       </tr>
-    </table>
+    </table> 
     <br>
     <br>
-    
-    <div class="action">
-      <button onclick="paint('red')">Red</button>
-      <button onclick="paint('green')">Green</button>
-      <button onclick="paint('yellow')">Yellow</button>
-    </div>
+    <h3>Setup [TODO: update these values on change]</h3>
+    <table>
+      <tr>
+        <th>Chemical</th>
+        <th>Label Strength (%)</th>
+      </tr>
+      <tr>
+        <td>Dichlor (Sodium Dichloro-s-Triazinetrione Dihydrate)</td>
+        <td><input type="number" id="dichlor" name="dichlor"></td>
+      </tr>
+      <tr>
+        <td>Bleach (Sodium Hypochlorite / liquid pool chlorine)</td>
+        <td><input type="number" id="bleach" name="bleach"></td>
+      </tr>
+      <tr>
+        <td>pH/TA Down (Sodium Bisulfate)</td>
+        <td><input type="number" id="ph-ta-down" name="ph-ta-down"></td>
+      </tr>
+      <tr>
+        <td>TA Up (Sodium Bicarbonate "Baking Soda")</td>
+        <td><input type="number" id="ta-up" name="ta-up"></td>
+      </tr>
+      <tr>
+        <td>pH Up (Sodium Carbonate "Soda Ash")</td>
+        <td><input type="number" id="ph-up" name="ph-up"></td>
+      </tr>
+      <tr>
+        <td>Calcium Chloride</td>
+        <td><input type="number" id="calcium" name="calcium"></td>
+      </tr>
+      <tr>
+        <td>Boric Acid</td>
+        <td><input type="number" id="boric-acid" name="boric-acid"></td>
+      </tr>
+    </table> 
     <br>
-    
+    <table>
+      <tr>
+        <th>Spa Parameter</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Spa Volume (gallons)</td>
+        <td><input type="number" id="volume" name="volume"></td>
+      </tr>
+      <tr>
+        <td>Max time between Drain & Refills (months)</td>
+        <td><input type="number" id="dandr-duration" name="dandr-duration"></td>
+      </tr>
+      <tr>
+        <td>Max time between Free Chlorine (FC) Tests (days)</td>
+        <td><input type="number" id="fcDuration"></td>
+      </tr>
+      <tr>
+        <td>Max time between Combined Chlorine (CC) Tests (days)</td>
+        <td><input type="number" id="ccDuration"></td>
+      </tr>
+      <tr>
+        <td>Max time between pH Tests (days)</td>
+        <td><input type="number" id="phDuration"></td>
+      </tr>
+      <tr>
+        <td>Max time between Total Alkalinity (TA) Tests (days)</td>
+        <td><input type="number" id="taDuration"></td>
+      </tr>
+      <tr>
+        <td>Max time between Calcium Hardness (CH) Tests (days)</td>
+        <td><input type="number" id="chDuration"></td>
+      </tr>
+      <tr>
+        <td>Max time between Cyanuric Acid (CYA) Tests (days)</td>
+        <td><input type="number" id="cyaDaysAgoLimitInput"></td>
+      </tr>
+    </table>   
   </div>
 </body>
 </html>
