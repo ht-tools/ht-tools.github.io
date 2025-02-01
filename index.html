@@ -14,7 +14,7 @@
     <p class="subheading">
       | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
     </p>
-    <h2>Status as of:</h2><h2 id="datetime"></h2>
+    <h2 id="datetime"></h2>
     <table>
       <tr>
         <th>CYA</th>
@@ -52,33 +52,37 @@
       <tr>
         <td>CYA Decay<br><br><div id="cyaDecay"></div></td>
         <td>Ideal: 30-50ppm<br>
-          
         </td>
       </tr>
     </table>
     <br>
     <br>
+    <!--FC-->
     <h3><div class="circle" id="circleFC2"></div> Free Chlorine (FC)</h3>
     <table>
       <tr>
-        <td>Test Result (3 days ago)<br>
-          <input type="number" id="fc"> ppm<br>
+        <td>Test Result <div class="inline" id="fcDaysAgo"></div><br>
+          <input type="number" id="fcTestInput"> ppm<br>
           <div class="action"><button onclick="testFC()">Update</button></div>
         </td>
-        <td>Now<br><br>0 ppm</td>
+        <td>Current Prediction:<br><br><div id="predictedFC"></div></td>
       </tr>
       <tr>
-        <td>CD<br><br>5 ppm/day</td>
+        <td>Chlorine Demand (CD)<br><br><div id="fcDemand"></div></td>
         <td>Target (Ideal: 3-5ppm)<br>
-          <input type="number" id="fc-target"/> ppm<br>
-          <div class="action"><button onclick="fcTarget()">Update</button></div>
+          <input type="number" id="fcTargetInput"/> ppm<br>
+          <div class="action"><button onclick="fcTarget()">Update</button></div><br>
+          <input type="checkbox" id="autoTargetInput" onclick="updateAutoTarget()">
+            <label for="autoTarget"> Automatically set to CD + 5 ppm</label>
         </td>
       </tr>
       <tr>
-        <td>Add TBD oz Dichlor<br>
+        <td>Add Dichlor<br>
+          <input type="number" id="addDichlorInput"/> oz<br>
           <div class="action"><button onclick="addDichlor()">Added</button></div>
         </td>
-        <td>Add TBD fl oz Bleach<br>
+        <td>Add Bleach<br>
+          <input type="number" id="addBleachInput"/> fl oz<br>
           <div class="action"><button onclick="addBleach()">Added</button></div>
         </td>
       </tr>
@@ -88,6 +92,7 @@
     </table>
     <br>
     <br>
+    <!--CC-->
     <h3><div class="circle" id="circleCC2"></div> Combined Chlorine (CC)</h3>
     <table>
       <tr>
@@ -217,6 +222,7 @@
       </tr>
     </table> 
     <br>
+    <br>
     <table>
       <tr>
         <th>Spa Parameter</th>
@@ -224,31 +230,31 @@
       </tr>
       <tr>
         <td>Spa Volume (gallons)</td>
-        <td><input type="number" id="volume" name="volume"></td>
+        <td><input type="number" id="spaVolumeInput"></td>
       </tr>
       <tr>
         <td>Max time between Drain & Refills (months)</td>
-        <td><input type="number" id="dandr-duration" name="dandr-duration"></td>
+        <td><input type="number" id="dandrDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between Free Chlorine (FC) Tests (days)</td>
-        <td><input type="number" id="fcDuration"></td>
+        <td><input type="number" id="fcDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between Combined Chlorine (CC) Tests (days)</td>
-        <td><input type="number" id="ccDuration"></td>
+        <td><input type="number" id="ccDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between pH Tests (days)</td>
-        <td><input type="number" id="phDuration"></td>
+        <td><input type="number" id="phDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between Total Alkalinity (TA) Tests (days)</td>
-        <td><input type="number" id="taDuration"></td>
+        <td><input type="number" id="taDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between Calcium Hardness (CH) Tests (days)</td>
-        <td><input type="number" id="chDuration"></td>
+        <td><input type="number" id="chDaysAgoLimitInput"></td>
       </tr>
       <tr>
         <td>Max time between Cyanuric Acid (CYA) Tests (days)</td>
