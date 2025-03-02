@@ -5,7 +5,7 @@
     align-items: center;
 }
   
-.circle {
+.statusLight {
   border: 1px solid #000000;
   width: 20px;
   height: 20px;
@@ -26,11 +26,15 @@ button {
   justify-content: space-between;
   width: 100%;
   margin: 10px;
-  style: inline;
+  /*style: inline; - style is not a valid CSS property*/
 }
 
 input {
   float: left;
+}
+
+input[type="number"] {
+  width: 80px;
 }
 
 label {
@@ -42,7 +46,49 @@ label {
   justify-content: center;
   align-items: center;
 }
-table, th, td {
-  border: 1px solid black;
+th, td { 
+  border: 2px solid black; 
+  border-radius: 8px;
 }
 
+.cyaOutline {
+  border: 12px ridge lightgray;
+  border-radius: 8px;
+}
+
+.chlorineOutline {
+  border: 12px ridge yellow;
+  border-radius: 8px;
+}
+
+.phOutline {
+  border: 12px ridge lightcoral;
+  border-radius: 8px;
+}
+
+.taOutline {
+  border: 12px ridge rgb(0, 165, 0);
+  border-radius: 8px;
+}
+
+.chOutline {
+  border: 12px ridge blue;
+  border-radius: 8px;
+}
+
+.filterOutline {
+  border: 12px ridge black;
+  border-radius: 8px;
+}
+
+.statusSummary {
+  border: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.setupTables {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-radius: 8px;
+}

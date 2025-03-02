@@ -6,6 +6,7 @@
     "configurations": [
         {
             "type": "msedge",
+            "port": 9222,
             "request": "launch",
             "name": "Open index.html",
             "file": "c:\\Users\\Chris user\\OneDrive\\Documents\\GitHub\\ht-tools.github.io\\index.html"
