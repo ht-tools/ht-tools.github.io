@@ -742,7 +742,7 @@ function updateTaTest() {
         localStorage.setItem("taLastTest", taCurrentTest);
         const date = new Date();
         localStorage.setItem("taLastTestDate", date);
-        let taCorrectedTest = taCurrentTest - (numVars['cyaPrediction'] * 0.33);
+        let taCorrectedTest = (taCurrentTest - (numVars['cyaPrediction'] * 0.33)).toFixed(2);
         if (taCorrectedTest < 0) {
             taCorrectedTest = 0;
         }

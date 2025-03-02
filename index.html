@@ -12,8 +12,9 @@
 <body>
   <div class="container">
     <h1>Hot Tub Tools</h1>
-    <p class="subheading">
-      | <a href="./dandr.html">Drain & Refill</a> | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
+    <p class="subheading" align="center">
+      | <a href="./dandrquick.html">Drain & Refill (Quick)</a> | <a href="./dandr.html">Drain & Refill (Decon)</a> |<br><br>
+      | Maintain | <a href="./log.html">Log</a> | <a href="./faq.html">FAQ</a> |
     </p>
     <h2>Status as of: <b class="textDisplays" id="dtNow"></b></h2>
     <table>
@@ -39,14 +40,18 @@
       </tr>
     </table>
     <div class="action">
-      <button onclick="refresh()">Refresh</button>
+      <button onclick="refresh()">Refresh Statuses</button>
     </div>
     <br>
     <!--Setup-->
     <h3><div class="colorChange statusLight" id="setupStatus2"></div> Setup</h3>
     <span display="inline-block">
       <input type="checkbox" id="setupComplete" display="inline-block" onclick="updateSetupStatus()">
-        <label for="setupComplete" display="inline-block"> Yes, I have confirmed the Spa Volume and Chemical Label Strengths at the bottom of this page are correct. I understand that if these values are incorrect, <u>all calculations in this app may be wrong</u>!</label><br><br>
+        <label for="setupComplete" display="inline-block"> Yes, I have confirmed the <u>Spa Volume</u> and 
+          <u>Chemical Label Strengths</u> at the bottom of this page are correct. I understand that if these 
+          values are incorrect, <u>all calculations in this app may be wrong</u>! This app uses the 
+          "dichlor bleach method" and is optimized for Taylor K-2005 or K-2006 test kits. Test strips are not 
+          accurate and are not recommended.</label><br><br>
     </span>
     <!--CYA-->
     <h3><div class="colorChange statusLight" id="cyaStatus2"></div> Cyanuric Acid (CYA)</h3>
@@ -63,8 +68,10 @@
         <td>CYA Decay:<br><br><b class="numDisplays" id="cyaDecay"></b> ppm/day</td>
       </tr>
       <tr>
-        <td class="colorChange" id="cyaUseDichlorBox" align="center">Maintain FC and CC with Dichlor to raise CYA.</td>
-        <td class="colorChange" id="cyaUseBleachBox" align="center">Maintain FC and CC with Bleach to allow CYA to decay.</td>
+        <td class="colorChange" id="cyaUseDichlorBox" align="center">If CYA is too low, the hot tub is still safe to use. 
+          Use dichlor to maintain FC and CC below, which will increase CYA with each dose.</td>
+        <td class="colorChange" id="cyaUseBleachBox" align="center">If CYA is too high, it will decay over time. The hot 
+          tub is still safe to use. Use bleach to maintain FC and CC below, to prevent increasing CYA.</td>
       </tr>
     </table>
     <br>
@@ -268,6 +275,7 @@
         <td><br>
           <div class="action"><button onclick="replacedFilter()">Replaced</button></div>
         </td>
+        <!--TODO - ADD DATE FIELD OF WHEN FILTER WAS REPLACED-->
       </tr>
     </table> 
     <br>
@@ -329,7 +337,7 @@
     <!--Time Limits-->
     <table class="setupTables">
       <tr>
-        <th>Max Time Since Last</th>
+        <th>Turn status red after this many days between events</th>
         <th>Days</th>
       </tr>
       <tr>
