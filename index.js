@@ -7,126 +7,108 @@ let numVars = {};
 let dateVars = {};
 let boolVars = {};
 
+let testAndMaintainPrefixes = ['ca', 'fc', 'cc', 'ph', 'ta', 'ch', 'spaVolume', 'filterCleaned', 'filterReplaced'];
+let chemicalPrefixes = ['Dichlor', 'Bleach', 'PhTaDown', 'MuriaticAcid', 'TaUp', 'PhUp', 'Calcium'];
+
 /* Current DateTime */
 textVars['dtNow'] = "0/0/0000 00:00:00 AM"
+textVars['nothingNeeded'] = ''
 
 /* Setup - Status */
-boolVars['setupComplete'] = false;
-textVars['setupStatus1'] = "background-color: red";
-textVars['setupStatus2'] = "background-color: red";
+boolVars['showAll'] = false;
+boolVars['showca'] = false;
+boolVars['caVisible'] = false;
+boolVars['showfc'] = false;
+boolVars['fcVisible'] = false;
+boolVars['showcc'] = false;
+boolVars['ccVisible'] = false;
+boolVars['showph'] = false;
+boolVars['phVisible'] = false;
+boolVars['showad'] = false;
+boolVars['adVisible'] = false;
+boolVars['showbd'] = false;
+boolVars['bdVisible'] = false;
+boolVars['showta'] = false;
+boolVars['taVisible'] = false;
+boolVars['showch'] = false;
+boolVars['chVisible'] = false;
+boolVars['showSpaVolume'] = false;
+boolVars['showFilterCleaned'] = false;
+boolVars['showFilterReplaced'] = false;
+boolVars['showDichlor'] = false;
+boolVars['DichlorVisible'] = false;
+boolVars['showBleach'] = false;
+boolVars['BleachVisible'] = false;
+boolVars['showPhTaDown'] = false;
+boolVars['PhTaDownVisible'] = false;
+boolVars['showMuriaticAcid'] = false;
+boolVars['MuriaticAcidVisible'] = false;
+boolVars['showTaUp'] = false;
+boolVars['TaUpVisible'] = false;
+boolVars['showPhUp'] = false;
+boolVars['PhUpVisible'] = false;
+boolVars['showCalcium'] = false;
+boolVars['CalciumVisible'] = false;
+boolVars['testHeaderVisible'] = false;
+boolVars['chemicalHeaderVisible'] = false;
+boolVars['maintenanceHeaderVisible'] = false;
+boolVars['adjustTA'] = false;
 
 /* CYA */
-numVars['cyaLastTest'] = 0;
-dateVars['cyaLastTestDate'] = createDate(0, -2, 0);
-numVars['cyaPrediction'] = 0;
-numVars['cyaDecay'] = 1;
-numVars['cyaAdded'] = 0;
-numVars['cyaDaysAgo'] = 60;
-textVars['cyaStatus1'] = "background-color: red";
-textVars['cyaStatus2'] = "background-color: red";
-textVars['cyaDaysAgoBox'] = "border-color: black";
-textVars['cyaPredictionBox'] = "border-color: black";
-textVars['cyaUseDichlorBox'] = "border-color: black";
-textVars['cyaUseBleachBox'] = "border-color: black";
+numVars['caLastTest'] = 0;
+dateVars['caLastTestDate'] = createDate(0, -2, 0);
+numVars['caPrediction'] = 0;
+numVars['caDecay'] = 1.4;
+numVars['caAdded'] = 0;
+numVars['caDaysAgo'] = 60;
 
 /* FC */
 numVars['fcLastTest'] = 0;
 dateVars['fcLastTestDate'] = createDate(0, -2, 0);
 numVars['fcPrediction'] = 0;
-numVars['fcDemand'] = 2;
+numVars['fcDecay'] = 2;
 numVars['fcTarget'] = 5;
-numVars['fcTargetBase'] = 5;
-boolVars['autoTarget'] = false;
-numVars['fcAddDichlor'] = 0;
+numVars['addDichlor'] = 0;
 numVars['fcAddBleach'] = 0;
 numVars['fcAdded'] = 0;
 numVars['fcDaysAgo'] = 60;
-textVars['fcStatus1'] = "background-color: red";
-textVars['fcStatus2'] = "background-color: red";
-textVars['fcDaysAgoBox'] = "border-color: black";
-textVars['fcPredictionBox'] = "border-color: black";
-textVars['fcAddDichlorBox'] = "border-color: black";
-textVars['fcAddBleachBox'] = "border-color: black";
-textVars['fcUseDichlorBox'] = "border-color: black";
-textVars['fcUseBleachBox'] = "border-color: black";
 
 /* CC */
 numVars['ccLastTest'] = 0;
 dateVars['ccLastTestDate'] = createDate(0, -2, 0);
-numVars['ccAddDichlor'] = 0;
-numVars['ccAddBleach'] = 0;
-numVars['ccRaiseFC'] = 0;
-numVars['ccRaiseFC2'] = 0;
-numVars['ccRaiseCYA'] = 0;
 numVars['ccDaysAgo'] = 60;
-textVars['ccStatus1'] = "background-color: red";
-textVars['ccStatus2'] = "background-color: red";
-textVars['ccTestBox'] = "border-color: black";
-textVars['ccDaysAgoBox'] = "border-color: black";
-textVars['ccAddDichlorBox'] = "border-color: black";
-textVars['ccAddBleachBox'] = "border-color: black";
-textVars['ccUseDichlorBox'] = "border-color: black";
-textVars['ccUseBleachBox'] = "border-color: black";
 
 /* pH */
-numVars['phLastTest'] = 0;
+numVars['phLastTest'] = 7.6;
 dateVars['phLastTestDate'] = createDate(0, -2, 0);
-numVars['acidDemand'] = 0;
-numVars['baseDemand'] = 0;
-numVars['phAddPhTaDown'] = 0;
-numVars['phAddMuriaticAcid'] = 0;
+numVars['adLastTest'] = 0;
+numVars['bdLastTest'] = 0;
+numVars['addPhTaDown'] = 0;
+numVars['addMuriaticAcid'] = 0;
 numVars['addPhUp'] = 0;
-textVars['phStatus1'] = "background-color: red";
-textVars['phStatus2'] = "background-color: red";
-textVars['phTestBox'] = "border-color: black";
-textVars['phDaysAgoBox'] = "border-color: black";
-textVars['acidDemandBox'] = "border-color: black";
-textVars['baseDemandBox'] = "border-color: black";
-textVars['phPhTaDownBox'] = "border-color: black";
-textVars['phUpBox'] = "border-color: black";
-textVars['phMuriaticBox'] = "border-color: black";
 
 /* TA */
-numVars['taLastTest'] = 0;
+numVars['taNewTestDisplay'] = 0;
+numVars['taLastTest'] = 50;
 dateVars['taLastTestDate'] = createDate(0, -2, 0);
 numVars['taDaysAgo'] = 60;
-numVars['taCorrectedTest'] = 0;
 numVars['taTarget'] = 50;
-numVars['taAddPhTaDown'] = 0;
-textVars['taPhTaDownCheck'] = '';
 numVars['addTaUp'] = 0;
-textVars['taUpCheck'] = '';
-numVars['taAddMuriaticAcid'] = 0;
-textVars['taMuriaticCheck'] = '';
-textVars['taStatus1'] = "background-color: red";
-textVars['taStatus2'] = "background-color: red";
-textVars['taCorrTestBox'] = "border-color: black";
-textVars['taDaysAgoBox'] = "border-color: black";
-textVars['taPhTaDownBox'] = "border-color: black";
-textVars['taMuriaticBox'] = "border-color: black";
-textVars['taUpBox'] = "border-color: black";
 
 /* CH */
-numVars['chLastTest'] = 0;
+numVars['chLastTest'] = 150;
 dateVars['chLastTestDate'] = createDate(0, -2, 0);
 numVars['chDaysAgo'] = 60;
 numVars['chTarget'] = 150;
 numVars['addCalcium'] = 0;
-textVars['chStatus1'] = "background-color: red";
-textVars['chStatus2'] = "background-color: red";
-textVars['chDaysAgoBox'] = "border-color: black";
-textVars['addCalciumBox'] = "border-color: black";
-textVars['addCalciumCheck'] = '';
 
-/* Filter */
+/* Maintenance */
+dateVars['spaVolumeLastConfirmed'] = createDate(0, 0, -2);
 dateVars['filterLastCleaned'] = createDate(0, -2, 0);
 dateVars['filterLastReplaced'] = createDate(0, 0, -2);
+numVars['spaVolumeDaysAgo'] = 700;
 numVars['filterCleanedDaysAgo'] = 60;
 numVars['filterReplacedDaysAgo'] = 700;
-textVars['filterStatus1'] = "background-color: red";
-textVars['filterStatus2'] = "background-color: red";
-textVars['cleanFilterBox'] = "border-color: black";
-textVars['replaceFilterBox'] = "border-color: black";
 
 /* Setup - Spa */
 numVars['spaVolume'] = 400;
@@ -139,51 +121,51 @@ numVars['muriaticStrength'] = 31.45;
 numVars['taUpStrength'] = 100;
 numVars['phUpStrength'] = 100;
 numVars['calciumStrength'] = 77;
-numVars['boricAcidStrength'] = 98;
+// numVars['boricAcidStrength'] = 98;
 
 /* Setup - Time Limits */
-numVars['cyaDaysAgoLimit'] = 30;
+numVars['caDaysAgoLimit'] = 30;
 numVars['fcDaysAgoLimit'] = 1;
 numVars['ccDaysAgoLimit'] = 7;
 numVars['phDaysAgoLimit'] = 1;
 numVars['taDaysAgoLimit'] = 14;
 numVars['chDaysAgoLimit'] = 30;
+numVars['spaVolumeDaysAgoLimit'] = 365;
 numVars['filterCleanedDaysAgoLimit'] = 21;
 numVars['filterReplacedDaysAgoLimit'] = 365;
-
-/* OVERWRITE DEFAULTS WITH ANY VALUES STORED IN THE BROWSER */
-for (var key in textVars) {
-    var value = localStorage.getItem(key);
-    if (value) {
-        textVars[key] = value;
-    }
-}
-
-for (var key in numVars) {
-    var value = localStorage.getItem(key);
-    if (value) {
-        numVars[key] = Number(value);
-    }
-}
-
-for (var key in dateVars) {
-    var value = localStorage.getItem(key);
-    if (value) {
-        dateVars[key] = Date.parse(value);
-    }
-}
-
-for (var key in boolVars) {
-    var value = localStorage.getItem(key);
-    if (value) {
-        boolVars[key] = (value == "true");
-    }
-}
 
 window.addEventListener('load', init, false); // Call init() when page loads
 
 /* FUNCTIONS */
 function init() {
+    /* OVERWRITE DEFAULTS WITH ANY VALUES STORED IN THE BROWSER */
+    for (var key in textVars) {
+        var value = localStorage.getItem(key);
+        if (value) {
+            textVars[key] = value;
+        }
+    }
+
+    for (var key in numVars) {
+        var value = localStorage.getItem(key);
+        if (value) {
+            numVars[key] = Number(value);
+        }
+    }
+
+    for (var key in dateVars) {
+        var value = localStorage.getItem(key);
+        if (value) {
+            dateVars[key] = Date.parse(value);
+        }
+    }
+
+    for (var key in boolVars) {
+        var value = localStorage.getItem(key);
+        if (value) {
+            boolVars[key] = (value == "true");
+        }
+    }
 
     /* CALCULATE ALL TIME-DEPENDENT VARIABLES */
 
@@ -194,277 +176,135 @@ function init() {
     textVars['dtNow'] = displayDate + " " + displayTime;
     
     /* CYA - Days Since Last Test */
-    numVars['cyaDaysAgo'] = ((date - dateVars['cyaLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['caDaysAgo'] = (date - dateVars['caLastTestDate']) / ONE_DAY;
 
     /* FC - Days Since Last Test */
-    numVars['fcDaysAgo'] = ((date - dateVars['fcLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['fcDaysAgo'] = (date - dateVars['fcLastTestDate']) / ONE_DAY;
 
     /* CC - Days Since Last Test */
-    numVars['ccDaysAgo'] = ((date - dateVars['ccLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['ccDaysAgo'] = (date - dateVars['ccLastTestDate']) / ONE_DAY;
 
     /* pH - Days Since Last Test */
-    numVars['phDaysAgo'] = ((date - dateVars['phLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['phDaysAgo'] = (date - dateVars['phLastTestDate']) / ONE_DAY;
 
     /* TA - Days Since Last Test */
-    numVars['taDaysAgo'] = ((date - dateVars['taLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['taDaysAgo'] = (date - dateVars['taLastTestDate']) / ONE_DAY;
 
     /* CH - Days Since Last Test */
-    numVars['chDaysAgo'] = ((date - dateVars['chLastTestDate']) / ONE_DAY).toFixed(2);
+    numVars['chDaysAgo'] = (date - dateVars['chLastTestDate']) / ONE_DAY;
 
-    /* FILTER - Days Since Last Cleaning */
-    numVars['filterCleanedDaysAgo'] = ((date - dateVars['filterLastCleaned']) / ONE_DAY).toFixed(2);
-    numVars['filterReplacedDaysAgo'] = ((date - dateVars['filterLastReplaced']) / ONE_DAY).toFixed(2);
+    /* MAINTENANCE - Days Since Last Action */
+    numVars['spaVolumeDaysAgo'] = (date - dateVars['spaVolumeLastConfirmed']) / ONE_DAY;
+    numVars['filterCleanedDaysAgo'] = (date - dateVars['filterLastCleaned']) / ONE_DAY;
+    numVars['filterReplacedDaysAgo'] = (date - dateVars['filterLastReplaced']) / ONE_DAY;
 
     /* CALCULATE ALL OTHER DEPENDENT VARIABLES */
 
     /* CYA - Current Prediction */
-    numVars['cyaPrediction'] = (numVars['cyaLastTest'] - (numVars['cyaDecay'] * numVars['cyaDaysAgo']) + numVars['cyaAdded']).toFixed(2);
-    if (numVars['cyaPrediction'] < 0) {
-        numVars['cyaPrediction'] = 0;
+    numVars['caPrediction'] = (numVars['caLastTest'] - (numVars['caDecay'] * numVars['caDaysAgo']) + numVars['caAdded']);
+    if (numVars['caPrediction'] < 0) {
+        numVars['caLastTest'] = numVars['caLastTest'] - numVars['caPrediction'];
+        numVars['caPrediction'] = 0;
+        localStorage.setItem('caLastTest', numVars['caLastTest']);
     }
 
-    /* CYA - Status Color*/
-    if (numVars['cyaDaysAgo'] <= numVars['cyaDaysAgoLimit'] && numVars['cyaPrediction'] <= 50 && numVars['cyaPrediction'] >= 30) {
-        textVars['cyaStatus1'] = 'background-color: green';
-        textVars['cyaStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['cyaDaysAgo'] > numVars['cyaDaysAgoLimit']) {
-            textVars['cyaDaysAgoBox'] = 'border-color: red';
-        }
-        if (numVars['cyaPrediction'] < 30) {
-            textVars['cyaPredictionBox'] = 'border-color: red';
-            textVars['cyaUseDichlorBox'] = 'border-color: red';
-        }
-        if (numVars['cyaPrediction'] > 50) {
-            textVars['cyaPredictionBox'] = 'border-color: red';
-            textVars['cyaUseBleachBox'] = 'border-color: red';
-        }
-    }
     
     /* FC - Current Prediction */
-    numVars['fcPrediction'] = (numVars['fcLastTest'] - (numVars['fcDemand'] * numVars['fcDaysAgo']) + numVars['fcAdded']).toFixed(2);
+    numVars['fcPrediction'] = (numVars['fcLastTest'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + numVars['fcAdded']);
     if (numVars['fcPrediction'] < 0) {
+        numVars['fcLastTest'] = numVars['fcLastTest'] - numVars['fcPrediction'];
         numVars['fcPrediction'] = 0;
+        localStorage.setItem('fcLastTest', numVars['fcLastTest']);
     }
     
-    /* FC - Target */
-    if(boolVars['autoTarget']) {
-        numVars['fcTarget'] = numVars['fcDemand'] + numVars['fcTargetBase'];
+    /* Dichlor and Bleach Amount to Add*/
+    let fcTargetDelta = numVars['fcTarget'] - numVars['fcPrediction'];
+    if (fcTargetDelta < 0.5) {
+        fcTargetDelta = 0;
     }
+    const fcAddDichlor = fcTargetDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength'];
+    const fcAddBleach = fcTargetDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength'];
+    
+    let fcBreakpointDelta = numVars['ccLastTest'] * 10 - numVars['fcPrediction'];
+    if (fcBreakpointDelta < 0.5) {
+        fcBreakpointDelta = 0;
+    }
+    const ccAddDichlor = fcBreakpointDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength'];
+    const ccAddBleach = fcBreakpointDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength'];
+    
+    const maxAddDichlor = Math.max(fcAddDichlor, ccAddDichlor); // Determine which is higher to use for max amount to add
+    const maxAddBleach = Math.max(fcAddBleach, ccAddBleach); // Determine which is higher to use for max amount to add
+    
+    if (numVars['caPrediction'] <= 40) { // CYA is low enough to use Dichlor
+        numVars['addDichlor'] = maxAddDichlor; // Use the max amount of Dichlor calculated
+        numVars['addBleach'] = '0.00'; // Don't use bleach if CYA is low
+    }
+    else { // CYA is high enough to use Bleach
+        numVars['addDichlor'] = '0.00'; // Don't use Dichlor if CYA is high
+        numVars['addBleach'] = maxAddBleach; // Use the max amount of Bleach calculated
+    }
+    localStorage.setItem("addDichlor", numVars['addDichlor']);
+    localStorage.setItem("addBleach", numVars['addBleach']);
 
-    /* FC - Update Dichlor and Bleach */
-    let fcDelta = numVars['fcTarget'] - numVars['fcPrediction'];
-    if (fcDelta < 0.5) {
-        fcDelta = 0;
-    }
-    
-    numVars['fcAddDichlor'] = (fcDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength']).toFixed(2);
-    localStorage.setItem("fcAddDichlor", numVars['fcAddDichlor']);
-    
-    numVars['fcAddBleach'] = (fcDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength']).toFixed(2);
-    localStorage.setItem("fcAddBleach", numVars['fcAddBleach']);
+    // TA & PH (only one should be active at a time)
+    numVars['addTaUp'] = '0.00';
+    numVars['addPhUp'] = '0.00';
+    numVars['addPhTaDown'] = '0.00';
+    numVars['addMuriaticAcid'] = '0.00';
 
-    /* FC - Status Color*/
-    if (numVars['fcDaysAgo'] <= numVars['fcDaysAgoLimit'] && numVars['fcPrediction'] <= 10 && numVars['fcPrediction'] >= 3) {
-        textVars['fcStatus1'] = 'background-color: green';
-        textVars['fcStatus2'] = 'background-color: green';
+    // TA UP
+    if (numVars['taLastTest'] < (numVars['taTarget'] - 10)) {
+        numVars['addTaUp'] = ((numVars['taTarget'] - numVars['taLastTest']) / 10 * 0.9 * numVars['spaVolume'] / 400 * 100 / numVars['taUpStrength']);
     }
     else {
-        if (numVars['fcDaysAgo'] > numVars['fcDaysAgoLimit']) {
-            textVars['fcDaysAgoBox'] = 'border-color: red';
+        // PH TA DOWN
+        const phAddPhTaDown = numVars['adLastTest'] * 0.49 * numVars['spaVolume'] / 400 * 93.2 / numVars['phTaDownStrength'];
+        const phAddMuriaticAcid = numVars['adLastTest'] * 0.37 * numVars['spaVolume'] / 400 * 31.45 / numVars['muriaticStrength'];
+        let taAddPhTaDown = 0;
+        let taAddMuriaticAcid = 0;
+        if (numVars['taLastTest'] > (numVars['taTarget'] + 10)) {
+            taAddPhTaDown = (numVars['taLastTest'] - numVars['taTarget']) / 10 * 1.37 * numVars['spaVolume'] / 400 * 93.2 / numVars['phTaDownStrength'];
+            taAddMuriaticAcid = (numVars['taLastTest'] - numVars['taTarget']) / 10 * 1.02 * numVars['spaVolume'] / 400 * 31.45 / numVars['muriaticStrength'];
         }
-        if (numVars['fcPrediction'] < 3 || numVars['fcPrediction'] > 10) {
-            textVars['fcPredictionBox'] = 'border-color: red';
-        }
-    }
-    if (fcDelta > 0) {
-        if (numVars['cyaPrediction'] <= 40) {
-            textVars['fcAddDichlorBox'] = 'border-color: red';
-            textVars['fcUseDichlorBox'] = 'border-color: red';
-        }
-        else { /* numVars['cyaPrediction'] > 40 */
-            textVars['fcAddBleachBox'] = 'border-color: red';
-            textVars['fcUseBleachBox'] = 'border-color: red';
-        }
-    }
-    
-    /* CC - Update Dichlor and Bleach */
-    let fcDelta2 = numVars['ccLastTest'] * 10 - numVars['fcPrediction'];
-    if (fcDelta2 < 0.5) {
-        fcDelta2 = 0;
-    }
-
-    numVars['ccAddDichlor'] = (fcDelta2 * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength']).toFixed(2);
-    localStorage.setItem("ccAddDichlor", numVars['ccAddDichlor']);
-    
-    numVars['ccRaiseFC'] = fcDelta2.toFixed(2);
-    localStorage.setItem("ccRaiseFC", numVars['ccRaiseFC']);
-    
-    numVars['ccRaiseCYA'] = (fcDelta2 * 0.8).toFixed(2);
-    localStorage.setItem('ccRaiseCYA', numVars['ccRaiseCYA']);
-    
-    numVars['ccAddBleach'] = (fcDelta2 * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength']).toFixed(2);
-    localStorage.setItem("ccAddBleach", numVars['ccAddBleach']);
-    
-    numVars['ccRaiseFC2'] = fcDelta2.toFixed(2);
-    localStorage.setItem("ccRaiseFC2", numVars['ccRaiseFC2']);
-
-    /* CC - Status Color*/
-    if (numVars['ccDaysAgo'] <= numVars['ccDaysAgoLimit'] && numVars['ccLastTest'] == 0 ) {
-        textVars['ccStatus1'] = 'background-color: green';
-        textVars['ccStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['ccDaysAgo'] > numVars['ccDaysAgoLimit']) {
-            textVars['ccDaysAgoBox'] = 'border-color: red';
-        }
-        if (numVars['ccLastTest'] > 0) {
-            textVars['ccTestBox'] = 'border-color: red';
-        }
-    }
-    if (fcDelta2 > 0) {
-        if (numVars['cyaPrediction'] <= 40) {
-            textVars['ccAddDichlorBox'] = 'border-color: red';
-            textVars['ccUseDichlorBox'] = 'border-color: red';
-        }
-        else { /* numVars['cyaPrediction'] > 40 */
-            textVars['ccAddBleachBox'] = 'border-color: red';
-            textVars['ccUseBleachBox'] = 'border-color: red';
-        }
-    }
-
-    /* pH - Update Acid Demand */
-    numVars['phAddPhTaDown'] = (numVars['acidDemand'] * 0.49 * numVars['spaVolume'] / 400 * 93.2 / numVars['phTaDownStrength']).toFixed(2);
-    localStorage.setItem("phAddPhTaDown", numVars['phAddPhTaDown']);
-    
-    numVars['phAddMuriaticAcid'] = (numVars['acidDemand'] * 0.37 * numVars['spaVolume'] / 400 * 31.45 / numVars['muriaticStrength']).toFixed(2);
-    localStorage.setItem("phAddMuriaticAcid", numVars['phAddMuriaticAcid']);
-    
-    /* pH - Update Base Demand */
-    numVars['addPhUp'] = (numVars['baseDemand'] * 0.21 * numVars['spaVolume'] / 400 * 100 / numVars['phUpStrength']).toFixed(2);
-    localStorage.setItem("addPhUp", numVars['addPhUp']);
-    
-    /* pH - Status Color */
-    if (numVars['phDaysAgo'] <= numVars['phDaysAgoLimit'] && numVars['phLastTest'] >= 7.4 && numVars['phLastTest'] <= 7.8) {
-        textVars['phStatus1'] = 'background-color: green';
-        textVars['phStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['phDaysAgo'] > numVars['phDaysAgoLimit']) {
-            textVars['phDaysAgoBox'] = 'border-color: red';
-        }
-        if (numVars['phLastTest'] < 7.4) {
-            textVars['phTestBox'] = 'border-color: red';
-            textVars['baseDemandBox'] = 'border-color: red';
-            textVars['phUpBox'] = 'border-color: red';
-        }
-        if (numVars['phLastTest'] > 7.8) {
-            textVars['phTestBox'] = 'border-color: red';
-            textVars['acidDemandBox'] = 'border-color: red';
-            textVars['phPhTaDownBox'] = 'border-color: red';
-            textVars['phMuriaticBox'] = 'border-color: red';
-        }
-    }
-
-    /* TA - Calculate chemicals to reach Target */
-    if (numVars['taCorrectedTest'] > (numVars['taTarget'] + 10)) {
-        numVars['taAddPhTaDown'] = ((numVars['taCorrectedTest'] - numVars['taTarget']) / 10 * 1.37 * numVars['spaVolume'] / 400 * 93.2 / numVars['phTaDownStrength']).toFixed(2);
-        localStorage.setItem('taAddPhTaDown', numVars['taAddPhTaDown']);
-
-        numVars['taAddMuriaticAcid'] = ((numVars['taCorrectedTest'] - numVars['taTarget']) / 10 * 1.02 * numVars['spaVolume'] / 400 * 31.45 / numVars['muriaticStrength']).toFixed(2);
-        localStorage.setItem("taAddMuriaticAcid", numVars['taAddMuriaticAcid']);
-    }
-    else {
-        if (numVars['taCorrectedTest'] < (numVars['taTarget'] - 10)) {
-            numVars['addTaUp'] = ((numVars['taTarget'] - numVars['taCorrectedTest']) / 10 * 0.9 * numVars['spaVolume'] / 400 * 100 / numVars['taUpStrength']).toFixed(2);
-            localStorage.setItem('addTaUp', numVars['addTaUp']);
+        if (taAddPhTaDown > phAddPhTaDown) {
+            numVars['addPhTaDown'] = taAddPhTaDown;
+            numVars['addMuriaticAcid'] = taAddMuriaticAcid;
+            boolVars['adjustTA'] = true; 
         }
         else {
-            numVars['taAddPhTaDown'] = 0;
-            localStorage.setItem('taAddPhTaDown', numVars['taAddPhTaDown']);
-            numVars['taAddMuriaticAcid'] = 0;
-            localStorage.setItem("taAddMuriaticAcid", numVars['taAddMuriaticAcid']);
-            numVars['addTaUp'] = 0;
-            localStorage.setItem('addTaUp', numVars['addTaUp']);
+            numVars['addPhTaDown'] = phAddPhTaDown;
+            numVars['addMuriaticAcid'] = phAddMuriaticAcid;
+            boolVars['adjustTA'] = false; 
+        }
+        
+        // PH UP
+        if (numVars['addPhTaDown'] == 0) {
+            numVars['addPhUp'] = (numVars['bdLastTest'] * 0.21 * numVars['spaVolume'] / 400 * 100 / numVars['phUpStrength']);
         }
     }
-    
-    // TODO - TEST ALL CALCULATIONS MATCH TAYLOR POOL TABLES
-    
-    /* TA - Status Color */
-    if (numVars['taDaysAgo'] <= numVars['taDaysAgoLimit'] && numVars['taCorrectedTest'] >= (numVars['taTarget'] - 10) && 
-        numVars['taCorrectedTest'] <= (numVars['taTarget'] + 10)) {
-        textVars['taStatus1'] = 'background-color: green';
-        textVars['taStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['taDaysAgo'] > numVars['taDaysAgoLimit']) {
-            textVars['taDaysAgoBox'] = 'border-color: red';
-        }
-        if (numVars['taCorrectedTest'] < (numVars['taTarget'] - 10)) {
-            textVars['taCorrTestBox'] = 'border-color: red';
-            textVars['taUpBox'] = 'border-color: red';
-        }
-        if (numVars['taCorrectedTest'] > (numVars['taTarget'] + 10)) {
-            textVars['taCorrTestBox'] = 'border-color: red';
-            textVars['taPhTaDownBox'] = 'border-color: red';
-            textVars['taMuriaticBox'] = 'border-color: red';
-        }
-    }
+    localStorage.setItem('addTaUp', numVars['addTaUp']);
+    localStorage.setItem('addPhUp', numVars['addPhUp']);
+    localStorage.setItem('addPhTaDown', numVars['addPhTaDown']);
+    localStorage.setItem('addMuriaticAcid', numVars['addMuriaticAcid']);
+    localStorage.setItem('adjustTA', boolVars['adjustTA']);
 
     /* CH - Update Calcium */
     let chDelta = numVars['chTarget'] - numVars['chLastTest'];
     if (chDelta < 10) {
         chDelta = 0;
     }
-    numVars['addCalcium'] = (chDelta / 10 * 0.77 * numVars['spaVolume'] / 400 * 77 / numVars['calciumStrength']).toFixed(2);
+    numVars['addCalcium'] = (chDelta / 10 * 0.77 * numVars['spaVolume'] / 400 * 77 / numVars['calciumStrength']);
     localStorage.setItem("addCalcium", numVars['addCalcium']);
-    
-    /* CH - Status Color*/
-    if (numVars['chDaysAgo'] <= numVars['chDaysAgoLimit'] && numVars['chLastTest'] >= 150 && numVars['chLastTest'] <= 250) {
-        textVars['chStatus1'] = 'background-color: green';
-        textVars['chStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['chDaysAgo'] > numVars['chDaysAgoLimit']) {
-            textVars['chDaysAgoBox'] = 'border-color: red';
-        }
-        if (numVars['chLastTest'] < 150) {
-            textVars['addCalciumBox'] = 'border-color: red';
-        }
-        if (numVars['chLastTest'] > 250) {
-            textVars['chFilterCalciumBox'] = 'border-color: red';
-        }
-    }
-    
-     /* OTHER CALCULATIONS */
 
-    /* FILTER - Status Color*/
-    if (numVars['filterCleanedDaysAgo'] <= numVars['filterCleanedDaysAgoLimit'] && 
-        numVars['filterReplacedDaysAgo'] <= numVars['filterReplacedDaysAgoLimit']) {
-        textVars['filterStatus1'] = 'background-color: green';
-        textVars['filterStatus2'] = 'background-color: green';
-    }
-    else {
-        if (numVars['filterCleanedDaysAgo'] > numVars['filterCleanedDaysAgoLimit']) {
-            textVars['cleanFilterBox'] = 'border-color: red';
-        }
-        if (numVars['filterReplacedDaysAgo'] > numVars['filterReplacedDaysAgoLimit']) {
-            textVars['replaceFilterBox'] = 'border-color: red';
-        }
-    }
-    
-    /* SETUP - Status Color*/
-    if (boolVars['setupComplete']) {
-        textVars['setupStatus1'] = 'background-color: green';
-        textVars['setupStatus2'] = 'background-color: green';
-    }
-    
     /* POPULATE ALL NUMERIC INPUT BOXES */
-    inputBoxes = document.querySelectorAll('input[type="number"]');
+    inputBoxes = document.getElementsByClassName("numInputs2");
     for (box in inputBoxes) {
-        inputBoxes[box].value = numVars[inputBoxes[box].id];
+        inputBoxes[box].value = Number(numVars[inputBoxes[box].id]).toFixed(2);
+    } 
+
+    inputBoxes = document.getElementsByClassName("numInputs0");
+    for (box in inputBoxes) {
+        inputBoxes[box].value = Number(numVars[inputBoxes[box].id]).toFixed(0);
     } 
 
     /* POPULATE ALL BOOLEAN CHECKBOXES */
@@ -476,7 +316,12 @@ function init() {
     /* POPULATE ALL NUMERIC INNER HTML */
     numDisplays = document.getElementsByClassName("numDisplays");
     for (display in numDisplays) {
-        numDisplays[display].innerHTML = numVars[numDisplays[display].id];
+        numDisplays[display].innerHTML = Number(numVars[numDisplays[display].id]).toFixed(2);
+    } 
+
+    numDisplays = document.getElementsByClassName("numDisplays0");
+    for (display in numDisplays) {
+        numDisplays[display].innerHTML = Number(numVars[numDisplays[display].id]).toFixed(0);
     } 
 
     /* POPULATE ALL TEXT INNER HTML */
@@ -485,399 +330,344 @@ function init() {
         textDisplays[display].innerHTML = textVars[textDisplays[display].id];
     } 
 
-    /* SET ALL COLORS */
-    colorDisplays = document.getElementsByClassName("colorChange");
-    for (display in colorDisplays) {
-        colorDisplays[display].style = textVars[colorDisplays[display].id];
+    // SELECT ROWS TO HIDE
+    for (prefix in testAndMaintainPrefixes) {
+        displayTestAndMaintainRow(testAndMaintainPrefixes[prefix]);
     }
-}
 
-
-
-// CYA FUNCTIONS
-
-function updateCyaTest() {
-    const cyaCurrentTest = cyaLastTest.valueAsNumber;
-    if (cyaCurrentTest >= 0 && cyaCurrentTest <= 200) {
-        localStorage.setItem("cyaLastTest", cyaCurrentTest);
-        const date = new Date();
-        localStorage.setItem("cyaLastTestDate", date);
-        localStorage.setItem("cyaAdded", 0);
-            
-        const cyaDifference = numVars['cyaLastTest'] - (cyaCurrentTest - numVars['cyaAdded']);
-        if (cyaDifference >= 0) {
-            numVars['cyaDaysAgo'] = (date - dateVars['cyaLastTestDate']) / ONE_DAY;
-            numVars['cyaDecay'] = (cyaDifference / numVars['cyaDaysAgo']).toFixed(2);
-            if (numVars['cyaDecay'] > 15) {
-                numVars['cyaDecay'] = 15;
-            }
-            localStorage.setItem("cyaDecay", numVars['cyaDecay']); 
-        }
-        refresh(); 
+    for (prefix in chemicalPrefixes) {
+        displayChemicalRow(chemicalPrefixes[prefix]);
+    }
+    
+    // AD
+    boolVars['adVisible'] = boolVars['showAll'] || boolVars['showad'];
+    if (boolVars['adVisible']) {
+        document.getElementById('adRow').style.display = 'table-row';
+        setTimeout(function(){document.getElementById('adRow').style.opacity = 1}, 1);
     }
     else {
-        alert("Please enter a CYA value between 0 and 200.");
+        document.getElementById('adRow').style.opacity = 0;
+        setTimeout(function(){document.getElementById('adRow').style.display = 'none'}, 2000);
     }
-}
 
-// FC FUNCTIONS
-
-function updateFcTest() {
-    const fcCurrentTest = fcLastTest.valueAsNumber;
-    if (fcCurrentTest >= 0 && fcCurrentTest <= 75) {
-        localStorage.setItem("fcLastTest", fcCurrentTest.toFixed(2));
-        const date = new Date();
-        localStorage.setItem("fcLastTestDate", date);
-        localStorage.setItem("fcAdded", 0);
-
-        const fcDifference = numVars['fcLastTest'] - (fcCurrentTest - numVars['fcAdded']);
-        if (fcDifference >= 0) {
-            numVars['fcDaysAgo'] = (date - dateVars['fcLastTestDate']) / ONE_DAY;
-            numVars['fcDemand'] = (fcDifference / numVars['fcDaysAgo']).toFixed(2);
-            if (numVars['fcDemand'] > 30) {
-                numVars['fcDemand'] = 30;
-            }
-            localStorage.setItem("fcDemand", numVars['fcDemand']); 
-        }
-        refresh();
+    // BD
+    boolVars['bdVisible'] = boolVars['showAll'] || boolVars['showbd'];
+    if (boolVars['bdVisible']) {
+        document.getElementById('bdRow').style.display = 'table-row';
+        setTimeout(function(){document.getElementById('bdRow').style.opacity = 1}, 1);
     }
     else {
-        alert("Please enter a FC value between 0 and 75.");
+        document.getElementById('bdRow').style.opacity = 0;
+        setTimeout(function(){document.getElementById('bdRow').style.display = 'none'}, 2000);
+    }
+
+    hideTestHeader();
+    hideChemicalHeader();
+    hideMaintainHeader();
+    
+    if (boolVars['testHeaderVisible'] || boolVars['chemicalHeaderVisible'] || boolVars['maintenanceHeaderVisible']) {
+        textVars['nothingNeeded'] = '';
+    }
+    else {
+        textVars['nothingNeeded'] = 'Nothing needed. Enjoy your hot tub!'
+    }
+    textDisplays['nothingNeeded'].innerHTML = textVars['nothingNeeded'];
+}
+
+// FUNCTIONS
+
+function hideTestHeader() {
+    if (    boolVars['caVisible'] || boolVars['fcVisible'] || boolVars['ccVisible'] || boolVars['phVisible'] || 
+            boolVars['adVisible'] || boolVars['bdVisible'] || boolVars['taVisible'] || boolVars['chVisible']) {
+        boolVars['testHeaderVisible'] = true;
+        document.getElementById('testHeaderRow').style.display = 'table-row';
+        setTimeout(function(){document.getElementById('testHeaderRow').style.opacity = 1}, 1);
+    }
+    else {
+        boolVars['testHeaderVisible'] = false;
+        document.getElementById('testHeaderRow').style.opacity = 0;
+        setTimeout(function(){document.getElementById('testHeaderRow').style.display = 'none'}, 2000);
+    }
+}
+    
+function hideChemicalHeader() {
+    if (    boolVars['DichlorVisible'] || boolVars['BleachVisible'] || boolVars['PhTaDownVisible'] || 
+            boolVars['MuriaticAcidVisible'] || boolVars['TaUpVisible'] || boolVars['PhUpVisible'] || 
+            boolVars['CalciumVisible']) {
+        boolVars['chemicalHeaderVisible'] = true;
+        document.getElementById('chemicalHeaderRow').style.display = 'table-row';
+        setTimeout(function(){document.getElementById('chemicalHeaderRow').style.opacity = 1}, 1);
+    }
+    else {
+        boolVars['chemicalHeaderVisible'] = false;
+        document.getElementById('chemicalHeaderRow').style.opacity = 0;
+        setTimeout(function(){document.getElementById('chemicalHeaderRow').style.display = 'none'}, 2000); 
     }
 }
 
-function updateFcTarget() {
-    const value = fcTarget.valueAsNumber;
-    if (value >= 1 && value <= 50) {
-        numVars['fcTarget'] = value;
-        numVars['fcTargetBase'] = value;
+function hideMaintainHeader() {
+    if (boolVars['spaVolumeVisible'] || boolVars['filterCleanedVisible'] || boolVars['filterReplacedVisible']) {
+        boolVars['maintenanceHeaderVisible'] = true;
+        document.getElementById('maintainHeaderRow').style.display = 'table-row';
+        setTimeout(function(){document.getElementById('maintainHeaderRow').style.opacity = 1}, 1);
+    }
+    else {
+        boolVars['maintenanceHeaderVisible'] = false;
+        document.getElementById('maintainHeaderRow').style.opacity = 0;
+        setTimeout(function(){document.getElementById('maintainHeaderRow').style.display = 'none'}, 2000);
+    }
+}
 
-        /* Turn off auto target if target is changed */
-        boolVars['autoTarget'] = false;
-        localStorage.setItem("autoTarget", boolVars['autoTarget']);
-        autoTarget.checked = boolVars['autoTarget'];
+function displayTestAndMaintainRow(prefix) {
+    boolVars[prefix + 'Visible'] = boolVars['showAll'] || boolVars['show' + prefix] || numVars[prefix + 'DaysAgo'] > numVars[prefix + 'DaysAgoLimit'];
+    if (boolVars[prefix + 'Visible']) {
+        document.getElementById(prefix + 'Row').style.display = 'table-row';
+        setTimeout(function(){document.getElementById(prefix + 'Row').style.opacity = 1}, 1);
+    }
+    else {
+        document.getElementById(prefix + 'Row').style.opacity = 0;
+        setTimeout(function(){document.getElementById(prefix + 'Row').style.display = 'none'}, 2000);
+    }
+}
 
-        localStorage.setItem("fcTarget", numVars['fcTarget']);
-        localStorage.setItem("fcTargetBase", numVars['fcTargetBase']);
+function displayChemicalRow(prefix) {
+    boolVars[prefix + 'Visible'] = boolVars['showAll'] || boolVars['show' + prefix] || numVars['add' + prefix] > 0;
+    if (boolVars[prefix + 'Visible']) {
+        document.getElementById(prefix + 'Row').style.display = 'table-row';
+        setTimeout(function(){document.getElementById(prefix + 'Row').style.opacity = 1}, 1);
+    }
+    else {
+        document.getElementById(prefix + 'Row').style.opacity = 0;
+        setTimeout(function(){document.getElementById(prefix + 'Row').style.display = 'none'}, 2000);
+    }
+}
+
+// TEST - ALL
+
+function updateTest(sPrefix, sDaysAgoLimitId = false) {
+    const newTest = document.getElementById(sPrefix + 'NewTest');
+    const newValue = Number(newTest.value);
+    
+    const deltaValue = numVars[sPrefix + 'LastTest'] - (newValue - numVars[sPrefix + 'Added']);
+    
+    const date = new Date();
+    
+    if (deltaValue >= 0) {
+        numVars[sPrefix + 'DaysAgo'] = (date - dateVars[sPrefix + 'LastTestDate']) / ONE_DAY;
+        numVars[sPrefix + 'Decay'] = (deltaValue / numVars[sPrefix + 'DaysAgo']);
+        if (numVars[sPrefix + 'Decay'] > 30) {
+            numVars[sPrefix + 'Decay'] = 30;
+        }
+        localStorage.setItem(sPrefix + 'Decay', numVars[sPrefix + 'Decay']); 
+    }
+
+    numVars[sPrefix + 'LastTest'] = newValue;
+    localStorage.setItem(sPrefix + 'LastTest', numVars[sPrefix + 'LastTest']);
+
+    dateVars[sPrefix + 'LastTestDate'] = date;
+    localStorage.setItem(sPrefix + 'LastTestDate', dateVars[sPrefix + 'LastTestDate']);
+    
+    numVars[sPrefix + 'Added'] = 0; 
+    localStorage.setItem(sPrefix + 'Added', numVars[sPrefix + 'Added']);
         
-        refresh();
+    if (sDaysAgoLimitId) {
+        const daysAgoLimit = document.getElementById(sDaysAgoLimitId);
+        numVars[daysAgoLimit.id] = daysAgoLimit.valueAsNumber;
+        localStorage.setItem(daysAgoLimit.id, numVars[daysAgoLimit.id]);
     }
-    else {
-        alert("Please enter a FC Target value between 1 and 50.");
-    }
-}
 
-function updateAutoTarget() {
-    const value = fcTarget.valueAsNumber;
-    if (value >= 1 && value <= 50) {
-        boolVars['autoTarget'] = document.getElementById("autoTarget").checked;
-        localStorage.setItem("autoTarget", boolVars['autoTarget']);
+    if (sPrefix == 'ph') {
+        boolVars['showph'] = false;
+        localStorage.setItem('showph', boolVars['showph']);
 
-        if(boolVars['autoTarget']) {
-            numVars['fcTargetBase'] = value;
-            numVars['fcTarget'] = numVars['fcDemand'] + numVars['fcTargetBase'];
-            localStorage.setItem("fcTargetBase", numVars['fcTargetBase']);
-            localStorage.setItem("fcTarget", numVars['fcTarget']);
+        if (numVars['phLastTest'] > 7.8) { 
+            boolVars['showad'] = true;
         }
         else {
-            numVars['fcTarget'] = numVars['fcTargetBase'];
-            localStorage.setItem("fcTarget", numVars['fcTarget']);
+            boolVars['showad'] = false;
+            
         }
+        localStorage.setItem('showad', boolVars['showad']);
 
-        refresh();
+        if (numVars['phLastTest'] < 7.4) {
+            boolVars['showbd'] = true;
+        }
+        else {
+            boolVars['showbd'] = false; 
+        }
+        localStorage.setItem('showbd', boolVars['showbd']);
     }
-    else {
-        alert("Please enter a FC Target value between 1 and 50.");
+
+    if (sPrefix == 'ad') {
+        boolVars['showad'] = false;
+        localStorage.setItem('showad', boolVars['showad']);
     }
+
+    if (sPrefix == 'bd') {
+        boolVars['showbd'] = false;
+        localStorage.setItem('showbd', boolVars['showbd']);
+    }
+    
+    refresh();
 }
 
-function fcAddedDichlor() {
-    const value = fcAddDichlor.valueAsNumber;
+// ADD - DICHLOR
+
+function addedDichlor() {
+    const value = addDichlor.valueAsNumber;
     if (value >= 0) {
+        refresh(); // Forces recalculation of fcLastTest and caLastTest, 
+        // including correction for decay causing Predicted value to go negative,
+        // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
         numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
-        numVars['cyaAdded'] = numVars['cyaAdded'] + (fcDelta * 0.8);
-        localStorage.setItem("fcAdded", numVars['fcAdded']);
-        localStorage.setItem("cyaAdded", numVars['cyaAdded']);
+        numVars['caAdded'] = numVars['caAdded'] + (fcDelta * 0.8);
+        localStorage.setItem('fcAdded', numVars['fcAdded']);
+        localStorage.setItem('caAdded', numVars['caAdded']);
 
         refresh();
     }
-    else {
-        alert("Please enter a positive value.");
-    }
 }
 
-function fcAddedBleach() {
-    const value = fcAddBleach.valueAsNumber;
+// ADD - BLEACH
+
+function addedBleach() {
+    const value = addBleach.valueAsNumber;
     if (value >= 0) {
+        refresh(); // Forces recalculation of fcLastTest and caLastTest, 
+        // including correction for decay causing Predicted value to go negative,
+        // immediately before adding the value in case it's been a while since the last refresh.
         numVars['fcAdded'] = (numVars['fcAdded'] + (value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength']));
         localStorage.setItem("fcAdded", numVars['fcAdded']);
         
         refresh();
     }
-    else {
-        alert("Please enter a positive value.");
-    }
 }
 
-// CC FUNCTIONS
+// ADD - pH/TA DOWN
 
-function updateCcTest() {
-    const ccCurrentTest = ccLastTest.valueAsNumber;
-    if (ccCurrentTest >= 0 && ccCurrentTest <= 75) {
-        localStorage.setItem("ccLastTest", ccCurrentTest);
-        const date = new Date();
-        localStorage.setItem("ccLastTestDate", date);
-        
-        refresh();
-    }
-    else {
-        alert("Please enter a CC value between 0 and 75.");
-    }
-}
-
-function ccAddedDichlor() {
-    const value = ccAddDichlor.valueAsNumber;
+function addedPhTaDown() {
+    // TODO - log chemical added
+    const value = addPhTaDown.valueAsNumber;
     if (value >= 0) {
-        const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
-        numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
-        numVars['cyaAdded'] = numVars['cyaAdded'] + (fcDelta * 0.8);
-        localStorage.setItem("fcAdded", numVars['fcAdded']);
-        localStorage.setItem("cyaAdded", numVars['cyaAdded']);
-
-        refresh();
-    }
-    else {
-        alert("Please enter a positive value.");
-    }
-}
-
-function ccAddedBleach() {
-    const value = ccAddBleach.valueAsNumber;
-    if (value >= 0) {
-        numVars['fcAdded'] = (numVars['fcAdded'] + (value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength']));
-        localStorage.setItem("fcAdded", numVars['fcAdded']);
-        
-        refresh();
-    }
-    else {
-        alert("Please enter a positive value.");
-    }
-}
-
-// pH FUNCTIONS
-
-function updatePhTest() { 
-    const phCurrentTest = phLastTest.valueAsNumber;
-    if (phCurrentTest >= 7 && phCurrentTest <= 8) {
-        localStorage.setItem("phLastTest", phCurrentTest);
-        const date = new Date();
-        localStorage.setItem("phLastTestDate", date);
-
-        localStorage.setItem("acidDemand", 0);
-        localStorage.setItem("baseDemand", 0);
-        
-        refresh();
-    }
-    else {
-        alert("Please enter a pH value between 7.0 and 8.0.");
-    }
-}
-
-function updateAdTest() {
-    const drops = acidDemand.valueAsNumber; 
-    if (drops >= 0 && drops <= 10) {
-        numVars['acidDemand'] = drops;
-        localStorage.setItem('acidDemand', numVars['acidDemand']);
-
-        refresh();
-    }
-    else {
-        alert('Please enter a value between 0 and 10.');
-    }
-}
-
-function updateBdTest() {
-    const drops = baseDemand.valueAsNumber; 
-    if (drops >= 0 && drops <= 10) {
-        numVars['baseDemand'] = drops;
-        localStorage.setItem('baseDemand', numVars['baseDemand']);
-
-        refresh();
-    }
-    else {
-        alert('Please enter a value between 0 and 10.');
-    }
-}
-
-function phAddedPhTaDown() {
-    /* const value = phAddPhTaDown.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('acidDemand', 0);
-    localStorage.setItem('baseDemand', 0);
-
-    refresh();
-}
-
-function addedPhUp() {
-    /* const value = addPhUp.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('acidDemand', 0);
-    localStorage.setItem('baseDemand', 0);
-
-    refresh();
-}
-
-function phAddedMuriaticAcid() {
-    /* const value = phAddMuriaticAcid.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('acidDemand', 0);
-    localStorage.setItem('baseDemand', 0);
-
-    refresh();
-}
-
-// TA FUNCTIONS
-
-function updateTaTest() { 
-    const taCurrentTest = taLastTest.valueAsNumber;
-    if (taCurrentTest >= 0 && taCurrentTest <= 500) {
-        localStorage.setItem("taLastTest", taCurrentTest);
-        const date = new Date();
-        localStorage.setItem("taLastTestDate", date);
-        let taCorrectedTest = (taCurrentTest - (numVars['cyaPrediction'] * 0.33)).toFixed(2);
-        if (taCorrectedTest < 0) {
-            taCorrectedTest = 0;
+        if (boolVars['adjustTA']) {
+            const taDelta = value * 10 / 1.37 / numVars['spaVolume'] * 400 / 93.2 * numVars['phTaDownStrength'];
+            numVars['taLastTest'] = numVars['taLastTest'] - taDelta;
+            localStorage.setItem('taLastTest', numVars['taLastTest']);
         }
-        localStorage.setItem("taCorrectedTest", taCorrectedTest);
-        localStorage.setItem('taPhTaDownCheck', '');
-        localStorage.setItem('taUpCheck', '');
-        localStorage.setItem('taMuriaticCheck', '');
-
-        // TA_corrected = TA_measured - (Borate_ppm * 0.17)
         
+        localStorage.setItem('adLastTest', 0);
+        boolVars['showph'] = true;
+        localStorage.setItem('showph', boolVars['showph']);
+
         refresh();
     }
-    else {
-        alert("Please enter a TA value between 0 and 500.");
-    }
 }
 
-function updateTaTarget() { 
-    const value = taTarget.valueAsNumber;
-    if (value >= 30 && value <= 250) {
-        numVars['taTarget'] = value;
-        localStorage.setItem("taTarget", numVars['taTarget']);
-        
+// ADD - MURIATIC ACID
+
+function addedMuriaticAcid() {
+    // TODO - log chemical added
+    const value = addMuriaticAcid.valueAsNumber;
+    if (value >= 0) {
+        if (boolVars['adjustTA']) {
+            const taDelta = value * 10 / 1.02 / numVars['spaVolume'] * 400 / 31.45 * numVars['muriaticStrength'];
+            numVars['taLastTest'] = numVars['taLastTest'] - taDelta;
+            localStorage.setItem('taLastTest', numVars['taLastTest']);
+        }
+                
+        localStorage.setItem('adLastTest', 0);
+        boolVars['showph'] = true;
+        localStorage.setItem('showph', boolVars['showph']);
         refresh();
     }
-    else {
-        alert("Please enter a TA Target value between 30 and 250.");
-    }
 }
 
-function taAddedPhTaDown() { 
-    /* const value = taAddPhTaDown.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('taPhTaDownCheck', '&#10003');
-
-    refresh();
-}
+// ADD - TA UP
 
 function addedTaUp() {
-    /* const value = addPhUp.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('taUpCheck', '&#10003');
-
-    refresh();
-}
-
-function taAddedMuriaticAcid() { 
-    /* const value = phAddMuriaticAcid.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('taMuriaticCheck', '&#10003');
-
-    refresh();
-}
-
-// CH FUNCTIONS
-
-function updateChTest() { 
-    const chCurrentTest = chLastTest.valueAsNumber;
-    if (chCurrentTest >= 0 && chCurrentTest <= 500) {
-        localStorage.setItem("chLastTest", chCurrentTest);
-        const date = new Date();
-        localStorage.setItem("chLastTestDate", date);
-        localStorage.setItem('addCalciumCheck', '');
-
+    // TODO - log chemical added
+    const value = addTaUp.valueAsNumber;
+    if (value >= 0) {
+        const taDelta = value * 10 / 0.9 / numVars['spaVolume'] * 400 / 100 * numVars['taUpStrength'];
+        numVars['taLastTest'] = numVars['taLastTest'] + taDelta;
+        localStorage.setItem('taLastTest', numVars['taLastTest']);
+        
+        localStorage.setItem('bdLastTest', 0);
+        
+        boolVars['showph'] = true;
+        localStorage.setItem('showph', boolVars['showph']);
         refresh();
     }
-    else {
-        alert("Please enter a CH value between 0 and 500.");
+}
+
+// ADD - pH UP
+
+function addedPhUp() {
+    // TODO - log chemical added
+    const value = addPhUp.valueAsNumber;
+    if (value >= 0) {
+        localStorage.setItem('bdLastTest', 0);
+        
+        boolVars['showph'] = true;
+        localStorage.setItem('showph', boolVars['showph']);
+        refresh();
     }
 }
 
-function chAddedCalcium() { 
-    /* const value = addCalcium.valueAsNumber; TODO - log chemical added */
-    localStorage.setItem('addCalciumCheck', '&#10003');
+// ADD - CALCIUM
 
-    refresh();
-}
-
-function updateChTarget() { 
-    const value = chTarget.valueAsNumber;
-    if (value >= 150 && value <= 250) {
-        numVars['chTarget'] = value;
-        localStorage.setItem("chTarget", numVars['chTarget']);
+function addedCalcium() { 
+    // TODO - log chemical added
+    const value = addCalcium.valueAsNumber;
+    if (value >= 0) {
+        const chDelta = value * 10 / 0.77 / numVars['spaVolume'] * 400 / 77 * numVars['calciumStrength'];
+        numVars['chLastTest'] = numVars['chLastTest'] + chDelta;
+        localStorage.setItem('chLastTest', numVars['chLastTest']);
         
         refresh();
     }
-    else {
-        alert("Please enter a CH Target value between 150 and 250.");
-    }
 }
 
-// FILTER FUNCTIONS
+// MAINTAIN - SPA VOLUME
+
+function confirmedSpaVolume() {
+    numVars['spaVolume'] = spaVolume.valueAsNumber;
+    localStorage.setItem("spaVolume", numVars['spaVolume']);
+    
+    numVars['spaVolumeDaysAgoLimit'] = spaVolumeDaysAgoLimit.valueAsNumber;
+    localStorage.setItem('spaVolumeDaysAgoLimit', numVars['spaVolumeDaysAgoLimit']);
+
+    localStorage.setItem('spaVolumeLastConfirmed', new Date());
+    
+    refresh();
+}
+
+// MAINTAIN - FILTER CLEANED
 
 function cleanedFilter() {
-    localStorage.setItem("filterLastCleaned", new Date());
+    numVars['filterCleanedDaysAgoLimit'] = filterCleanedDaysAgoLimit.valueAsNumber;
+    localStorage.setItem('filterCleanedDaysAgoLimit',numVars['filterCleanedDaysAgoLimit']); 
+
+    localStorage.setItem('filterLastCleaned', new Date());
+    
     refresh();
 }
+
+// MAINTAIN - FILTER REPLACED
 
 function replacedFilter() {
+    numVars['filterReplacedDaysAgoLimit'] = filterReplacedDaysAgoLimit.valueAsNumber;
+    localStorage.setItem('filterReplacedDaysAgoLimit', numVars['filterReplacedDaysAgoLimit']); 
+    
     localStorage.setItem("filterLastReplaced", new Date());
+    
     refresh();
-}
-
-// SETUP FUNCTIONS
-
-function updateSetupStatus() {
-    boolVars['setupComplete'] = document.getElementById("setupComplete").checked;
-    localStorage.setItem("setupComplete", boolVars['setupComplete']);
-    refresh();
-}
-
-function storeSpa() {
-    const collection = document.getElementsByClassName("spaList");
-    for (let i = 0; i < collection.length; i++) {
-        localStorage.setItem(collection[i].id, collection[i].value);
-    } 
-    refresh();
-}
-
-function storeChem() {
-    const collection = document.getElementsByClassName("chemList");
-    for (let i = 0; i < collection.length; i++) {
-        localStorage.setItem(collection[i].id, collection[i].value);
-    }
-    refresh(); 
-}
-
-function storeTimeLimit() {
-    const collection = document.getElementsByClassName("timeLimitList");
-    for (let i = 0; i < collection.length; i++) {
-        localStorage.setItem(collection[i].id, collection[i].value);
-    }
-    refresh(); 
 }
 
 // OTHER FUNCTIONS
 function refresh() {
-    location.reload();
+    init();
 }
 
 function createDate(days, months, years) {
@@ -886,4 +676,95 @@ function createDate(days, months, years) {
     date.setMonth(date.getMonth() + months);
     date.setFullYear(date.getFullYear() + years);
     return date;    
+}
+
+function storeShowAll() {
+    const element = document.getElementById('showAll');
+    if (element) {
+        localStorage.setItem('showAll', element.checked);
+    }
+    refresh();
+}
+
+function updateTaCorrectedTest() {
+    const value = taUncorrectedTest.valueAsNumber;
+    let correctedValue = value - (numVars['caPrediction'] * 0.33);
+    if (correctedValue < 0) {
+        correctedValue = 0;
+    }
+    document.getElementById('taNewTestDisplay').innerHTML = correctedValue.toFixed(0);
+    document.getElementById('taNewTest').value = Number(correctedValue);
+}
+
+function editChemStrength(sChemicalStrengthId) {
+    let strength = prompt("Please enter Active Ingredient % from chemical bottle.", numVars[sChemicalStrengthId]);
+    if (strength) {
+        strength = Number(strength);
+        if (strength >= 1 && strength <= 100) {
+            numVars[sChemicalStrengthId] = strength;
+            localStorage.setItem(sChemicalStrengthId, numVars[sChemicalStrengthId]);
+            refresh();
+        }
+        else {
+            alert("Please enter a number between 1 and 100.");
+        }
+    }
+}
+
+function fcTargetAdjust(delta) {
+    numVars['fcTarget'] = numVars['fcTarget'] + delta;
+    if (numVars['fcTarget'] < 1) {
+        numVars['fcTarget'] = 1;
+    }
+    if (numVars['fcTarget'] > 70) {
+        numVars['fcTarget'] = 70;
+    }
+    localStorage.setItem("fcTarget", numVars['fcTarget']);
+    
+    refresh();
+}
+
+function editFcTarget() {
+    let target = prompt("Please enter new FC target value.", numVars['fcTarget']);
+    if (target) {
+        target = parseInt(target);
+        if (target >= 1 && target <= 70) {
+            numVars['fcTarget'] = target;
+            localStorage.setItem('fcTarget', numVars['fcTarget']);
+            refresh();
+        }
+        else {
+            alert("Please enter a number between 1 and 70.");
+        }
+    }
+}
+
+function editTaTarget() {
+    let target = prompt("Please enter new TA target value.", numVars['taTarget']);
+    if (target) {
+        target = parseInt(target);
+        if (target >= 50 && target <= 120) {
+            numVars['taTarget'] = target;
+            localStorage.setItem('taTarget', numVars['taTarget']);
+            refresh();
+        }
+        else {
+            alert("Please enter a number between 50 and 120.");
+        }
+    }
+}
+
+function editChTarget() {
+    let target = prompt("Please enter new CH target value.", numVars['chTarget']);
+    if (target) {
+        target = parseInt(target);
+        if (target >= 150 && target <= 250) {
+            numVars['chTarget'] = target;
+            localStorage.setItem('chTarget', numVars['chTarget']);
+            refresh();
+        }
+        else {
+            alert("Please enter a number between 150 and 250.");
+        }
+    }
 }
