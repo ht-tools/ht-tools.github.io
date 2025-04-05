@@ -77,7 +77,7 @@
           </tr>
           <tr id="fcRow">
             <td><abbr title="Free Chlorine">FC</abbr></td>
-            <td><span class="units">3-5 ppm </span><button class="symbols" onclick="editFcTarget()">&#x270E</button></td>
+            <td><span class="units">3-5 ppm</span><br><button class="symbols" onclick="editFcTarget()">&#x270E</button></td>
             <form onsubmit="updateTest('fc', 'fcDaysAgoLimit');return false">
               <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
               <td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>
@@ -122,7 +122,7 @@
           </tr>
           <tr id="taRow">
             <td><abbr title="Total Alkalinity">TA</abbr></td>
-            <td><span class="units">50-120 ppm </span><button class="symbols" onclick="editTaTarget()">&#x270E</button></td>
+            <td><span class="units">50-120 ppm</span><br><button class="symbols" onclick="editTaTarget()">&#x270E</button></td>
             <form onsubmit="updateTest('ta', 'taDaysAgoLimit');return false">
               <td>
                 <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
@@ -138,7 +138,7 @@
           </tr>
           <tr id="chRow">
             <td><abbr title="Calcium Hardness">CH</abbr></td>
-            <td><span class="units">150-250 ppm </span><button class="symbols" onclick="editChTarget()">&#x270E</button></td>
+            <td><span class="units">150-250 ppm</span><br><button class="symbols" onclick="editChTarget()">&#x270E</button></td>
             <form onsubmit="updateTest('ch', 'chDaysAgoLimit');return false">
               <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
               <td><input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span></td>
