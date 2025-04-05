@@ -1,6 +1,8 @@
 // TODO - Up and Down arrows look wrong on iOS Safari
 // TODO - Abreviation hover tips do not show up on iOS Safari
 // TODO - How to add site as app on homepage for iPhone and Android
+// TODO - move all abbr to FAQ
+// TODO - Show ideal FC and CYA values somewhere?
 
 /* CONSTANTS */
 const ONE_DAY = 1000 * 60 * 60 * 24;

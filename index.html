@@ -23,17 +23,14 @@
     <table class="statusTable">
       <thead>
         <tr>
-          <th class="underline" colspan="2"><div class="tooltip">FC<span class="tooltiptext">
-            Free Chlorine sanitizes the water (Ideal: 3-5 ppm when using hot tub).</span></div></th>
-          <th><button onclick="fcTargetAdjust(+1)">&#11205;&#xfe0e;</button></th>
-          <th class="underline" colspan="2"><div class="tooltip">CYA<span class="tooltiptext">
-            Cyanuric Acid stabilizes the chlorine (Ideal: 30-50 ppm).</span></div></th>
+          <th class="underline" colspan="2">FC</th>
+          <th><button class="symbols" onclick="fcTargetAdjust(+1)">&#11205</button></th>
+          <th class="underline" colspan="2">CYA</th>
         </tr>
       </thead>
       <tbody class="center">
         <tr>
-          <td><div class="tooltip">Predicted Value:<span class="tooltiptext">
-            Calculated based on chemicals added and time since last test.</span></div></td>
+          <td>Predicted Value:</td>
           <td><abbr title="Chlorine Demand - calculated based on the difference between the last two tests.">Decreasing</abbr>:</td>
           <td>FC Target:<br><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
           <td><abbr title="Calculated based on chemicals added and time since last test.">Predicted Value</abbr>:</td>
@@ -42,7 +39,7 @@
         <tr>
           <td><b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span></td>
           <td><b class="numDisplays" id="fcDecay"></b><span class="units">ppm/day</span></td>
-          <td><button onclick="fcTargetAdjust(-1)">&#11206;&#xfe0e;</button></td>
+          <td><button class="symbols" onclick="fcTargetAdjust(-1)">&#11206</button></td>
           <td><b class="numDisplays" id="caPrediction"></b><span class="units">ppm</span></td>
           <td><b class="numDisplays" id="caDecay"></b><span class="units">ppm/day</span></td>
         </tr>
