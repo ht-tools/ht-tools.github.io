@@ -1,3 +1,7 @@
+// TODO - Up and Down arrows look wrong on iOS Safari
+// TODO - Abreviation hover tips do not show up on iOS Safari
+// TODO - How to add site as app on homepage for iPhone and Android
+
 /* CONSTANTS */
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -61,6 +65,7 @@ numVars['caPrediction'] = 0;
 numVars['caDecay'] = 1.4;
 numVars['caAdded'] = 0;
 numVars['caDaysAgo'] = 60;
+numVars['caNegCorrection'] = 0;
 
 /* FC */
 numVars['fcLastTest'] = 0;
@@ -72,6 +77,7 @@ numVars['addDichlor'] = 0;
 numVars['fcAddBleach'] = 0;
 numVars['fcAdded'] = 0;
 numVars['fcDaysAgo'] = 60;
+numVars['fcNegCorrection'] = 0;
 
 /* CC */
 numVars['ccLastTest'] = 0;
@@ -201,20 +207,21 @@ function init() {
     /* CALCULATE ALL OTHER DEPENDENT VARIABLES */
 
     /* CYA - Current Prediction */
-    numVars['caPrediction'] = (numVars['caLastTest'] - (numVars['caDecay'] * numVars['caDaysAgo']) + numVars['caAdded']);
+    numVars['caPrediction'] = numVars['caLastTest'] - (numVars['caDecay'] * numVars['caDaysAgo']) + 
+        numVars['caAdded'] + numVars['caNegCorrection'];
     if (numVars['caPrediction'] < 0) {
-        numVars['caLastTest'] = numVars['caLastTest'] - numVars['caPrediction'];
+        numVars['caNegCorrection'] = numVars['caNegCorrection'] - numVars['caPrediction'];
+        localStorage.setItem('caNegCorrection', numVars['caNegCorrection']);
         numVars['caPrediction'] = 0;
-        localStorage.setItem('caLastTest', numVars['caLastTest']);
     }
 
-    
     /* FC - Current Prediction */
-    numVars['fcPrediction'] = (numVars['fcLastTest'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + numVars['fcAdded']);
+    numVars['fcPrediction'] = numVars['fcLastTest'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + 
+        numVars['fcAdded'] + numVars['fcNegCorrection'];
     if (numVars['fcPrediction'] < 0) {
-        numVars['fcLastTest'] = numVars['fcLastTest'] - numVars['fcPrediction'];
+        numVars['fcNegCorrection'] = numVars['fcNegCorrection'] - numVars['fcPrediction'];
+        localStorage.setItem('fcNegCorrection', numVars['fcNegCorrection']);
         numVars['fcPrediction'] = 0;
-        localStorage.setItem('fcLastTest', numVars['fcLastTest']);
     }
     
     /* Dichlor and Bleach Amount to Add*/
@@ -448,7 +455,7 @@ function updateTest(sPrefix, sDaysAgoLimitId = false) {
     const newTest = document.getElementById(sPrefix + 'NewTest');
     const newValue = Number(newTest.value);
     
-    const deltaValue = numVars[sPrefix + 'LastTest'] - (newValue - numVars[sPrefix + 'Added']);
+    const deltaValue = numVars[sPrefix + 'LastTest'] - (newValue - numVars[sPrefix + 'Added'] - numVars[sPrefix + 'NegCorrection']);
     
     const date = new Date();
     
@@ -469,6 +476,9 @@ function updateTest(sPrefix, sDaysAgoLimitId = false) {
     
     numVars[sPrefix + 'Added'] = 0; 
     localStorage.setItem(sPrefix + 'Added', numVars[sPrefix + 'Added']);
+
+    numVars[sPrefix + 'NegCorrection'] = 0;
+    localStorage.setItem(sPrefix + 'NegCorrection', numVars[sPrefix + 'NegCorrection']);
         
     if (sDaysAgoLimitId) {
         const daysAgoLimit = document.getElementById(sDaysAgoLimitId);
@@ -516,7 +526,7 @@ function updateTest(sPrefix, sDaysAgoLimitId = false) {
 function addedDichlor() {
     const value = addDichlor.valueAsNumber;
     if (value >= 0) {
-        refresh(); // Forces recalculation of fcLastTest and caLastTest, 
+        refresh(); // Forces recalculation of fcPrediction and caPrediction, 
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
@@ -534,7 +544,7 @@ function addedDichlor() {
 function addedBleach() {
     const value = addBleach.valueAsNumber;
     if (value >= 0) {
-        refresh(); // Forces recalculation of fcLastTest and caLastTest, 
+        refresh(); // Forces recalculation of fcPrediction and caPrediction, 
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
         numVars['fcAdded'] = (numVars['fcAdded'] + (value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength']));

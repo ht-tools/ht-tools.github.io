@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Hot Tub Tools</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./index.js" defer></script>
@@ -23,14 +23,17 @@
     <table class="statusTable">
       <thead>
         <tr>
-          <th class="underline" colspan="2"><abbr title="Free Chlorine (Ideal: 3-5 ppm when using hot tub) - water sanitizer.">FC</abbr></th>
-          <th><button onclick="fcTargetAdjust(+1)">&#11205</button></th>
-          <th class="underline" colspan="2"><abbr title="Cyanuric Acid (Ideal: 30-50 ppm) - chlorine stabilizer.">CYA</abbr></th>
+          <th class="underline" colspan="2"><div class="tooltip">FC<span class="tooltiptext">
+            Free Chlorine sanitizes the water (Ideal: 3-5 ppm when using hot tub).</span></div></th>
+          <th><button onclick="fcTargetAdjust(+1)">&#11205;&#xfe0e;</button></th>
+          <th class="underline" colspan="2"><div class="tooltip">CYA<span class="tooltiptext">
+            Cyanuric Acid stabilizes the chlorine (Ideal: 30-50 ppm).</span></div></th>
         </tr>
       </thead>
       <tbody class="center">
         <tr>
-          <td><abbr title="Calculated based on chemicals added and time since last test.">Predicted Value</abbr>:</td>
+          <td><div class="tooltip">Predicted Value:<span class="tooltiptext">
+            Calculated based on chemicals added and time since last test.</span></div></td>
           <td><abbr title="Chlorine Demand - calculated based on the difference between the last two tests.">Decreasing</abbr>:</td>
           <td>FC Target:<br><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
           <td><abbr title="Calculated based on chemicals added and time since last test.">Predicted Value</abbr>:</td>
@@ -39,7 +42,7 @@
         <tr>
           <td><b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span></td>
           <td><b class="numDisplays" id="fcDecay"></b><span class="units">ppm/day</span></td>
-          <td><button onclick="fcTargetAdjust(-1)">&#11206</button></td>
+          <td><button onclick="fcTargetAdjust(-1)">&#11206;&#xfe0e;</button></td>
           <td><b class="numDisplays" id="caPrediction"></b><span class="units">ppm</span></td>
           <td><b class="numDisplays" id="caDecay"></b><span class="units">ppm/day</span></td>
         </tr>
@@ -57,7 +60,7 @@
       <thead>
         <tr id="testHeaderRow">
           <th><abbr title="Use Taylor K-2005 / K-2006 or similar test kits. Test strips are less accurate and are not recommended.">Test</abbr></th>
-          <th>Ideal Value</th>
+          <th>Ideal</th>
           <th>Test Result</th>
           <th>Remind me in</th>
           <th>Action</th>
@@ -75,7 +78,7 @@
           </tr>
           <tr id="fcRow">
             <td><abbr title="Free Chlorine">FC</abbr></td>
-            <td><span class="units">3-5 ppm </span><button onclick="editFcTarget()">&#x270E</button></td>
+            <td><span class="units">3-5 ppm </span><button onclick="editFcTarget()">&#x270E;&#xfe0e;</button></td>
             <form onsubmit="updateTest('fc', 'fcDaysAgoLimit');return false">
               <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
               <td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>
@@ -120,7 +123,7 @@
           </tr>
           <tr id="taRow">
             <td><abbr title="Total Alkalinity">TA</abbr></td>
-            <td><span class="units">50-120 ppm </span><button onclick="editTaTarget()">&#x270E</button></td>
+            <td><span class="units">50-120 ppm </span><button onclick="editTaTarget()">&#x270E;&#xfe0e;</button></td>
             <form onsubmit="updateTest('ta', 'taDaysAgoLimit');return false">
               <td>
                 <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
@@ -136,7 +139,7 @@
           </tr>
           <tr id="chRow">
             <td><abbr title="Calcium Hardness">CH</abbr></td>
-            <td><span class="units">150-250 ppm </span><button onclick="editChTarget()">&#x270E</button></td>
+            <td><span class="units">150-250 ppm </span><button onclick="editChTarget()">&#x270E;&#xfe0e;</button></td>
             <form onsubmit="updateTest('ch', 'chDaysAgoLimit');return false">
               <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
               <td><input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span></td>
@@ -158,7 +161,7 @@
       <tbody>
         <tr id="DichlorRow">
           <td><abbr title="Sodium Dichloro-s-Triazinetrione Dihydrate">Dichlor</abbr></td>
-          <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button onclick="editChemStrength('dichlorStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedDichlor();return false">
             <td><input class="numInputs2" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
             <td><button type="submit">Added</button></td>
@@ -166,7 +169,7 @@
         </tr>
         <tr id="BleachRow">
           <td><abbr title="Sodium Hypochlorite (Liquid pool chlorine)">Bleach</abbr></td>
-          <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button onclick="editChemStrength('bleachStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedBleach();return false">
             <td><input class="numInputs2" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
@@ -174,7 +177,7 @@
         </tr>
         <tr id="PhTaDownRow">
           <td><abbr title="Sodium Bisulfate">pH/TA Down</abbr></td>
-          <td><span class="numDisplays" id="phTaDownStrength"></span><span class="units">% </span><button onclick="editChemStrength('phTaDownStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="phTaDownStrength"></span><span class="units">% </span><button onclick="editChemStrength('phTaDownStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedPhTaDown();return false">
             <td><input class="numInputs2" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
@@ -182,7 +185,7 @@
         </tr>
         <tr id="MuriaticAcidRow">
           <td>&#x2937 or <abbr title="Muriatic Acid is generally not used for hot tubs unless you have a skin sensitivity to sulfates.">Muriatic Acid</abbr></td>
-          <td><span class="numDisplays" id="muriaticStrength"></span><span class="units">% </span><button onclick="editChemStrength('muriaticStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="muriaticStrength"></span><span class="units">% </span><button onclick="editChemStrength('muriaticStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedMuriaticAcid();return false">
             <td><input class="numInputs2" type="number" id="addMuriaticAcid" min="0" max="100" step="0.01" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
@@ -190,7 +193,7 @@
         </tr>
         <tr id="TaUpRow">
           <td><abbr title="Sodium Bicarbonate / Sodium Hydrogen Carbonate (Baking Soda)">TA Up</abbr></td>
-          <td><span class="numDisplays" id="taUpStrength"></span><span class="units">% </span><button onclick="editChemStrength('taUpStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="taUpStrength"></span><span class="units">% </span><button onclick="editChemStrength('taUpStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedTaUp();return false">
             <td><input class="numInputs2" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
@@ -198,7 +201,7 @@
         </tr>
         <tr id="PhUpRow">
           <td><abbr title="Sodium Carbonate (Soda Ash)">pH Up</abbr></td>
-          <td><span class="numDisplays" id="phUpStrength"></span><span class="units">% </span><button onclick="editChemStrength('phUpStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="phUpStrength"></span><span class="units">% </span><button onclick="editChemStrength('phUpStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedPhUp();return false">
             <td><input class="numInputs2" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
@@ -206,7 +209,7 @@
         </tr>
         <tr id="CalciumRow">
           <td>Calcium Chloride</td>
-          <td><span class="numDisplays" id="calciumStrength"></span><span class="units">% </span><button onclick="editChemStrength('calciumStrength')">&#x270E</button></td>
+          <td><span class="numDisplays" id="calciumStrength"></span><span class="units">% </span><button onclick="editChemStrength('calciumStrength')">&#x270E;&#xfe0e;</button></td>
           <form onsubmit="addedCalcium();return false">
             <td><input class="numInputs2" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
