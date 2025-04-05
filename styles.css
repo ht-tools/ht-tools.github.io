@@ -16,7 +16,8 @@
 
 .symbols {
   font-size: 1.0em;
-  color: black
+  color: black;
+  font-weight: bold;
 }
 
 .inline {
@@ -49,7 +50,7 @@ input {
 }
 
 input[type="number"] {
-  width: 50px;
+  width: 40px;
 }
 
 label {
@@ -128,8 +129,8 @@ tr {
 
   /* Fade in tooltip 
   opacity: 0;
-  transition: opacity 0.3s;*/
-}
+  transition: opacity 0.3s;
+}*/
 
 /* Tooltip arrow 
 .tooltip .tooltiptext::after {
@@ -140,8 +141,8 @@ tr {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #555 transparent transparent transparent;*/
-}
+  border-color: #555 transparent transparent transparent;
+}*/
 
 /* Show the tooltip text when you mouse over the tooltip container 
 .tooltip:hover .tooltiptext {

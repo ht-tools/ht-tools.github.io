@@ -308,7 +308,7 @@ function init() {
     /* POPULATE ALL NUMERIC INPUT BOXES */
     inputBoxes = document.getElementsByClassName("numInputs2");
     for (box in inputBoxes) {
-        inputBoxes[box].value = Number(numVars[inputBoxes[box].id]).toFixed(2);
+        inputBoxes[box].value = formatNumber(Number(numVars[inputBoxes[box].id])); //.toFixed(2);
     } 
 
     inputBoxes = document.getElementsByClassName("numInputs0");
@@ -325,7 +325,7 @@ function init() {
     /* POPULATE ALL NUMERIC INNER HTML */
     numDisplays = document.getElementsByClassName("numDisplays");
     for (display in numDisplays) {
-        numDisplays[display].innerHTML = Number(numVars[numDisplays[display].id]).toFixed(2);
+        numDisplays[display].innerHTML = formatNumber(Number(numVars[numDisplays[display].id])); //.toFixed(2);
     } 
 
     numDisplays = document.getElementsByClassName("numDisplays0");
@@ -778,5 +778,13 @@ function editChTarget() {
         else {
             alert("Please enter a number between 150 and 250.");
         }
+    }
+}
+
+function formatNumber(input) {
+    if (Number.isInteger(input)) {
+        return input; // Return the number as is if it's a whole number
+    } else {
+        return parseFloat(input.toFixed(2)); // Limit to 2 decimal places
     }
 }
