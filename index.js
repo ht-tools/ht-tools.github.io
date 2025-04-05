@@ -700,12 +700,17 @@ function storeShowAll() {
 
 function updateTaCorrectedTest() {
     const value = taUncorrectedTest.valueAsNumber;
-    let correctedValue = value - (numVars['caPrediction'] * 0.33);
-    if (correctedValue < 0) {
-        correctedValue = 0;
+    if (value) {
+        let correctedValue = value - (numVars['caPrediction'] * 0.33);
+        if (correctedValue < 0) {
+            correctedValue = 0;
+        }
+        if (correctedValue > 500) {
+            correctedValue = 500;
+        }
+        document.getElementById('taNewTestDisplay').innerHTML = correctedValue.toFixed(0);
+        document.getElementById('taNewTest').value = Number(correctedValue);
     }
-    document.getElementById('taNewTestDisplay').innerHTML = correctedValue.toFixed(0);
-    document.getElementById('taNewTest').value = Number(correctedValue);
 }
 
 function editChemStrength(sChemicalStrengthId) {
