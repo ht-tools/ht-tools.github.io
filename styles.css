@@ -3,7 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
+}
+
+.container, footer {
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
 }
   
 .statusLight {
@@ -101,6 +104,13 @@ tr {
 
 .cursive {
   font-family: cursive;
+}
+
+footer, a {
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
  /* Tooltip container 
