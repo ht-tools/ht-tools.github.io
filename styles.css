@@ -1,8 +1,8 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container, footer {
@@ -80,12 +80,21 @@ p {
 }
 
 .statusTable {
-  border-spacing: 8px;
+  border-spacing: 8px 0;
+}
+
+.statusTable th, .statusTable td { 
+  padding: 4px;
 }
 
 .statusTable .underline {
   border-bottom: 2px solid black;
   
+}
+
+.statusTable .side-borders {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
 }
 
 .recommendedTable, .recommendedTable th, .recommendedTable td { 
@@ -106,56 +115,20 @@ tr {
   font-family: cursive;
 }
 
-footer, a {
-  text-align: center;
+footer a, footer span {
   font-size: 0.8em;
+}
+
+footer {
+  text-align: center;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
- /* Tooltip container 
- .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; 
-}*/
+.help-section h2 {
+  font-size: 1.1em;
+}
 
-/* Tooltip text 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;*/
-
-  /* Position the tooltip text 
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;*/
-
-  /* Fade in tooltip 
-  opacity: 0;
-  transition: opacity 0.3s;
-}*/
-
-/* Tooltip arrow 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}*/
-
-/* Show the tooltip text when you mouse over the tooltip container 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-} */
+.help-section h1 {
+  text-decoration-line: underline;
+}

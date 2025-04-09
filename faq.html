@@ -15,27 +15,85 @@
       | <a href="./dandrquick.html">Drain & Refill (Quick)</a> | <a href="./dandr.html">Drain & Refill (Decon)</a> |<br><br>
       | <a href="./index.html">Maintain</a> | <a href="./log.html">Log</a> | FAQ |
     </p>
-    <section>
+    <section class="help-section">
+      <h1>Status Table</h1>
+      <h2>Predicted Value</h2>
+      <p>Calculated FC or CYA value based on chemicals added and time since last test.</p>
+      <h2>Decreasing FC or CYA</h2>
+      <p>Calculated based on the difference between the last two tests. For FC, this value is referred to as Chlorine Demand (CD)</p>
+      <h2>FC Target</h2>
+      <p>Desired FC level set by user. Recommended chemicals to add will be based on the difference between the Target and the 
+        Last Test or Predicted Value.
+      </p>
       
+      <h1>Tests</h1>
+      <h2>Test Method</h2>
+      <p>Use a Taylor K-2005 / K-2006 or similar test kit. Test strips are less accurate and are not recommended.</p>
+      <h2>CYA</h2>
+      <p>Cyanuric Acid (CYA) stabilizes the chlorine (Ideal range: 30-50 ppm). If your CYA is too low, you will have trouble 
+        maintaining your required FC level (the chlorine will be quickly destroyed). If CYA is too high, your chlorine 
+        will become ineffective at killing bacteria. Dichlor contains CYA but Bleach does not. This app will automatically suggest 
+        Bleach or Dichlor to maintain your CYA in the recommended range.</p>
+      <h2>FC</h2>
+      <p>Free Chlorine (FC) represents the amount of chlorine that is freely available to sanitize the water (Ideal range: 3-5 ppm 
+        when using hot tub). You may need to set your FC Target higher than your ideal range, depending on how long you go between 
+        soaks, to compensate for chlorine demand. You never want to let your FC drop too low or bacteria can grow.
+      </p>
+      <h2>CC</h2>
+      <p>Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. 
+        If CC rises above 0.5 ppm, you should shock the water with a higher dose of chlorine. The recommended level is 10x the 
+        current CC level. This is referred to as Breakpoint Chlorination.
+      </p>
+      <h2>pH</h2>
+      <p>pH is a measure of how acidic or basic the water is (Ideal range: 7.4-7.8). If pH is too low, it can cause skin irritation and 
+        corrode metal parts. If pH is too high, it can cause scale buildup and cloudy water.
+      </p>
+      <h2>AD</h2>
+      <p>If the pH is too high, use the Acid Demand (AD) test to determine how much acid is needed to lower the pH to the ideal range.</p>
+      <h2>BD</h2>
+      <p>If the pH is too low, use the Base Demand (BD) test to determine how much base is needed to raise the pH to the ideal range.</p>
+      <h2>TA</h2>
+      <p>Total Alkalinity (TA) represents the ability of the water to resist acidification. If TA is too high, the pH will drift up. 
+        If the TA is too low, the pH will drift down. You should adjust TA first, give time for the water to settle (several hours), 
+        then test and adjust pH. Once pH has been stable in the ideal range for a week, test your TA and use the corrected value as your new target.
+      </p>
+      <h2>Corrected TA</h2>
+      <p>This value has been corrected to compensate for false-high readings due to CYA level.</p>
+      <h2>CH</h2>
+      <p>Calcium Hardness (CH) represents the amount of calcium in the water. If CH is too low, it can cause corrosion of metal parts. 
+        If CH is too high, it can cause scale buildup and cloudy water. The ideal range is 150-250 ppm.</p>
       
-      <h2>What if my TA and pH are both high?</h2>
-      <p>Add Sodium Bisulfate "pH Down" to lower TA by 10 ppm per day. If this causes your pH to dip too low, raise your pH by running the jets more (aerating the water). Aerating the water will not affect TA.</p>
-      <h2>What if my TA and pH are both low?</h2>
-      <p>Add Sodium Bicarbonate to increase TA by 10 ppm per day. If this causes your pH to spike too high, wait two hours and then add the necessary pH Down to get pH back to 7.6.</p>
-      <h2>What if my TA is low but my pH is high?</h2>
-      <p>Add Sodium Bicarbonate to increase TA by 10 ppm per day. Wait two hours and then add the necessary pH Down to get pH down to 7.6.</p>
-      <h2>What if my TA is high but my pH is low?</h2>
-      <p>Add Sodium Bisulfate "pH Down" to lower TA by 10 ppm per day. If your pH is significantly low, wait 2 hours then increase it by adding Sodium Carbonate to get pH up to 7.6. If pH is only slightly low, increase it by running the jets more (aerating the water). Aerating the water will not affect TA.</p>
-      <h2>What is the relationship between TA and pH?</h2>
-      <p>TA is the buffer for pH. If TA is low, pH will be unstable and can easily swing up or down. If TA is high, pH will be stable but may be too high. With the Dichlor/Bleach method, the sweet spot is approximately TA = 50 and pH = 7.6. Once you get both levels set, you can likely go weeks without having to adjust either.</p>
-      <h2>Why do I care about Cyanuric Acid (CYA)?</h2>
-      <p>If you have no CYA in your water, you will have trouble maintaining your required FC level (the chlorine will be quickly destroyed). If CYA is 30-50 ppm, your chlorine will be properly stabilized. If CYA exceeds 50 ppm, your chlorine will become less effective. Dichlor contains CYA but Sodium Hypochlorite does not.</p>
-      <!--FC: Free Chlorine sanitizes the water (Ideal: 3-5 ppm when using hot tub).-->
-      <!--CYA: Cyanuric Acid stabilizes the chlorine (Ideal: 30-50 ppm).-->
-      <!--Predicted Value: Calculated based on chemicals added and time since last test.-->
-      
+      <h1>Chemicals</h1>
+      <h2>Strength</h2>
+      <p>This is the label strength of the chemical and should match the Active Ingredient % on the bottle.</p>
+      <h2>Amount</h2>
+      <p>This is the amount of chemical to add to the water. For dry chemicals, it is recommended to use a digital kitchen scale 
+        to weigh the ingredients in a scoop.
+      </p>
+      <h2>Dichlor</h2>
+      <p>Sodium Dichloro-s-Triazinetrione Dihydrate, or Dichlor for short, is a dry chlorine that also contains CYA.</p>
+      <h2>Bleach</h2>
+      <p>Sodium Hypochlorite (commonly known as Bleach or liquid pool chlorine) is a liquid chlorine that does not contain CYA.</p>
+      <h2>pH/TA Down</h2>
+      <p>Sodium Bisulfate is a dry acid for lowering pH and TA.</p>
+      <h2>Muriatic Acid</h2>
+      <p>Muriatic Acid is less commonly used for hot tubs unless you have a skin sensitivity to sulfates. It is an alternative to 
+        Sodium Bisulfate for lowering pH and TA.</p>
+      <h2>TA Up</h2>
+      <p>Sodium Bicarbonate (commonly known as Baking Soda or Sodium Hydrogen Carbonate) is used to raise TA, but will also have an effect on pH.</p>
+      <h2>pH Up</h2>
+      <p>Sodium Carbonate (Soda Ash) is used to raise pH, but will also have an effect on TA.</p>
+            
+      <h1>Maintenance</h1>
+      <h2>Spa Volume</h2>
+      <p>The number of gallons in your hot tub is very important for the calculations made by this app. If you enter the wrong number, 
+        the recommended amounts of each chemical to add will be wrong!
+      </p>
+      <h2>Filter Cleaning</h2>
+      <p>Be sure to take out and spray off your filter with a garden hose every few weeks or as needed.</p>
+      <h2>Filter Replacement</h2>
+      <p>Approximately once per year, replace your filter with a brand new one.</p>
     </section>
-    
   </div>
 </body>
 </html>
