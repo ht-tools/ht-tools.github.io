@@ -9,14 +9,6 @@
   font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
 }
   
-.statusLight {
-  border: 1px solid #000000;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
 .symbols {
   font-size: 1.0em;
   color: black;
@@ -59,11 +51,6 @@ input[type="number"] {
 label {
   display: block;
   margin-left: 28px;
-}
-
-.cell {
-  justify-content: center;
-  align-items: center;
 }
 
 h2 {

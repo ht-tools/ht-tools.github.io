@@ -1,7 +1,3 @@
-// TODO - Abreviation hover tips do not show up on iOS Safari
-// TODO - move all abbr to FAQ
-// TODO - Show ideal FC and CYA values somewhere?
-
 /* CONSTANTS */
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -518,6 +514,18 @@ function updateTest(sPrefix, sDaysAgoLimitId = false) {
         localStorage.setItem('showbd', boolVars['showbd']);
     }
     
+    let units = ' ppm';
+    if (sPrefix == 'ph') {
+        units = '';
+    } else if (sPrefix == 'ad' || sPrefix == 'bd') {
+        units = '  drops';
+    }
+    let prefix = sPrefix.toUpperCase();
+    if (prefix == 'CA') {
+        prefix = 'CYA';
+    }
+    logActivity('Tested ' + prefix, formatNumber(newValue) + units);
+    
     refresh();
 }
 
@@ -535,6 +543,12 @@ function addedDichlor() {
         localStorage.setItem('fcAdded', numVars['fcAdded']);
         localStorage.setItem('caAdded', numVars['caAdded']);
 
+        logActivity(
+            'Added ' + numVars['dichlorStrength'] + '% Dichlor', 
+            formatNumber(value) + ' oz', 
+            'Increased FC by ' + formatNumber(fcDelta) + ' ppm and CYA by ' + formatNumber(fcDelta * 0.8) + ' ppm'
+        );
+        
         refresh();
     }
 }
@@ -547,8 +561,15 @@ function addedBleach() {
         refresh(); // Forces recalculation of fcPrediction and caPrediction, 
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
-        numVars['fcAdded'] = (numVars['fcAdded'] + (value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength']));
+        const fcDelta = value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength'];
+        numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
         localStorage.setItem("fcAdded", numVars['fcAdded']);
+        
+        logActivity(
+            'Added ' + numVars['bleachStrength'] + '% Bleach', 
+            formatNumber(value) + ' fl oz', 
+            'Increased FC by ' + formatNumber(fcDelta) + ' ppm'
+        );
         
         refresh();
     }
@@ -557,11 +578,12 @@ function addedBleach() {
 // ADD - pH/TA DOWN
 
 function addedPhTaDown() {
-    // TODO - log chemical added
     const value = addPhTaDown.valueAsNumber;
     if (value >= 0) {
+        let note = 'Decreased pH';
         if (boolVars['adjustTA']) {
             const taDelta = value * 10 / 1.37 / numVars['spaVolume'] * 400 / 93.2 * numVars['phTaDownStrength'];
+            note = 'Decreased TA by ' + formatNumber(taDelta) + ' ppm';
             numVars['taLastTest'] = numVars['taLastTest'] - taDelta;
             localStorage.setItem('taLastTest', numVars['taLastTest']);
         }
@@ -570,6 +592,12 @@ function addedPhTaDown() {
         boolVars['showph'] = true;
         localStorage.setItem('showph', boolVars['showph']);
 
+        logActivity(
+            'Added ' + numVars['phTaDownStrength'] + '% Sodium Bisulfate', 
+            formatNumber(value) + ' oz', 
+            note
+        );
+        
         refresh();
     }
 }
@@ -577,11 +605,12 @@ function addedPhTaDown() {
 // ADD - MURIATIC ACID
 
 function addedMuriaticAcid() {
-    // TODO - log chemical added
     const value = addMuriaticAcid.valueAsNumber;
     if (value >= 0) {
+        let note = 'Decreased pH';
         if (boolVars['adjustTA']) {
             const taDelta = value * 10 / 1.02 / numVars['spaVolume'] * 400 / 31.45 * numVars['muriaticStrength'];
+            note = 'Decreased TA by ' + formatNumber(taDelta) + ' ppm';
             numVars['taLastTest'] = numVars['taLastTest'] - taDelta;
             localStorage.setItem('taLastTest', numVars['taLastTest']);
         }
@@ -589,6 +618,13 @@ function addedMuriaticAcid() {
         localStorage.setItem('adLastTest', 0);
         boolVars['showph'] = true;
         localStorage.setItem('showph', boolVars['showph']);
+        
+        logActivity(
+            'Added ' + numVars['muriaticStrength'] + '% Muriatic Acid', 
+            formatNumber(value) + ' fl oz', 
+            note
+        );
+        
         refresh();
     }
 }
@@ -596,7 +632,6 @@ function addedMuriaticAcid() {
 // ADD - TA UP
 
 function addedTaUp() {
-    // TODO - log chemical added
     const value = addTaUp.valueAsNumber;
     if (value >= 0) {
         const taDelta = value * 10 / 0.9 / numVars['spaVolume'] * 400 / 100 * numVars['taUpStrength'];
@@ -607,6 +642,13 @@ function addedTaUp() {
         
         boolVars['showph'] = true;
         localStorage.setItem('showph', boolVars['showph']);
+        
+        logActivity(
+            'Added ' + numVars['taUpStrength'] + '% Sodium Bicarbonate', 
+            formatNumber(value) + ' oz', 
+            'Increased TA by ' + formatNumber(taDelta) + ' ppm'
+        );
+        
         refresh();
     }
 }
@@ -614,13 +656,19 @@ function addedTaUp() {
 // ADD - pH UP
 
 function addedPhUp() {
-    // TODO - log chemical added
     const value = addPhUp.valueAsNumber;
     if (value >= 0) {
         localStorage.setItem('bdLastTest', 0);
         
         boolVars['showph'] = true;
         localStorage.setItem('showph', boolVars['showph']);
+        
+        logActivity(
+            'Added ' + numVars['phUpStrength'] + '% Sodium Carbonate', 
+            formatNumber(value) + ' oz', 
+            'Increased pH'
+        );
+        
         refresh();
     }
 }
@@ -628,12 +676,17 @@ function addedPhUp() {
 // ADD - CALCIUM
 
 function addedCalcium() { 
-    // TODO - log chemical added
     const value = addCalcium.valueAsNumber;
     if (value >= 0) {
         const chDelta = value * 10 / 0.77 / numVars['spaVolume'] * 400 / 77 * numVars['calciumStrength'];
         numVars['chLastTest'] = numVars['chLastTest'] + chDelta;
         localStorage.setItem('chLastTest', numVars['chLastTest']);
+        
+        logActivity(
+            'Added ' + numVars['calciumStrength'] + '% Calcium Chloride', 
+            formatNumber(value) + ' oz', 
+            'Increased CH by ' + formatNumber(chDelta) + ' ppm'
+        );
         
         refresh();
     }
@@ -650,6 +703,11 @@ function confirmedSpaVolume() {
 
     localStorage.setItem('spaVolumeLastConfirmed', new Date());
     
+    logActivity(
+        'Confirmed Spa Volume', 
+        formatNumber(numVars['spaVolume']) + ' gallons'
+    );
+    
     refresh();
 }
 
@@ -661,6 +719,10 @@ function cleanedFilter() {
 
     localStorage.setItem('filterLastCleaned', new Date());
     
+    logActivity(
+        'Cleaned Filter'
+    );
+    
     refresh();
 }
 
@@ -671,6 +733,10 @@ function replacedFilter() {
     localStorage.setItem('filterReplacedDaysAgoLimit', numVars['filterReplacedDaysAgoLimit']); 
     
     localStorage.setItem("filterLastReplaced", new Date());
+    
+    logActivity(
+        'Replaced Filter'
+    );
     
     refresh();
 }
@@ -698,7 +764,7 @@ function storeShowAll() {
 
 function updateTaCorrectedTest() {
     const value = taUncorrectedTest.valueAsNumber;
-    if (value) {
+    if (!isNaN(value)) {
         let correctedValue = value - (numVars['caPrediction'] * 0.33);
         if (correctedValue < 0) {
             correctedValue = 0;
@@ -790,4 +856,31 @@ function formatNumber(input) {
     } else {
         return parseFloat(input.toFixed(2)); // Limit to 2 decimal places
     }
+}
+
+function logActivity(sActivity, sValue = '', sNote = '') {
+    // Parse the existing log file or initialize an empty array if it's empty
+    let logEntries = [];
+    try {
+        logEntries = JSON.parse(localStorage.getItem('htLog')) || [];
+    } catch (error) {
+        console.error("Error parsing log file:", error);
+    }
+
+    date = new Date();
+    const dateTime = date.toLocaleString(); // Format the date and time
+
+    // Create a new log entry
+    const newEntry = {
+        ['Date/Time']: dateTime,
+        ['Activity']: sActivity,
+        ['Value']: sValue,
+        ['Note']: sNote,
+    };
+
+    // Add the new entry to the log
+    logEntries.push(newEntry);
+
+    // Save the updated log back to localStorage
+    localStorage.setItem('htLog', JSON.stringify(logEntries));
 }
