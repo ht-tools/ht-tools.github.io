@@ -450,20 +450,20 @@ function displayChemicalRow(prefix) {
 function updateTest(sPrefix, sDaysAgoLimitId = false) {
     const newTest = document.getElementById(sPrefix + 'NewTest');
     const newValue = Number(newTest.value);
-    
-    const deltaValue = numVars[sPrefix + 'LastTest'] - (newValue - numVars[sPrefix + 'Added'] - numVars[sPrefix + 'NegCorrection']);
-    
     const date = new Date();
     
-    if (deltaValue >= 0) {
-        numVars[sPrefix + 'DaysAgo'] = (date - dateVars[sPrefix + 'LastTestDate']) / ONE_DAY;
-        numVars[sPrefix + 'Decay'] = (deltaValue / numVars[sPrefix + 'DaysAgo']);
-        if (numVars[sPrefix + 'Decay'] > 30) {
-            numVars[sPrefix + 'Decay'] = 30;
-        }
-        localStorage.setItem(sPrefix + 'Decay', numVars[sPrefix + 'Decay']); 
+    if (newValue > 0) {
+        const deltaValue = numVars[sPrefix + 'LastTest'] - (newValue - numVars[sPrefix + 'Added']);
+            if (deltaValue >= 0) {
+                numVars[sPrefix + 'DaysAgo'] = (date - dateVars[sPrefix + 'LastTestDate']) / ONE_DAY;
+                numVars[sPrefix + 'Decay'] = (deltaValue / numVars[sPrefix + 'DaysAgo']);
+                if (numVars[sPrefix + 'Decay'] > 30) {
+                    numVars[sPrefix + 'Decay'] = 30;
+                }
+                localStorage.setItem(sPrefix + 'Decay', numVars[sPrefix + 'Decay']); 
+            }
     }
-
+    
     numVars[sPrefix + 'LastTest'] = newValue;
     localStorage.setItem(sPrefix + 'LastTest', numVars[sPrefix + 'LastTest']);
 
@@ -540,8 +540,10 @@ function addedDichlor() {
         const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
         numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
         numVars['caAdded'] = numVars['caAdded'] + (fcDelta * 0.8);
+        numVars['ccLastTest'] = 0; // Reset CC to 0 after adding Dichlor
         localStorage.setItem('fcAdded', numVars['fcAdded']);
         localStorage.setItem('caAdded', numVars['caAdded']);
+        localStorage.setItem('ccLastTest', numVars['ccLastTest']);
 
         logActivity(
             'Added ' + numVars['dichlorStrength'] + '% Dichlor', 
@@ -563,7 +565,9 @@ function addedBleach() {
         // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength'];
         numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
+        numVars['ccLastTest'] = 0; // Reset CC to 0 after adding Bleach
         localStorage.setItem("fcAdded", numVars['fcAdded']);
+        localStorage.setItem('ccLastTest', numVars['ccLastTest']);
         
         logActivity(
             'Added ' + numVars['bleachStrength'] + '% Bleach', 
