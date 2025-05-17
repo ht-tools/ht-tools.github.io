@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.container, footer {
+.container, footer, .font {
   font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
 }
   
@@ -20,11 +20,20 @@
   margin: 0;
 }
 
-.center {
+.inline2 {
+  display: inline-block;
+  float:none;
+  text-align:center;
+  margin: 0;
+}
+
+.center, .subheading {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
+
+
 
 .action {
   margin: 10px;
@@ -119,3 +128,14 @@ footer {
 .help-section h1 {
   text-decoration-line: underline;
 }
+
+
+
+.decon-section {
+  display: none;
+}
+
+.deconSection:checked ~ .decon-section {
+  display: block;
+}
+
