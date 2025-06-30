@@ -20,132 +20,107 @@
         <button class="symbols" onclick="refresh()">&#x27F3</button>
       </span>
     </h3>
-    <table class="statusTable">
-      <thead>
+    <div>
+      <img id="fc_chart" src="./fc_high.png" alt="FC Chart" width="400">
+      <table class="statusTable">
         <tr>
-          <th class="underline" colspan="2">FC</th>
-          <th class="side-borders"><button class="symbols" onclick="fcTargetAdjust(+1)">&uarr;</button></th>
-          <th class="underline" colspan="2">CYA</th>
-        </tr>
-      </thead>
-      <tbody class="center">
-        <tr>
-          <td>Predicted<br>Value:</td>
-          <td>Decreasing:</td>
-          <td class="side-borders">FC<br>Target:<br><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
-          <td>Predicted<br>Value:</td>
-          <td>Decreasing:</td>
+          <th class="underline" colspan="2">
+            Current Prediction
+          </th>
         </tr>
         <tr>
-          <td><b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span></td>
-          <td><b class="numDisplays" id="fcDecay"></b><span class="units">ppm/day</span></td>
-          <td class="side-borders"><button class="symbols" onclick="fcTargetAdjust(-1)">&darr;</button></td>
-          <td><b class="numDisplays" id="caPrediction"></b><span class="units">ppm</span></td>
-          <td><b class="numDisplays" id="caDecay"></b><span class="units">ppm/day</span></td>
+          <th>
+            FC
+          </th>
+          <th>
+            When
+          </th>
         </tr>
-      </tbody>
-    </table>
-    
+        <tr>
+          <td>
+            <b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span>
+          </td>
+          <td>
+            Now
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>5</b><span class="units">ppm</span>
+          </td>
+          <td>
+            <b class="textDisplays" id="fcStartIdeal"></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>3</b><span class="units">ppm</span>
+          </td>
+          <td>
+            <b class="textDisplays" id="fcEndIdeal"></b>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <table class="statusTable">
+        <tr>
+          <th class="underline" colspan="3">
+            Adjust for Ideal FC during next use
+          </th>
+        </tr>
+        <tr>
+          <th>
+            FC
+          </th>
+          <th>
+            When
+          </th>
+          <th>
+            Adjust
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span>
+          </td>
+          <td>
+            After bleach or dichlor is added
+          </td>
+          <td>
+            <button class="symbols" onclick="fcTargetAdjust(-1)">&lt;</button>
+            <button class="symbols" onclick="fcTargetAdjust(+1)">&gt;</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>5</b><span class="units">ppm</span>
+          </td>
+          <td>
+            <b class="textDisplays" id="fcTargetStartIdeal"></b>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>3</b><span class="units">ppm</span>
+          </td>
+          <td>
+            <b class="textDisplays" id="fcTargetEndIdeal"></b>
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br>
+
     <h3>Recommended Actions /
       <label class="inline" for="showAll">
         <input type="checkbox" id="showAll" onclick="storeShowAll()">
         <span>Show All:</span>
       </label>
     </h3>
-    <p class="textDisplays cursive" id="nothingNeeded"></p>
-    <table class="recommendedTable" id="recommendedTests">
-      <thead>
-        <tr id="testHeaderRow">
-          <th>Test</th>
-          <th>Ideal</th>
-          <th>Test Result</th>
-          <th>Remind<br>me in</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-        <tbody>
-          <tr id="caRow">
-            <td>CYA</td>
-            <td><span class="units">30-50 ppm</span></td>
-            <form onsubmit="updateTest('ca', 'caDaysAgoLimit');return false">
-              <td><input type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-              <td><input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="fcRow">
-            <td>FC</td>
-            <td><span class="units">3-5 ppm</span><br><button class="symbols" onclick="editFcTarget()">&#x270E</button></td>
-            <form onsubmit="updateTest('fc', 'fcDaysAgoLimit');return false">
-              <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
-              <td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>  
-          </tr>
-          <tr id="ccRow">
-            <td>CC</td>
-            <td><span class="units">&lt; 0.5 ppm</span></td>
-            <form onsubmit="updateTest('cc', 'ccDaysAgoLimit');return false">
-              <td><input type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
-              <td><input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="phRow">
-            <td>pH</td>
-            <td><span class="units">7.4-7.8</span></td>
-            <form onsubmit="updateTest('ph', 'phDaysAgoLimit');return false">
-              <td><input type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
-              <td><input class="numInputs2" type="number" id="phDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="adRow">
-            <td>AD</td>
-            <td><span class="units">pH: 7.6</span></td>
-            <form onsubmit="updateTest('ad');return false">
-              <td><input type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-              <td>n/a</td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="bdRow">
-            <td>BD</td>
-            <td><span class="units">pH: 7.6</span></td>
-            <form onsubmit="updateTest('bd');return false">
-              <td><input type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-              <td>n/a</td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="taRow">
-            <td>TA</td>
-            <td><span class="units">50-120 ppm</span><br><button class="symbols" onclick="editTaTarget()">&#x270E</button></td>
-            <form onsubmit="updateTest('ta', 'taDaysAgoLimit');return false">
-              <td>
-                <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
-                <input type="hidden" id="taNewTest">
-                <span class="units">
-                  ppm<br>(Corrected:
-                  <span class="numDisplays0" id="taNewTestDisplay"></span>)
-                </span>
-              </td>
-              <td><input class="numInputs2" type="number" id="taDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-          <tr id="chRow">
-            <td>CH</td>
-            <td><span class="units">150-250 ppm</span><br><button class="symbols" onclick="editChTarget()">&#x270E</button></td>
-            <form onsubmit="updateTest('ch', 'chDaysAgoLimit');return false">
-              <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-              <td><input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span></td>
-              <td><button type="submit">Tested</button></td>
-            </form>
-          </tr>
-        </tbody>
-    </table>
-    <br>
     <table class="recommendedTable" id="recommendedChemicals">
       <thead>
         <tr id="chemicalHeaderRow">
@@ -157,7 +132,7 @@
       </thead>
       <tbody>
         <tr id="DichlorRow">
-          <td>Dichlor</td>
+          <td class="textDisplays" id="dichlorMessage">Dichlor</td>
           <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
           <form onsubmit="addedDichlor();return false">
             <td><input class="numInputs2" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
@@ -165,7 +140,7 @@
           </form>
         </tr>
         <tr id="BleachRow">
-          <td>Bleach</td>
+          <td class="textDisplays" id="bleachMessage">Bleach</td>
           <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
           <form onsubmit="addedBleach();return false">
             <td><input class="numInputs2" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
@@ -215,38 +190,142 @@
       </tbody>
     </table>
     <br>
-    <table class="recommendedTable" id="recommendedMaintenance">
+
+    <h3>Daily/Weekly Tests</h3>
+    <table class="recommendedTable" id="recommendedWeeklyTests">
+      <thead>
+        <tr id="testWeeklyHeaderRow">
+          <th>Test</th>
+          <th>Ideal</th>
+          <th>Test Result</th>
+          <th>Days Since<br>Last Test</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="fcRow">
+          <td>FC</td>
+          <td><span class="units">3-5 ppm</span><br><button class="symbols" onclick="editFcTarget()">&#x270E</button></td>
+          <form onsubmit="updateTest('fc');return false"> <!--, 'fcDaysAgoLimit'-->
+            <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
+            <!--<td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>-->
+            <td>
+              <!--<label for="fcDays"><span class="left">0</span><span class="right">7</span></label>-->
+              <br><meter class="meter7" id="fcMeter" min="0" optimum="1" low="2" high="4" max="7" value="0"></meter> 
+            </td> 
+            <td><button type="submit">Tested</button></td>
+          </form>  
+        </tr>
+        <tr id="ccRow">
+          <td>CC</td>
+          <td><span class="units">&lt; 0.5 ppm</span></td>
+          <form onsubmit="updateTest('cc');return false"> <!--, 'ccDaysAgoLimit'-->
+            <td><input type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
+            <td><meter id="ccMeter" min="0" optimum="1" low="5" high="6" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr id="phRow">
+          <td>pH</td>
+          <td><span class="units">7.4-7.8</span></td>
+          <form onsubmit="updateTest('ph');return false"> <!--, 'phDaysAgoLimit'-->
+            <td><input type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
+            <td><meter id="phMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="phDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr id="adRow">
+          <td>AD</td>
+          <td><span class="units">pH: 7.6</span></td>
+          <form onsubmit="updateTest('ad');return false">
+            <td><input type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
+            <td>n/a</td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr id="bdRow">
+          <td>BD</td>
+          <td><span class="units">pH: 7.6</span></td>
+          <form onsubmit="updateTest('bd');return false">
+            <td><input type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
+            <td>n/a</td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <h3>Monthly Tests/Maintenance</h3>
+    <table class="recommendedTable" id="recommendedMonthlyTests">
+      <thead>
+        <tr id="testMonthlyHeaderRow">
+          <th>Test</th>
+          <th>Ideal</th>
+          <th>Test Result</th>
+          <th>Days Since<br>Last Test</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="caRow">
+          <td>CYA</td>
+          <td><span class="units">30-50 ppm</span></td>
+          <form onsubmit="updateTest('ca');return false"> <!--, 'caDaysAgoLimit'-->
+            <td><input type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
+            <td><br><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr id="taRow">
+          <td>TA</td>
+          <td><span class="units">50-120 ppm</span><br><button class="symbols" onclick="editTaTarget()">&#x270E</button></td>
+          <form onsubmit="updateTest('ta');return false"> <!--, 'taDaysAgoLimit'-->
+            <td>
+              <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
+              <input type="hidden" id="taNewTest">
+              <span class="units">
+                ppm<br>(Corrected:
+                <span class="numDisplays0" id="taNewTestDisplay"></span>)
+              </span>
+            </td>
+            <td><meter id="taMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="taDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr id="chRow">
+          <td>CH</td>
+          <td><span class="units">150-250 ppm</span><br><button class="symbols" onclick="editChTarget()">&#x270E</button></td>
+          <form onsubmit="updateTest('ch');return false"> <!--, 'chDaysAgoLimit'-->
+            <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
+            <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+      </tbody>
       <thead>
         <tr id="maintainHeaderRow">
-          <th>Maintain</th>
+          <th colspan="2">Maintain</th>
           <th>Value</th>
-          <th>Remind me in</th>
+          <th>Days Since<br>Last Action</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr id="spaVolumeRow">
-          <td>Spa Volume</td>
+          <td colspan="2">Spa Volume</td>
           <form onsubmit="confirmedSpaVolume();return false">
             <td><input class="numInputs0" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gallons</span></td>
-            <td><input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span></td>
-            <td><button type="submit">Confirmed</button></td>
+            <td><br><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Topped Off</button></td>
           </form>
         </tr>
         <tr id="filterCleanedRow">
-          <td>Filter</td>
-          <td>Time to clean</td>
+          <td colspan="2">Filter</td>
+          <td>Clean</td>
           <form onsubmit="cleanedFilter();return false">
-            <td><input class="numInputs0" type="number" id="filterCleanedDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span></td>
+            <td><meter id="filterMeter" min="0" optimum="1" low="14" high="21" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="filterCleanedDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Cleaned</button></td>
-          </form>
-        </tr>
-        <tr id="filterReplacedRow">
-          <td>Filter</td>
-          <td>Time to replace</td>
-          <form onsubmit="replacedFilter();return false">
-            <td><input class="numInputs0" type="number" id="filterReplacedDaysAgoLimit" min="0" max="730" step="any" required><span class="units">days</span></td>
-            <td><button type="submit">Replaced</button></td>
           </form>
         </tr>
       </tbody>

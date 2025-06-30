@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Live Server",
+            "type": "shell",
+            "command": "echo",
+            "args": ["Starting Live Server - Please start Live Server manually if not already running"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Live Preview",
+            "command": "${command:livePreview.start.preview.atFile}",
+            "args": ["${workspaceFolder}/index.html"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

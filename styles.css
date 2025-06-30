@@ -77,6 +77,7 @@ p {
 
 .statusTable {
   border-spacing: 8px 0;
+  text-align: left;
 }
 
 .statusTable th, .statusTable td { 
@@ -99,7 +100,33 @@ p {
   padding-left: 4px;
   padding-right: 4px;
 }
+/*
+.recommendedTable th, .recommendedTable td {
+  border: 1px solid black;
+}
 
+.recommendedTable {
+
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.recommendedTable tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+    
+.recommendedTable tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.recommendedTable tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+    
+.recommendedTable tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+*/
 tr {
   -webkit-transition: opacity 2s;
   -moz-transition: opacity 2s;
@@ -138,4 +165,43 @@ footer {
 .deconSection:checked ~ .decon-section {
   display: block;
 }
+/*
+.left {
+  font-size: 0.8em;
+  align-content: left;
+}
 
+.right {
+  font-size: 0.8em;
+  align-content: right;
+}
+  */
+
+.meter7, .meter30 {
+  /*margin: 5em;
+  font-size: 0.8em;*/
+  position: relative;
+}
+
+.meter7::before, .meter30::before {
+  content: '0';
+  font-size: 0.8em;
+  position: absolute;
+  top: -100%;
+}
+
+.meter7::after {
+  content: '7';
+  font-size: 0.8em;
+  position: absolute;
+  top: -100%;
+  right: 0;
+}
+
+.meter30::after {
+  content: '30';
+  font-size: 0.8em;
+  position: absolute;
+  top: -100%;
+  right: 0;
+}
