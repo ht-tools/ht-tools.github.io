@@ -177,9 +177,9 @@ footer {
 }
   */
 
+/* TBD meter labels below do not show on iPhone Safari or Desktop Firefox 
+
 .meter7, .meter30 {
-  /*margin: 5em;
-  font-size: 0.8em;*/
   position: relative;
 }
 
@@ -204,4 +204,4 @@ footer {
   position: absolute;
   top: -100%;
   right: 0;
-}
+}*/

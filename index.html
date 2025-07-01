@@ -198,7 +198,7 @@
           <th>Test</th>
           <th>Ideal</th>
           <th>Test Result</th>
-          <th>Days Since<br>Last Test</th>
+          <th>Check In<br>&lt; 7 Days</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -211,7 +211,7 @@
             <!--<td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>-->
             <td>
               <!--<label for="fcDays"><span class="left">0</span><span class="right">7</span></label>-->
-              <br><meter class="meter7" id="fcMeter" min="0" optimum="1" low="2" high="4" max="7" value="0"></meter> 
+              <meter class="meter7" id="fcMeter" min="0" optimum="1" low="2" high="4" max="7" value="0"></meter> 
             </td> 
             <td><button type="submit">Tested</button></td>
           </form>  
@@ -239,7 +239,7 @@
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('ad');return false">
             <td><input type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>n/a</td>
+            <td>(as needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -248,7 +248,7 @@
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('bd');return false">
             <td><input type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>n/a</td>
+            <td>(as needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -263,7 +263,7 @@
           <th>Test</th>
           <th>Ideal</th>
           <th>Test Result</th>
-          <th>Days Since<br>Last Test</th>
+          <th>Check In<br>&lt; 30 Days</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -273,7 +273,7 @@
           <td><span class="units">30-50 ppm</span></td>
           <form onsubmit="updateTest('ca');return false"> <!--, 'caDaysAgoLimit'-->
             <td><input type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-            <td><br><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+            <td><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -302,22 +302,12 @@
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
-      </tbody>
-      <thead>
-        <tr id="maintainHeaderRow">
-          <th colspan="2">Maintain</th>
-          <th>Value</th>
-          <th>Days Since<br>Last Action</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
         <tr id="spaVolumeRow">
           <td colspan="2">Spa Volume</td>
           <form onsubmit="confirmedSpaVolume();return false">
             <td><input class="numInputs0" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gallons</span></td>
-            <td><br><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span>--></td>
-            <td><button type="submit">Topped Off</button></td>
+            <td><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Top Off</button></td>
           </form>
         </tr>
         <tr id="filterCleanedRow">
