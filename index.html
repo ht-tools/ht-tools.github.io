@@ -24,92 +24,52 @@
       <img id="fc_chart" src="./fc_high.png" alt="FC Chart" width="400">
       <table class="statusTable">
         <tr>
-          <th class="underline" colspan="2">
-            Current Prediction
-          </th>
+          <th class="underline" colspan="2">Current Prediction</th>
         </tr>
         <tr>
-          <th>
-            FC
-          </th>
-          <th>
-            When
-          </th>
+          <th>FC</th>
+          <th>When</th>
         </tr>
         <tr>
-          <td>
-            <b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span>
-          </td>
-          <td>
-            Now
-          </td>
+          <td><b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span></td>
+          <td>Now</td>
         </tr>
         <tr>
-          <td>
-            <b>5</b><span class="units">ppm</span>
-          </td>
-          <td>
-            <b class="textDisplays" id="fcStartIdeal"></b>
-          </td>
+          <td><b class="numDisplays" id="fcMax"></b><span class="units">ppm (Max)</span></td>
+          <td><b class="textDisplays" id="fcStartIdeal"></b></td>
         </tr>
         <tr>
-          <td>
-            <b>3</b><span class="units">ppm</span>
-          </td>
-          <td>
-            <b class="textDisplays" id="fcEndIdeal"></b>
-          </td>
+          <td><b class="numDisplays" id="fcMin"></b><span class="units">ppm (Min)</span></td>
+          <td><b class="textDisplays" id="fcEndIdeal"></b></td>
         </tr>
       </table>
       <br>
       <table class="statusTable">
         <tr>
-          <th class="underline" colspan="3">
-            Adjust for Ideal FC during next use
-          </th>
+          <th class="underline" colspan="3"><b class="textDisplays" id="fcTargetText"></b></th>
         </tr>
         <tr>
-          <th>
-            FC
-          </th>
-          <th>
-            When
-          </th>
-          <th>
-            Adjust
-          </th>
+          <th>FC</th>
+          <th>When</th>
+          <th>Adjust</th>
         </tr>
         <tr>
-          <td>
-            <b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span>
-          </td>
-          <td>
-            After bleach or dichlor is added
-          </td>
+          <td><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
+          <td>After bleach or dichlor is added</td>
           <td>
             <button class="symbols" onclick="fcTargetAdjust(-1)">&lt;</button>
             <button class="symbols" onclick="fcTargetAdjust(+1)">&gt;</button>
           </td>
         </tr>
         <tr>
-          <td>
-            <b>5</b><span class="units">ppm</span>
-          </td>
-          <td>
-            <b class="textDisplays" id="fcTargetStartIdeal"></b>
-          </td>
-          <td>
-          </td>
+          <td><b class="numDisplays" id="fcMax"></b><span class="units">ppm (Max)</span></td>
+          <td><b class="textDisplays" id="fcTargetStartIdeal"></b></td>
+          <td></td>
         </tr>
         <tr>
-          <td>
-            <b>3</b><span class="units">ppm</span>
-          </td>
-          <td>
-            <b class="textDisplays" id="fcTargetEndIdeal"></b>
-          </td>
-          <td>
-          </td>
+          <td><b class="numDisplays" id="fcMin"></b><span class="units">ppm (Min)</span></td>
+          <td><b class="textDisplays" id="fcTargetEndIdeal"></b></td>
+          <td></td>
         </tr>
       </table>
     </div>
@@ -132,7 +92,7 @@
       </thead>
       <tbody>
         <tr id="DichlorRow">
-          <td class="textDisplays" id="dichlorMessage">Dichlor</td>
+          <td>Dichlor</td>
           <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
           <form onsubmit="addedDichlor();return false">
             <td><input class="numInputs2" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
@@ -140,7 +100,7 @@
           </form>
         </tr>
         <tr id="BleachRow">
-          <td class="textDisplays" id="bleachMessage">Bleach</td>
+          <td>Bleach</td>
           <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
           <form onsubmit="addedBleach();return false">
             <td><input class="numInputs2" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
