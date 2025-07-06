@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- TBD: Add meta tags for SEO and PWA. Add Open Graph tags for social media sharing.
+  <meta name="description" content="Hot Tub Tools for managing your hot tub water chemistry.">
+  <meta name="keywords" content="hot tub, tools, water chemistry, maintenance,">
+  <meta name="author" content="Your Name">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.json">
+-->
   <title>Hot Tub Tools</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./index.js" defer></script>
@@ -10,7 +19,7 @@
 <body>
   <div class="container">
     <h1>Hot Tub Tools</h1>
-    <p class="subheading">
+    <p class="subheading"> <!-- TBD MAKE THIS A NAV ELEMENT-->
       | <a href="./dandr.html">Drain & Refill</a> | Maintain 
       | <a href="./log.html">Log</a> | <a href="./help.html">Help</a> |
     </p>
@@ -35,12 +44,12 @@
           <td>Now</td>
         </tr>
         <tr>
-          <td><b class="numDisplays" id="fcMax"></b><span class="units">ppm</span></td>
-          <td><b class="textDisplays" id="fcStartIdeal"></b><span class="units">(Max)</span></td>
+          <td><b class="numDisplays" id="fcMax"></b><span class="units">(Max)</span></td>
+          <td><b class="textDisplays" id="fcStartIdeal"></b></td>
         </tr>
         <tr>
-          <td><b class="numDisplays" id="fcMin"></b><span class="units">ppm</span></td>
-          <td><b class="textDisplays" id="fcEndIdeal"></b><span class="units">(Min)</span></td>
+          <td><b class="numDisplays" id="fcMin"></b><span class="units">(Min)</span></td>
+          <td><b class="textDisplays" id="fcEndIdeal"></b></td>
         </tr>
       </table>
       <br>
@@ -55,20 +64,20 @@
         </tr>
         <tr>
           <td><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
-          <td>After bleach or dichlor is added</td>
+          <td>After bleach or<br>dichlor is added</td>
           <td>
             <button class="symbols" onclick="fcTargetAdjust(-1)">&lt;</button>
             <button class="symbols" onclick="fcTargetAdjust(+1)">&gt;</button>
           </td>
         </tr>
         <tr>
-          <td><b class="numDisplays" id="fcMax"></b><span class="units">ppm</span></td>
-          <td><b class="textDisplays" id="fcTargetStartIdeal"></b><span class="units">(Max)</span></td>
+          <td><b class="numDisplays" id="fcMax"></b><span class="units">(Max)</span></td>
+          <td><b class="textDisplays" id="fcTargetStartIdeal"></b></td>
           <td></td>
         </tr>
         <tr>
-          <td><b class="numDisplays" id="fcMin"></b><span class="units">ppm</span></td>
-          <td><b class="textDisplays" id="fcTargetEndIdeal"></b><span class="units">(Min)</span></td>
+          <td><b class="numDisplays" id="fcMin"></b><span class="units">(Min)</span></td>
+          <td><b class="textDisplays" id="fcTargetEndIdeal"></b></td>
           <td></td>
         </tr>
       </table>
@@ -165,7 +174,7 @@
       <tbody>
         <tr id="fcRow">
           <td>FC</td>
-          <td><span class="units">3-5 ppm</span><br><button class="symbols" onclick="editFcTarget()">&#x270E</button></td>
+          <td><span class="small_left">Depends<br>on CYA </span><span><button class="symbols" onclick="editFcTarget()">&#x270E</button></span></td>
           <form onsubmit="updateTest('fc');return false"> <!--, 'fcDaysAgoLimit'-->
             <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
             <!--<td><input class="numInputs2" type="number" id="fcDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span></td>-->
@@ -239,7 +248,7 @@
         </tr>
         <tr id="taRow">
           <td>TA</td>
-          <td><span class="units">50-120 ppm</span><br><button class="symbols" onclick="editTaTarget()">&#x270E</button></td>
+          <td><span class="small_left">50-120<br>ppm </span><span><button class="symbols" onclick="editTaTarget()">&#x270E</button></span></td>
           <form onsubmit="updateTest('ta');return false"> <!--, 'taDaysAgoLimit'-->
             <td>
               <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
@@ -253,9 +262,9 @@
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
-        <tr id="chRow">
+        <tr class="underline" id="chRow">
           <td>CH</td>
-          <td><span class="units">150-250 ppm</span><br><button class="symbols" onclick="editChTarget()">&#x270E</button></td>
+          <td><span class="small_left">150-250<br>ppm </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
           <form onsubmit="updateTest('ch');return false"> <!--, 'chDaysAgoLimit'-->
             <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
             <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>

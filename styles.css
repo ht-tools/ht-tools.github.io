@@ -75,6 +75,11 @@ p {
   margin-left: 5px;
 }
 
+.small_left {
+  font-size: 0.8em;
+  margin-left: 0;
+}
+
 .statusTable {
   border-spacing: 8px 0;
   text-align: left;
@@ -87,6 +92,10 @@ p {
 .statusTable .underline {
   border-bottom: 2px solid black;
   
+}
+
+.recommendedTable .underline {
+  border-bottom: 2px solid black;
 }
 
 .statusTable .side-borders {
