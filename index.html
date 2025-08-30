@@ -59,7 +59,7 @@
         <tr>
           <th class="underline" colspan="3">
             <b class="textDisplays" id="fcTargetText"></b>
-            <button class="question" onclick="alert('If you see &quot;Hold this level until CC < 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures < 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
+            <button class="question" onclick="alert('If you see &quot;Hold this level until CC &le; 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures < 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
           </th>
         </tr>
         <tr>
@@ -128,7 +128,7 @@
             <button class="question" onclick="showDialog('phTaDownDialog', 'phTaDownVideo')">?</button>
             <dialog id="phTaDownDialog">
               <p>Sodium Bisulfate (pH/TA Down) is a granular dry acid that lowers pH and Total Alkalinity (TA). Alternatively, you can use liquid Muriatic Acid which has the advantage of not creating sulfates, which irritate some people`s skin. I recommend the lower strength Muriatic Acid (~14.5 %) because it is very powerful. Follow all handling precautions!</p>
-              <video controls loop id="phTaDownVideo" width="400">
+              <video playsinline webkit-playsinline controls loop id="phTaDownVideo" width="400">
                 <source src="./add_acid.mp4" type="video/mp4" />
                 <track src="./add_acid.vtt" kind="subtitles" srclang="en" label="English" default />
               </video>
@@ -201,7 +201,7 @@
         </tr>
         <tr id="ccRow">
           <td>CC<button class="question" onclick="alert('Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. If CC rises above 0.5 ppm, you should maintain the higher recommended FC target until CC tests < 0.5 ppm. This is referred to as Breakpoint Chlorination.')">?</button></td>
-          <td><span class="units">&lt; 0.5</span></td>
+          <td><span class="units">&le; 0.5</span></td>
           <form onsubmit="updateTest('cc');return false"> <!--, 'ccDaysAgoLimit'-->
             <td><input type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
             <td><meter id="ccMeter" min="0" optimum="1" low="5" high="6" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
@@ -299,7 +299,7 @@
             <button class="question" onclick="showDialog('filterDialog')">?</button>
             <dialog id="filterDialog">
               <p>Be sure to take out and spray off your filter with a garden hose every few weeks or as needed. Approximately once per year, replace your filter with a brand new one.</p>
-              <!--video controls loop id="filterVideo" width="400">
+              <!--video playsinline webkit-playsinline controls loop id="filterVideo" width="400">
                 <source src="./add_acid.mp4" type="video/mp4" />
                 <track src="./filter.vtt" kind="subtitles" srclang="en" label="English" default />
               </video>

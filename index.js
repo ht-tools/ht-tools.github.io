@@ -616,9 +616,9 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     }
 */
     if (sPrefix == 'cc') {
-        if (numVars['ccLastValue'] >= 0.5) {
+        if (numVars['ccLastValue'] > 0.5) {
             numVars['fcTarget'] = numVars['fcSlamTarget'];
-            textVars['fcTargetText'] = 'Hold this level until CC < 0.5 ppm';
+            textVars['fcTargetText'] = 'Hold this level until CC &le; 0.5 ppm';
         } else {
             numVars['fcTarget'] = numVars['fcTargetOld'];
             textVars['fcTargetText'] = 'Adjust for Ideal FC during next use';
