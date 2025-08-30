@@ -1054,3 +1054,22 @@ function logActivity(sActivity, sValue = '', sNote = '') {
     // Save the updated log back to localStorage
     localStorage.setItem('htLog', JSON.stringify(logEntries));
 }
+
+function showDialog(dialogId, videoId=false) {
+    const dialog = document.getElementById(dialogId);
+    dialog.showModal(); 
+    if (videoId) {
+        const video = document.getElementById(videoId);
+        video.play();
+    }
+}
+
+function closeDialog(dialogId, videoId=false) {
+    if (videoId) {
+        const video = document.getElementById(videoId);
+        video.pause();
+        video.currentTime = 0;
+    }
+    const dialog = document.getElementById(dialogId);
+    dialog.close();
+}

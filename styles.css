@@ -15,6 +15,28 @@
   font-weight: bold;
 }
 
+.banner {
+  background-color: lightgray;
+
+}
+
+.photos {
+  width: 400px;
+}
+
+.fc-adjust {
+  height: 2.0em;
+  vertical-align: bottom;
+}
+
+.question {
+  font-size: 0.7em;
+  color: black;
+  font-weight: bold;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
 .inline {
   display: inline-block;
   margin: 0;
@@ -33,7 +55,20 @@
   text-align: center;
 }
 
+.fixedWidth {
+  max-width: 400px;
+  margin: 0 auto;
+}
 
+ul {
+  padding-left: 20px;
+  margin-left: 0;
+}
+
+figure {
+  padding-left: 0;
+  margin-left: 0;
+}
 
 .action {
   margin: 10px;
@@ -41,6 +76,10 @@
 
 button {
   cursor: pointer;
+}
+
+dialog {
+  width: 400px;
 }
 
 .columnHeadings {
@@ -95,7 +134,7 @@ p {
 }
 
 .recommendedTable .underline {
-  border-bottom: 2px solid black;
+  border-bottom: 4px solid black;
 }
 
 .statusTable .side-borders {
@@ -109,33 +148,7 @@ p {
   padding-left: 4px;
   padding-right: 4px;
 }
-/*
-.recommendedTable th, .recommendedTable td {
-  border: 1px solid black;
-}
 
-.recommendedTable {
-
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.recommendedTable tr:first-child th:first-child {
-    border-top-left-radius: 10px;
-}
-    
-.recommendedTable tr:first-child th:last-child {
-    border-top-right-radius: 10px;
-}
-
-.recommendedTable tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
-}
-    
-.recommendedTable tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
-}
-*/
 tr {
   -webkit-transition: opacity 2s;
   -moz-transition: opacity 2s;
