@@ -59,7 +59,7 @@
         <tr>
           <th class="underline" colspan="3">
             <b class="textDisplays" id="fcTargetText"></b>
-            <button class="question" onclick="alert('If you see &quot;Hold this level until CC &le; 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures < 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
+            <button class="question" onclick="alert('If you see &quot;Hold this level until CC &le; 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
           </th>
         </tr>
         <tr>
@@ -71,9 +71,9 @@
           <td><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
           <td>After bleach or<br>dichlor is added</td>
           <td>
-            <button class="symbols fc-adjust" onclick="fcTargetAdjust(-1)">&lt;</button>
-            <button class="symbols fc-adjust" onclick="editFcTarget()">&#x270E</button>
-            <button class="symbols fc-adjust" onclick="fcTargetAdjust(+1)">&gt;</button>
+            <button class="symbols fc-adjust center" onclick="fcTargetAdjust(-1)">&lt;</button>
+            <button class="symbols fc-adjust center" onclick="editFcTarget()">&#x270E</button>
+            <button class="symbols fc-adjust center" onclick="fcTargetAdjust(+1)">&gt;</button>
           </td>
         </tr>
         <tr>
