@@ -3,6 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.sectionLeft {
+  text-align: left;
 }
 
 .container, footer, .font {
@@ -13,6 +18,16 @@
   font-size: 1.0em;
   color: black;
   font-weight: bold;
+  height: 1.8em;
+  width: 1.8em;
+  border-radius: 10%;
+  vertical-align: bottom;
+  border-width: 1px;
+}
+
+.inputBox {
+  border-color: black;
+  border-width: 1px;
 }
 
 .banner {
@@ -24,18 +39,13 @@
   width: 400px;
 }
 
-.fc-adjust {
-  height: 2.0em;
-  width: 2.0em;
-  vertical-align: bottom;
-}
-
 .question {
   font-size: 0.7em;
   color: black;
   font-weight: bold;
   border-radius: 50%;
   margin-left: 5px;
+  border-width: 1px;
 }
 
 .inline {
@@ -50,7 +60,7 @@
   margin: 0;
 }
 
-.center, .subheading {
+.center {
   justify-content: center;
   align-items: center;
   text-align: center;

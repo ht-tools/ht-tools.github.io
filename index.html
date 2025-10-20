@@ -12,38 +12,41 @@
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <link rel="manifest" href="./manifest.json">
 -->
-  <title>Hot Tub Tools</title>
+  <title>HTS</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./index.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <h1>Hot Tub Tools</h1>
-    <nav class="subheading"> 
+    <h1>Hot Tub Savior</h1>
+    <img id="hts_logo" src="./images/hts.jpg" alt="HTS" width="400">
+    <br>
+    <nav class="center"> 
       | <a href="./dandr.html">Drain & Refill</a> 
-      | Maintain 
+      | <b>Maintain</b> 
       | <a href="./log.html">Log</a> 
       | <a href="./supplies.html">Supplies</a> |
     </nav>
-    <h3>Status at:
-      <span class="textDisplays" id="dtNow"></span>
-      <span class="action">
-        <button class="symbols" onclick="refresh()">&#x27F3</button>
-      </span>
-    </h3>
     <div>
-      <img id="fc_chart" src="./fc_high.png" alt="FC Chart" width="400">
+      <img id="fc_chart" src="./images/fc_high.png" alt="FC Chart" width="400">
+      <br>
       <table class="statusTable">
         <tr>
-          <th class="underline" colspan="2">Current Prediction</th>
+          <th class="underline" colspan="3">Current Prediction</th>
         </tr>
         <tr>
           <th>FC<button class="question" onclick="alert('Free Chlorine (FC) is the amount of chlorine available to sanitize the water. You may need to Adjust your FC higher than your ideal range, depending on how long you go between soaks, to compensate for Chlorine Demand (the rate at which your tub consumes FC). If your FC drops too low, bacteria can grow.')">?</button></th>
           <th>When</th>
+          <th class="center">Refresh</th>
         </tr>
         <tr>
           <td><b class="numDisplays" id="fcPrediction"></b><span class="units">ppm</span></td>
-          <td>Now</td>
+          <td>Now (<b class="textDisplays" id="dtNow"></b>)</td>
+          <td>
+            <span class="action">
+              <button class="symbols" onclick="refresh()">&#x27F3</button>
+            </span>
+          </td>
         </tr>
         <tr>
           <td><b class="numDisplays" id="fcMax"></b><span class="units">(Max)</span></td>
@@ -57,8 +60,8 @@
       <br>
       <table class="statusTable">
         <tr>
-          <th class="underline" colspan="3">
-            <b class="textDisplays" id="fcTargetText"></b>
+          <th class="underline textDisplays" colspan="3" id="fcTargetText">
+            <!--b class="textDisplays" id="fcTargetText"></b-->
             <button class="question" onclick="alert('If you see &quot;Hold this level until CC &le; 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
           </th>
         </tr>
@@ -71,9 +74,9 @@
           <td><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
           <td>After bleach or<br>dichlor is added</td>
           <td>
-            <button class="symbols fc-adjust center" onclick="fcTargetAdjust(-1)">&lt;</button>
-            <button class="symbols fc-adjust center" onclick="editFcTarget()">&#x270E</button>
-            <button class="symbols fc-adjust center" onclick="fcTargetAdjust(+1)">&gt;</button>
+            <button class="symbols center" onclick="fcTargetAdjust(-1)">&lt;</button>
+            <button class="symbols center" onclick="editFcTarget()">&#x270E</button>
+            <button class="symbols center" onclick="fcTargetAdjust(+1)">&gt;</button>
           </td>
         </tr>
         <tr>
@@ -110,15 +113,27 @@
           <td>Dichlor<button class="question" onclick="alert('Sodium Dichloro-s-Triazinetrione Dihydrate (Dichlor) is a granular chlorine that also contains Cyanuric Acid (CYA).')">?</button></td>
           <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
           <form onsubmit="addedDichlor();return false">
-            <td><input class="numInputs2" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
+            <td><input class="numInputs2 inputBox" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
         <tr id="BleachRow">
-          <td>Bleach<button class="question" onclick="alert('Sodium Hypochlorite (Bleach) is a liquid chlorine that does not contain Cyanuric Acid (CYA). I recommend you use Sodium Hypochlorite labeled for pools/spas but you can also use literal &quot;Bleach&quot;. If you use &quot;Bleach&quot;, be sure it contains no softeners, is not color-fast, and is unscented. Pay attention to the label strength.')">?</button></td>
+          <td>
+            Bleach
+            <button class="question" onclick="showDialog('bleachDialog', 'bleachVideo')">?</button>
+            <dialog id="bleachDialog">
+              <p>Sodium Hypochlorite (Bleach) is a liquid chlorine that does not contain Cyanuric Acid (CYA). Sodium Hypochlorite labeled for pools/spas is recommended but you can also use literal &quot;Bleach&quot;. If you use &quot;Bleach&quot;, be sure it contains no softeners, is not color-fast, and is unscented. Pay attention to the label strength.</p>
+              <video playsinline webkit-playsinline controls loop id="bleachVideo" width="400">
+                <source src="./videos/bleach.mp4" type="video/mp4" />
+                <track src="./videos/bleach.vtt" kind="subtitles" srclang="en" label="English" default />
+              </video>
+              <br>
+              <button onclick="closeDialog('bleachDialog', 'bleachVideo')">Close</button>
+            </dialog>
+          </td>
           <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
           <form onsubmit="addedBleach();return false">
-            <td><input class="numInputs2" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
+            <td><input class="numInputs1 inputBox" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -129,8 +144,8 @@
             <dialog id="phTaDownDialog">
               <p>Sodium Bisulfate (pH/TA Down) is a granular dry acid that lowers pH and Total Alkalinity (TA). Alternatively, you can use liquid Muriatic Acid which has the advantage of not creating sulfates, which irritate some people`s skin. I recommend the lower strength Muriatic Acid (~14.5 %) because it is very powerful. Follow all handling precautions!</p>
               <video playsinline webkit-playsinline controls loop id="phTaDownVideo" width="400">
-                <source src="./add_acid.mp4" type="video/mp4" />
-                <track src="./add_acid.vtt" kind="subtitles" srclang="en" label="English" default />
+                <source src="./videos/add_acid.mp4" type="video/mp4" />
+                <track src="./videos/add_acid.vtt" kind="subtitles" srclang="en" label="English" default />
               </video>
               <br>
               <button onclick="closeDialog('phTaDownDialog', 'phTaDownVideo')">Close</button>
@@ -138,7 +153,7 @@
           </td>
           <td><span class="numDisplays" id="phTaDownStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phTaDownStrength')">&#x270E</button></td>
           <form onsubmit="addedPhTaDown();return false">
-            <td><input class="numInputs2" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -146,7 +161,7 @@
           <td>&#x2937 or Muriatic Acid</td>
           <td><span class="numDisplays" id="muriaticStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('muriaticStrength')">&#x270E</button></td>
           <form onsubmit="addedMuriaticAcid();return false">
-            <td><input class="numInputs2" type="number" id="addMuriaticAcid" min="0" max="100" step="0.01" required><span class="units">fl oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addMuriaticAcid" min="0" max="100" step="0.01" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -154,7 +169,7 @@
           <td>TA Up<button class="question" onclick="alert('Sodium Bicarbonate (commonly known as Baking Soda or Sodium Hydrogen Carbonate) is used to raise Total Alkalinity (TA), but will also have some effect on pH.')">?</button></td>
           <td><span class="numDisplays" id="taUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('taUpStrength')">&#x270E</button></td>
           <form onsubmit="addedTaUp();return false">
-            <td><input class="numInputs2" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -162,7 +177,7 @@
           <td>pH Up<button class="question" onclick="alert('Sodium Carbonate (Soda Ash) is used to raise pH, but will also have some effect on Total Alkalinity (TA).')">?</button></td>
           <td><span class="numDisplays" id="phUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phUpStrength')">&#x270E</button></td>
           <form onsubmit="addedPhUp();return false">
-            <td><input class="numInputs2" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -170,7 +185,7 @@
           <td>Calcium<button class="question" onclick="alert('Calcium Chloride is used to raise Calcium Hardness (CH).')">?</button></td>
           <td><span class="numDisplays" id="calciumStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('calciumStrength')">&#x270E</button></td>
           <form onsubmit="addedCalcium();return false">
-            <td><input class="numInputs2" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -191,28 +206,61 @@
       </thead>
       <tbody>
         <tr id="fcRow">
-          <td>FC<button class="question" onclick="alert('Free Chlorine (FC) is the amount of chlorine available to sanitize the water. You may need to Adjust your FC higher than your ideal range, depending on how long you go between soaks, to compensate for Chlorine Demand (the rate at which your tub consumes FC). If your FC drops too low, bacteria can grow.')">?</button></td>
+          <td>FC
+            <button class="question" onclick="showDialog('testFcDialog', 'testFcVideo')">?</button>
+            <dialog id="testFcDialog">
+              <p>Free Chlorine (FC) is the amount of chlorine available to sanitize the water. You may need to Adjust your FC higher than your ideal range, depending on how long you go between soaks, to compensate for Chlorine Demand (the rate at which your tub consumes FC). If your FC drops too low, bacteria can grow.</p>
+              <video playsinline webkit-playsinline controls loop id="testFcVideo" width="400">
+                <source src="./videos/test_fc_cc.mp4" type="video/mp4" />
+                <track src="./videos/test_fc_cc.vtt" kind="subtitles" srclang="en" label="English" default />
+              </video>
+              <br>
+              <button onclick="closeDialog('testFcDialog', 'testFcVideo')">Close</button>
+            </dialog>
+          </td>
           <td><span class="small_left">Depends<br>on CYA </span></td>
           <form onsubmit="updateTest('fc');return false"> <!--, 'fcDaysAgoLimit'-->
-            <td><input type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter class="meter7" id="fcMeter" min="0" optimum="1" low="2" high="4" max="7" value="0"></meter></td> 
+            <td><input class="inputBox" type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
+            <td><meter class="meter7" id="fcMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td> 
             <td><button type="submit">Tested</button></td>
           </form>  
         </tr>
         <tr id="ccRow">
-          <td>CC<button class="question" onclick="alert('Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. If CC rises above 0.5 ppm, you should maintain the higher recommended FC target until CC tests < 0.5 ppm. This is referred to as Breakpoint Chlorination.')">?</button></td>
+          <td>CC
+            <button class="question" onclick="showDialog('testCcDialog', 'testCcVideo')">?</button>
+            <dialog id="testCcDialog">
+              <p>Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. If CC rises above 0.5 ppm, you should maintain the higher recommended FC target until CC tests < 0.5 ppm. This is referred to as Breakpoint Chlorination.</p>
+              <video playsinline webkit-playsinline controls loop id="testCcVideo" width="400">
+                <source src="./videos/test_fc_cc.mp4" type="video/mp4" />
+                <track src="./videos/test_fc_cc.vtt" kind="subtitles" srclang="en" label="English" default />
+              </video>
+              <br>
+              <button onclick="closeDialog('testCcDialog', 'testCcVideo')">Close</button>
+            </dialog>
+          </td>
           <td><span class="units">&le; 0.5</span></td>
           <form onsubmit="updateTest('cc');return false"> <!--, 'ccDaysAgoLimit'-->
-            <td><input type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter id="ccMeter" min="0" optimum="1" low="5" high="6" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+            <td><input class="inputBox" type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
+            <td><meter id="ccMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
         <tr id="phRow">
-          <td>pH<button class="question" onclick="alert('pH is a measure of how acidic or basic the water is. If pH is too low, it can cause skin irritation and corrode metal parts. If pH is too high, it can cause scale buildup and cloudy water.')">?</button></td>
+          <td>pH
+            <button class="question" onclick="showDialog('testPhDialog', 'testPhVideo')">?</button>
+            <dialog id="testPhDialog">
+              <p>pH is a measure of how acidic or basic the water is. If pH is too low, it can cause skin irritation and corrode metal parts. If pH is too high, it can cause scale buildup and cloudy water.</p>
+              <video playsinline webkit-playsinline controls loop id="testPhVideo" width="400">
+                <source src="./videos/test_ph.mp4" type="video/mp4" />
+                <track src="./videos/test_ph.vtt" kind="subtitles" srclang="en" label="English" default />
+              </video>
+              <br>
+              <button onclick="closeDialog('testPhDialog', 'testPhVideo')">Close</button>
+            </dialog>
+          </td>
           <td><span class="units">7.4-7.8</span></td>
           <form onsubmit="updateTest('ph');return false"> <!--, 'phDaysAgoLimit'-->
-            <td><input type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
+            <td><input class="inputBox" type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
             <td><meter id="phMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="phDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Tested</button></td>
           </form>
@@ -221,7 +269,7 @@
           <td>AD<button class="question" onclick="alert('If pH is too high, use the Acid Demand (AD) test to determine how much acid is needed to lower the pH to the ideal range.')">?</button></td>
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('ad');return false">
-            <td><input type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
+            <td><input class="inputBox" type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
             <td>(as needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
@@ -230,7 +278,7 @@
           <td>BD<button class="question" onclick="alert('If pH is too low, use the Base Demand (BD) test to determine how much base is needed to raise the pH to the ideal range.')">?</button></td>
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('bd');return false">
-            <td><input type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
+            <td><input class="inputBox" type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
             <td>(as needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
@@ -255,17 +303,17 @@
           <td>CYA<button class="question" onclick="alert('Cyanuric Acid (CYA) stabilizes the chlorine. If your CYA is too low, you will have trouble maintaining the required FC level (the chlorine will be quickly destroyed). If CYA is too high, your chlorine will become ineffective at killing bacteria. Dichlor contains CYA but Bleach does not. This app will automatically suggest Bleach or Dichlor to maintain your CYA in the recommended range.')">?</button></td>
           <td><span class="small_left">30-50</span></td>
           <form onsubmit="updateTest('ca');return false"> <!--, 'caDaysAgoLimit'-->
-            <td><input type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
+            <td><input class="inputBox" type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
             <td><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
         <tr id="taRow">
-          <td>TA<button class="question" onclick="alert('Total Alkalinity (TA) represents the ability of the water to resist acidification. If TA is too high, the pH will drift up. If TA is too low, the pH will drift down. You should adjust TA first, give time for the water to settle (several hours), then test and adjust pH. Once pH has been stable in the ideal range for a week, test your TA and use the corrected value as your new target (usually ~50 ppm). Corrected TA has been adjusted to compensate for false-high readings due to CYA level.')">?</button></td>
-          <td><span class="small_left">50-120<br> </span><span><button class="symbols" onclick="editTaTarget()">&#x270E</button></span></td>
+          <td>TA<button class="question" onclick="alert('Total Alkalinity (TA) represents the ability of the water to resist acidification. If TA is too high, the pH will drift up. If TA is too low, the pH will drift down. You should adjust TA first, give time for the water to settle (several hours), then test and adjust pH. If pH has been stable in the ideal range for a week, but your TA tests high or low, consider adjusting your TA Target Value to match your current Corrected Test Value (usually ~50 ppm). Corrected TA has been adjusted to compensate for false-high readings due to CYA level.')">?</button></td>
+          <td><span class="small_left">30-120<br> </span><span><button class="symbols" onclick="editTaTarget()">&#x270E</button></span></td>
           <form onsubmit="updateTest('ta');return false"> <!--, 'taDaysAgoLimit'-->
             <td>
-              <input type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
+              <input class="inputBox" type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
               <input type="hidden" id="taNewTest">
               <span class="units">
                 ppm<br>(Corrected:
@@ -280,7 +328,7 @@
           <td>CH<button class="question" onclick="alert('Calcium Hardness (CH) represents the amount of calcium in the water. If CH is too low, it can cause corrosion of metal parts. If CH is too high, it can cause scale buildup and cloudy water.')">?</button></td>
           <td><span class="small_left">150-250<br> </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
           <form onsubmit="updateTest('ch');return false"> <!--, 'chDaysAgoLimit'-->
-            <td><input type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
+            <td><input class="inputBox" type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
             <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>
             <td><button type="submit">Tested</button></td>
           </form>
@@ -288,29 +336,29 @@
         <tr id="spaVolumeRow">
           <td colspan="2">Spa Volume<button class="question" onclick="alert('The number of gallons in your hot tub is very important for the calculations made by this app. If you enter the wrong number, the recommended amounts of each chemical to add will be wrong! You need to top off your water level periodically due to evaporation.')">?</button></td>
           <form onsubmit="confirmedSpaVolume();return false">
-            <td><input class="numInputs0" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gal</span></td>
+            <td><input class="numInputs0 inputBox" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gal</span></td>
             <td><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span>--></td>
-            <td><button type="submit">Verified</button></td>
+            <td><button type="submit">Done</button></td>
           </form>
         </tr>
         <tr id="filterCleanedRow">
           <td colspan="2">
             Filter
-            <button class="question" onclick="showDialog('filterDialog')">?</button>
+            <button class="question" onclick="showDialog('filterDialog', 'filterVideo')">?</button>
             <dialog id="filterDialog">
               <p>Be sure to take out and spray off your filter with a garden hose every few weeks or as needed. Approximately once per year, replace your filter with a brand new one.</p>
-              <!--video playsinline webkit-playsinline controls loop id="filterVideo" width="400">
-                <source src="./add_acid.mp4" type="video/mp4" />
-                <track src="./filter.vtt" kind="subtitles" srclang="en" label="English" default />
+              <video playsinline webkit-playsinline controls loop id="filterVideo" width="400">
+                <source src="./videos/filter.mp4" type="video/mp4" />
+                <track src="./videos/filter.vtt" kind="subtitles" srclang="en" label="English" default />
               </video>
-              <br-->
-              <button onclick="closeDialog('filterDialog')">Close</button>
+              <br>
+              <button onclick="closeDialog('filterDialog', 'filterVideo')">Close</button>
             </dialog>
           </td>
-          <td>Rinse off</td>
+          <td>Rinse/Replace</td>
           <form onsubmit="cleanedFilter();return false">
-            <td><meter id="filterMeter" min="0" optimum="1" low="14" high="21" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="filterCleanedDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
-            <td><button type="submit">Rinsed</button></td>
+            <td><meter id="filterMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="filterCleanedDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+            <td><button type="submit">Done</button></td>
           </form>
         </tr>
       </tbody>

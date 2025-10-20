@@ -182,9 +182,9 @@ function init() {
 
     /* Current DateTime */
     const date = new Date();
-    let displayDate = date.toLocaleDateString();
-    let displayTime = date.toLocaleTimeString();
-    textVars['dtNow'] = displayDate + " " + displayTime;
+    let displayDate = date.toLocaleDateString([], { month: '2-digit', day: '2-digit' });
+    let displayTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    textVars['dtNow'] = displayDate + ", " + displayTime;
     
     /* CYA - Days Since Last Test */
     numVars['caDaysAgo'] = (date - dateVars['caLastTestDate']) / ONE_DAY;
@@ -287,11 +287,11 @@ function init() {
     nMilliseconds = numVars['fcModifiedDaysAgo'] * ONE_DAY; // milliseconds since last test
     numVars['fcPrediction'] = numVars['fcLastValue'] * Math.exp(-numVars['fcDecayK'] * nMilliseconds);
     if (numVars['fcPrediction'] > numVars['fcMax']) {
-        document.getElementById("fc_chart").src="./fc_high.png";
+        document.getElementById("fc_chart").src="./images/fc_high.png";
     } else if (numVars['fcPrediction'] >= numVars['fcMin']) {
-        document.getElementById("fc_chart").src="./fc_ideal.png";
+        document.getElementById("fc_chart").src="./images/fc_ideal.png";
     } else {
-        document.getElementById("fc_chart").src="./fc_low.png";
+        document.getElementById("fc_chart").src="./images/fc_low.png";
     }
     
     // FC - Ideal Start and End Dates
@@ -299,16 +299,17 @@ function init() {
     let dateLastModified = new Date(dateVars['fcLastModifiedDate']);
     let dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMax'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
     let dateEndIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMin'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
-    textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString();
-    textVars['fcEndIdeal'] = dateEndIdeal.toLocaleString();
-    
+    //textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString(); 
+    textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    textVars['fcEndIdeal'] = dateEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+
     // FC - TARGET - Start and End Dates
     // ln(N(t) / N0) / -k = t
     let dateTargetStartIdeal = new Date(date.getTime() + Math.log(numVars['fcMax'] / numVars['fcTarget']) / -numVars['fcDecayK']);
     let dateTargetEndIdeal = new Date(date.getTime() + Math.log(numVars['fcMin'] / numVars['fcTarget']) / -numVars['fcDecayK']);
-    textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString();
-    textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString();
-    
+    textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+
 /*
     numVars['fcPrediction'] = numVars['fcLastValue'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + 
         numVars['fcAdded'] + numVars['fcNegCorrection'];
@@ -418,6 +419,13 @@ function init() {
     inputBoxes = document.getElementsByClassName("numInputs2");
     for (box in inputBoxes) {
         inputBoxes[box].value = formatNumber(Number(numVars[inputBoxes[box].id])); //.toFixed(2);
+    } 
+
+    inputBoxes = document.getElementsByClassName("numInputs1");
+    for (box in inputBoxes) {
+        // inputBoxes[box].value = formatNumber(Number(numVars[inputBoxes[box].id])); //.toFixed(2);
+        // set inputBoxes[box].value equal to 1 decimal place, rounded to nearest 0.5
+        inputBoxes[box].value = (Math.round(Number(numVars[inputBoxes[box].id]) * 2) / 2).toFixed(1);
     } 
 
     inputBoxes = document.getElementsByClassName("numInputs0");
@@ -994,13 +1002,13 @@ function editTaTarget() {
     let target = prompt("Please enter new TA target value.", numVars['taTarget']);
     if (target) {
         target = parseInt(target);
-        if (target >= 50 && target <= 120) {
+        if (target >= 30 && target <= 120) {
             numVars['taTarget'] = target;
             localStorage.setItem('taTarget', numVars['taTarget']);
             refresh();
         }
         else {
-            alert("Please enter a number between 50 and 120.");
+            alert("Please enter a number between 30 and 120.");
         }
     }
 }
