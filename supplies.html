@@ -6,16 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTJ</title>
   <link rel="stylesheet" href="./styles.css">
-  <script src="./scripts.js" defer></script>
+  <script src="./supplies.js" defer></script>
 </head>
-<body class="container fixedWidth">
-  
-  <header>
-    <h1>Hot Tub Jesus</h1>
-    <img class="top-rounded" id="htj_logo" src="./images/htj-top-400.jpg" alt="HTJ" width="400">
-  </header>
-  <br>
-
+<header>
+  <h1>Hot Tub Jesus</h1>
   <nav class="subheading">
     | <a href="./dandr.html">Drain & Refill</a> 
     | <a href="./index.html">Maintain</a> 
@@ -23,8 +17,54 @@
     | <b>Supplies</b> |
   </nav>
   <br>
-    
-  <section class="sectionLeft">
+  <img class="top-rounded" id="htj_logo" src="./images/htj-top-400.jpg" alt="HTJ" width="400">
+  <i class="center">For which of you, intending to maintain a hot tub, does not sit down first and count the supplies, whether he has enough to do it?</i>
+</header>
+<br>
+<body class="container fixedWidth"> 
+  <section class="relative">
+    <div class="menu-container-container">
+      <div class="menu-container">
+        <button class="menu-button" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <h4>Chemicals</h4>
+          <a href="https://a.co/d/7CwQ0GI" target="_blank">Dichlor<br>- 99% Sodium Dichloro-s-Triazinetrione Dihydrate</a>
+          <a href="https://www.homedepot.com/p/HDX-Chlorinating-Liquid-for-Swimming-Pool-Shock-1-Gallon-3-Pack-30128HDX/303115700" target="_blank">Bleach - 10% Sodium Hypochlorite</a>
+          <a href="https://www.lowes.com/pd/Kem-Tek-2-Gallon-Muriatic-Acid/50323853" target="_blank">pH/TA Down/Muriatic Acid - 14.5% Hydrogen Chloride</a>
+          <a href="https://a.co/d/cNgpTuD" target="_blank">pH/TA Down<br>- 93.2% Sodium Bisulfate - alternate to Muriatic Acid</a>
+          <a href="https://a.co/d/jhm84H6" target="_blank">TA Up - 100% Sodium Bicarbonate</a>
+          <a href="https://a.co/d/9MSzCGL" target="_blank">pH Up - 100% Sodium Carbonate</a>
+          <a href="https://a.co/d/4EJgFDx" target="_blank">Calcium Chloride - 100%</a>
+          <h4>Dispensers</h4>
+          <a href="https://a.co/d/eczRigR" target="_blank">Bleach Jug - HDPE Opaque F-style jug</a>
+          <a href="https://a.co/d/9GBe3mx" target="_blank">Bleach Pump - 1 fl oz Pump Dispenser</a>
+          <a href="https://a.co/d/gmc1ymu" target="_blank">Muriatic Acid "Bettix Bottle"</a>
+          <a href="https://a.co/d/bZlCboX" target="_blank">Dry Ingredients Measuring Cup</a>
+          <a href="https://a.co/d/iN7y7LM" target="_blank">Dry Ingredients Digital Scale</a>
+          <h4>Testing Equipment</h4>
+          <a href="https://a.co/d/65Um4dv" target="_blank">Water Test Kit - Taylor K-2006</a>
+          <a href="https://a.co/d/hPCH7SX" target="_blank">Magnetic Stirrer for Test Kit<br>- Taylor 9265 Speedstir Start-Up Pack</a>
+          <a href="https://a.co/d/6tBIuE0" target="_blank">Cyanuric Acid Reagent Refill - R-0013 Large Refill</a>
+          <a href="https://a.co/d/0QN2yya" target="_blank">FAS-DPD Titrating Reagent - R-0871 Large Refill</a>
+          <h4>Cleaning Supplies</h4>
+          <a href="https://a.co/d/bQ73xpr" target="_blank">Skimmer Net - for Removing Debris from Water</a>
+          <a href="https://a.co/d/b7okWtm" target="_blank">Filter Flosser - for Rinsing Filter</a>
+          <a href="https://a.co/d/b2jsdPX" target="_blank">Jet Cleaner - to Flush Plumbing before Draining</a>
+          <a href="https://www.lowes.com/pd/Zoeller-0-33-HPThermoplastic-Submersible-Utility-Pump/1000668957" target="_blank">Submersible Pump - for Draining Hot Tub</a>
+          <a href="https://www.lowes.com/pd/DEWALT-10-Gallons-6-5-HP-Corded-Wet-Dry-Shop-Vacuum-with-Accessories-Included/5015125809" target="_blank">Wet/Dry Vac - to Assist with Draining Hot Tub</a>
+          <a href="https://a.co/d/4StQoli" target="_blank">White Vinegar - for Cleaning Inside Surfaces</a>
+          <a href="https://a.co/d/6RF69he" target="_blank">Scouring Pad - for Scrubbing Inside of Hot Tub</a>
+          <a href="https://a.co/d/1TbKdja" target="_blank">303 Protectant Spray<br>- for Cleaning Outside of Cover and Hot Tub Shell</a>
+        </div>
+      </div>
+    </div>
+    <img id="supplies-img" src="./images/ht-supplies-400.jpg" alt="Supplies" width="400" cursor="pointer" onclick="toggleMenu()">
+  </section>
+  <!--section class="sectionLeft">
     <h2 class="banner">Chemicals</h2>
     <ul>
       <li>
@@ -245,7 +285,7 @@
         </figure>
       </li>
     </ul>
-  </section>
+  </section-->
 </body>
 <footer>
   <img class="bottom-rounded" id="htj_logo" src="./images/htj-bottom-400.jpg" alt="HTJ" width="400">

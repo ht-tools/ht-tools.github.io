@@ -44,5 +44,7 @@ function eraseLog() {
     // User pressed OK
     localStorage.removeItem("htLog");
     document.getElementById('jsonTable').innerHTML = ""; // Clear the table in the HTML
+    logActivity('Erased Log');
+    location.reload(); // Reload the page to reflect changes
   } 
 }

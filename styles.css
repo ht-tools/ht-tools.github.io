@@ -6,9 +6,12 @@
   text-align: center;
 }
 
+
+
 .sectionLeft {
   text-align: left;
 }
+
 
 .container, footer, .font {
   font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
@@ -21,7 +24,7 @@
   height: 1.8em;
   width: 1.8em;
   border-radius: 10%;
-  vertical-align: bottom;
+  vertical-align: middle;
   border-width: 1px;
 }
 
@@ -70,6 +73,8 @@
   margin: 0;
 }
 
+
+
 .center {
   justify-content: center;
   align-items: center;
@@ -117,6 +122,8 @@ input[type="number"] {
   width: 50px;
 }
 
+
+
 label {
   display: block;
   margin-left: 28px;
@@ -149,6 +156,8 @@ p {
   padding: 4px;
 }
 
+
+
 .statusTable .underline {
   border-bottom: 2px solid black;
   
@@ -169,7 +178,15 @@ p {
   padding-left: 4px;
   padding-right: 4px;
 }
+/*
+.recommendedTable tr:nth-child(even) {
+  background-color: #d793ce;
+}
 
+.recommendedTable th, .recommendedTable tr:nth-child(even) {
+  background-color: #6b1bec7a;
+}
+*/
 tr {
   -webkit-transition: opacity 2s;
   -moz-transition: opacity 2s;
@@ -208,6 +225,64 @@ footer {
 .deconSection:checked ~ .decon-section {
   display: block;
 }
+
+.relative {
+  position: relative;
+}
+
+.menu-container-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-button span {
+    width: 30px;
+    height: 4px;
+    background: black;
+    margin: 4px 0;
+}
+
+h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 380px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 3px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    background-color: #fad660;
+}
+
 /*
 .left {
   font-size: 0.8em;

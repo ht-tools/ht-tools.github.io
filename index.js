@@ -1,5 +1,8 @@
 /* CONSTANTS */
 const ONE_DAY = 1000 * 60 * 60 * 24; // milliseconds in one day
+const ONE_HOUR = 1000 * 60 * 60; // milliseconds in one hour
+const ONE_MINUTE = 1000 * 60; // milliseconds in one minute
+const ADJUST_FC_TEXT = 'Add Chemicals to Hit Target'; //Adjust FC for Ideal Range at Next Use
 
 /* SET ALL DEFAULT VARIABLE VALUES */
 let textVars = {};
@@ -13,7 +16,7 @@ let chemicalPrefixes = ['Dichlor', 'Bleach', 'PhTaDown', 'MuriaticAcid', 'TaUp',
 /* Current DateTime */
 textVars['dtNow'] = "0/0/0000 00:00:00 AM";
 textVars['nothingNeeded'] = '';
-textVars['fcTargetText'] = 'Adjust for Ideal FC during next use';
+textVars['fcTargetText'] = ADJUST_FC_TEXT;
 
 /* Setup - Status */
 boolVars['showAll'] = false;
@@ -286,9 +289,9 @@ function init() {
     // N(t) = N0 * e^(-kt)
     nMilliseconds = numVars['fcModifiedDaysAgo'] * ONE_DAY; // milliseconds since last test
     numVars['fcPrediction'] = numVars['fcLastValue'] * Math.exp(-numVars['fcDecayK'] * nMilliseconds);
-    if (numVars['fcPrediction'] > numVars['fcMax']) {
+    if (numVars['fcPrediction'] >= Number(numVars['fcMax']) + 0.1) {
         document.getElementById("fc_chart").src="./images/fc_high.png";
-    } else if (numVars['fcPrediction'] >= numVars['fcMin']) {
+    } else if (numVars['fcPrediction'] > Number(numVars['fcMin']) - 0.1) {
         document.getElementById("fc_chart").src="./images/fc_ideal.png";
     } else {
         document.getElementById("fc_chart").src="./images/fc_low.png";
@@ -297,18 +300,35 @@ function init() {
     // FC - Ideal Start and End Dates
     // ln(N(t) / N0) / -k = t
     let dateLastModified = new Date(dateVars['fcLastModifiedDate']);
-    let dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMax'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
-    let dateEndIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMin'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
+    let dateStartIdeal = new Date();
+    let dateEndIdeal = new Date();
+    if (Number(numVars['fcLastValue']) > 0) {
+        dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMax'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
+        dateEndIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMin'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
+    } 
     //textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString(); 
     textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-    textVars['fcEndIdeal'] = dateEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-
+    let timeDelta = date.getTime() - dateEndIdeal.getTime(); //milliseconds since last test
+    if (timeDelta > ONE_DAY) {
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_DAY).toFixed(1) + ' days.';
+    } else if (timeDelta > ONE_HOUR) {
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_HOUR).toFixed(1) + ' hours.';
+    } else if (timeDelta > 0) { 
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_MINUTE).toFixed(0) + ' minutes.';
+    } else if (timeDelta < -ONE_DAY) {
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_DAY).toFixed(1) + ' days.';
+    } else if (timeDelta < -ONE_HOUR) {
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_HOUR).toFixed(1) + ' hours.';
+    } else {
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_MINUTE).toFixed(0) + ' minutes.';
+    }
+    
     // FC - TARGET - Start and End Dates
     // ln(N(t) / N0) / -k = t
     let dateTargetStartIdeal = new Date(date.getTime() + Math.log(numVars['fcMax'] / numVars['fcTarget']) / -numVars['fcDecayK']);
     let dateTargetEndIdeal = new Date(date.getTime() + Math.log(numVars['fcMin'] / numVars['fcTarget']) / -numVars['fcDecayK']);
-    textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-    textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetStartIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit' 
+    textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetEndIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit'
 
 /*
     numVars['fcPrediction'] = numVars['fcLastValue'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + 
@@ -518,11 +538,13 @@ function hideChemicalHeader() {
         boolVars['chemicalHeaderVisible'] = true;
         document.getElementById('chemicalHeaderRow').style.display = 'table-row';
         setTimeout(function(){document.getElementById('chemicalHeaderRow').style.opacity = 1}, 1);
+        document.getElementById('noneNeeded').innerHTML = '';
     }
     else {
         boolVars['chemicalHeaderVisible'] = false;
         document.getElementById('chemicalHeaderRow').style.opacity = 0;
         setTimeout(function(){document.getElementById('chemicalHeaderRow').style.display = 'none'}, 2000); 
+        document.getElementById('noneNeeded').innerHTML = 'None needed.';
     }
 }
 
@@ -584,7 +606,7 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
             let k = Math.log(N_0 / N_t) / t;
             numVars['fcDecayK'] = k;
             localStorage.setItem('fcDecayK', numVars['fcDecayK']);
-            console.log("fcDecayK: " + numVars['fcDecayK']);
+            
 
             /*
             const deltaValue = numVars[sPrefix + 'LastValue'] - (newValue - numVars[sPrefix + 'Added']);
@@ -626,10 +648,10 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     if (sPrefix == 'cc') {
         if (numVars['ccLastValue'] > 0.5) {
             numVars['fcTarget'] = numVars['fcSlamTarget'];
-            textVars['fcTargetText'] = 'Hold this level until CC &le; 0.5 ppm';
+            textVars['fcTargetText'] = 'Hold this Target until CC Test<br>&le; 0.5 ppm';
         } else {
             numVars['fcTarget'] = numVars['fcTargetOld'];
-            textVars['fcTargetText'] = 'Adjust for Ideal FC during next use';
+            textVars['fcTargetText'] = ADJUST_FC_TEXT;
         }
         localStorage.setItem('fcTarget', numVars['fcTarget']);
         localStorage.setItem('fcTargetText', textVars['fcTargetText']);
@@ -709,7 +731,8 @@ function addedDichlor() {
         logActivity(
             'Added ' + numVars['dichlorStrength'] + '% Dichlor', 
             formatNumber(value) + ' oz', 
-            'Increased FC by ' + formatNumber(fcDelta) + ' ppm and CYA by ' + formatNumber(fcDelta * 0.8) + ' ppm'
+            'Increased FC by ' + formatNumber(fcDelta) + ' ppm and CYA by ' + formatNumber(fcDelta * 0.8) + ' ppm. ' +
+            'Estimated CYA is now ' + (Number(numVars['caLastValue']) + Number(numVars['caAdded'])).toFixed(0) + ' ppm.'
         );
         
         refresh();
@@ -973,7 +996,7 @@ function fcTargetAdjust(delta) {
     if (numVars['fcTarget'] > 70) {
         numVars['fcTarget'] = 70;
     }
-    textVars['fcTargetText'] = 'Adjust for Ideal FC during next use';
+    textVars['fcTargetText'] = ADJUST_FC_TEXT;
     numVars['fcTargetOld'] = numVars['fcTarget']; // Store old value for comparison
     localStorage.setItem("fcTarget", numVars['fcTarget']);
     localStorage.setItem("fcTargetText", textVars['fcTargetText']);
