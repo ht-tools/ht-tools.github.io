@@ -17,17 +17,6 @@
   font-family: 'Gill Sans', 'Gill Sans MT', 'Serif', sans-serif;
 }
   
-.symbols {
-  font-size: 1.0em;
-  color: black;
-  font-weight: bold;
-  height: 1.8em;
-  width: 1.8em;
-  border-radius: 10%;
-  vertical-align: middle;
-  border-width: 1px;
-}
-
 .inputBox {
   border-color: black;
   border-width: 1px;
@@ -59,6 +48,7 @@
   border-radius: 50%;
   margin-left: 5px;
   border-width: 1px;
+  vertical-align: middle;
 }
 
 .inline {
@@ -281,6 +271,59 @@ h4 {
 
 .dropdown-menu a:hover {
     background-color: #fad660;
+}
+
+.symbols {
+  font-size: 13px; /*1.0em;*/
+  color: black;
+  font-weight: bold;
+  height: 24px; /*1.8em;*/
+  width: 24px;/*1.8em;*/
+  border-radius: 5px;
+  vertical-align: middle;
+  border-width: 1px;
+  padding: 0;
+  margin: 0;
+}
+
+.fc-container {
+    position: relative;
+}
+
+.fc-target-up {
+  position: absolute;
+  top: 115px;
+  right: 43px;
+}
+
+.fc-target-edit {
+  position: absolute;
+  top: 147px;
+  right: 43px;
+}
+
+.fc-target-down {
+  position: absolute;
+  top: 178px;
+  right: 43px;
+}
+
+.fc-target {
+  position: absolute;
+  top: 150px;
+  right: 382px;
+}
+
+.fc-max {
+  position: absolute;
+  top: 195px;
+  right: 382px;
+}
+
+.fc-min {
+  position: absolute;
+  top: 238px;
+  right: 382px;
 }
 
 /*

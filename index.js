@@ -2,7 +2,7 @@
 const ONE_DAY = 1000 * 60 * 60 * 24; // milliseconds in one day
 const ONE_HOUR = 1000 * 60 * 60; // milliseconds in one hour
 const ONE_MINUTE = 1000 * 60; // milliseconds in one minute
-const ADJUST_FC_TEXT = 'Add Chemicals to Hit Target'; //Adjust FC for Ideal Range at Next Use
+const ADJUST_FC_TEXT = 'Add Chemicals to hit Target'; //Adjust FC for Ideal Range at Next Use
 
 /* SET ALL DEFAULT VARIABLE VALUES */
 let textVars = {};
@@ -285,13 +285,27 @@ function init() {
         }
     }
 
+    // Ensure Target FC is >= new FC Max value based on CYA
+    if (textVars['fcTargetText'] == ADJUST_FC_TEXT) {
+        if (numVars['fcTarget'] < numVars['fcMax']) {
+            numVars['fcTarget'] = numVars['fcMax'];
+            numVars['fcTargetOld'] = numVars['fcTarget']; // Store old value for comparison
+            localStorage.setItem("fcTargetOld", numVars['fcTargetOld']);
+        }
+    } else {
+        numVars['fcTarget'] = numVars['fcSlamTarget'];
+    }
+    localStorage.setItem("fcTarget", numVars['fcTarget']);
+
     /* FC - Current Prediction */
     // N(t) = N0 * e^(-kt)
     nMilliseconds = numVars['fcModifiedDaysAgo'] * ONE_DAY; // milliseconds since last test
     numVars['fcPrediction'] = numVars['fcLastValue'] * Math.exp(-numVars['fcDecayK'] * nMilliseconds);
-    if (numVars['fcPrediction'] >= Number(numVars['fcMax']) + 0.1) {
+    if (Number(numVars['fcPrediction']).toFixed(1) > numVars['fcTarget']) {
         document.getElementById("fc_chart").src="./images/fc_high.png";
-    } else if (numVars['fcPrediction'] > Number(numVars['fcMin']) - 0.1) {
+    } else if (Number(numVars['fcPrediction']).toFixed(1) > numVars['fcMax']) {
+        document.getElementById("fc_chart").src="./images/fc_target.png";
+    } else if (Number(numVars['fcPrediction']).toFixed(1) >= numVars['fcMin']) {
         document.getElementById("fc_chart").src="./images/fc_ideal.png";
     } else {
         document.getElementById("fc_chart").src="./images/fc_low.png";
@@ -463,6 +477,11 @@ function init() {
     numDisplays = document.getElementsByClassName("numDisplays");
     for (display in numDisplays) {
         numDisplays[display].innerHTML = formatNumber(Number(numVars[numDisplays[display].id])); //.toFixed(2);
+    } 
+
+    numDisplays = document.getElementsByClassName("numDisplays1");
+    for (display in numDisplays) {
+        numDisplays[display].innerHTML = Number(numVars[numDisplays[display].id]).toFixed(1);
     } 
 
     numDisplays = document.getElementsByClassName("numDisplays0");
@@ -648,7 +667,7 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     if (sPrefix == 'cc') {
         if (numVars['ccLastValue'] > 0.5) {
             numVars['fcTarget'] = numVars['fcSlamTarget'];
-            textVars['fcTargetText'] = 'Hold this Target until CC Test<br>&le; 0.5 ppm';
+            textVars['fcTargetText'] = 'Hold this Target until CC Test &le; 0.5 ppm';
         } else {
             numVars['fcTarget'] = numVars['fcTargetOld'];
             textVars['fcTargetText'] = ADJUST_FC_TEXT;
@@ -990,33 +1009,37 @@ function editChemStrength(sChemicalStrengthId) {
 
 function fcTargetAdjust(delta) {
     numVars['fcTarget'] = numVars['fcTarget'] + delta;
-    if (numVars['fcTarget'] < 1) {
-        numVars['fcTarget'] = 1;
+    if (numVars['fcTarget'] < numVars['fcMax']) {
+        numVars['fcTarget'] = numVars['fcMax'];
     }
     if (numVars['fcTarget'] > 70) {
         numVars['fcTarget'] = 70;
     }
+    localStorage.setItem("fcTarget", numVars['fcTarget']);
+
     textVars['fcTargetText'] = ADJUST_FC_TEXT;
     numVars['fcTargetOld'] = numVars['fcTarget']; // Store old value for comparison
-    localStorage.setItem("fcTarget", numVars['fcTarget']);
     localStorage.setItem("fcTargetText", textVars['fcTargetText']);
     localStorage.setItem("fcTargetOld", numVars['fcTargetOld']);
+
     refresh();
 }
 
 function editFcTarget() {
-    let target = prompt("Please enter new FC target value.", numVars['fcTarget']);
+    let target = prompt("Please enter new Target FC.", numVars['fcTarget']);
     if (target) {
         target = parseInt(target);
-        if (target >= 1 && target <= 70) {
+        if (target >= numVars['fcMax'] && target <= 70) {
             numVars['fcTarget'] = target;
+            textVars['fcTargetText'] = ADJUST_FC_TEXT;
+            localStorage.setItem('fcTargetText', textVars['fcTargetText']);
             numVars['fcTargetOld'] = numVars['fcTarget']; // Store old value for comparison
             localStorage.setItem('fcTarget', numVars['fcTarget']);
             localStorage.setItem('fcTargetOld', numVars['fcTargetOld']);
             refresh();
         }
         else {
-            alert("Please enter a number between 1 and 70.");
+            alert('Please enter a number between ' + numVars['fcMax'] + ' and 70.');
         }
     }
 }

@@ -30,49 +30,26 @@
 </header>
 <body class="container fixedWidth">
   <h3>Predicted FC
-    <button class="question" onclick="alert('Free Chlorine (FC) is the amount of chlorine available to sanitize the water. The predicted value is based on previous tests and any bleach or dichlor added. Tub usage may drastically alter the FC value. The predicted value can help you avoid needing to test as often, but do not put too much faith in the prediction. When in doubt, test the FC to be sure.')">?</button>
+    <button class="question" onclick="alert('Free Chlorine (FC) is the amount of chlorine available to sanitize the water. If your FC drops below Min, bacteria can grow. The predicted value is based on the chlorine consumption between tests (Chlorine Demand) and any bleach or dichlor added. Tub usage may drastically affect FC. The predicted value allows you to test less often, but do not trust it. When in doubt, test the FC to be sure.')">?</button>
   </h3>
-  <img id="fc_chart" src="./images/fc_high.png" alt="FC Chart" width="400">
-  <br>
+  <div class="fc-container">
+    <img id="fc_chart" src="./images/fc_high.png" alt="FC Chart" width="400">
+    <button class="fc-target-up symbols center" onclick="fcTargetAdjust(+1)">&uarr;</button>
+    <button class="fc-target-edit symbols center" onclick="editFcTarget()">&#x270E</button>
+    <button class="fc-target-down symbols center" onclick="fcTargetAdjust(-1)">&darr;</button>
+    <b class="fc-target numDisplays0" id="fcTarget"></b>
+    <span class="fc-max numDisplays" id="fcMax"></span>
+    <span class="fc-min numDisplays" id="fcMin"></span>
+  </div>
   <p>
-    <b class="numDisplays0" id="fcPrediction"></b><b class="units">ppm</b>. 
+    <b class="numDisplays1" id="fcPrediction"></b><b class="units">ppm</b>. 
     Below 'min' <span class="textDisplays" id="fcEndIdeal"></span> <span><button class="symbols" onclick="refresh()">&#x27F3</button></span>
+    <br>
+    <span class="textDisplays units" id="fcTargetText"></span>
+    <button class="question" onclick="alert('Adjust the Target FC to compensate for Chlorine Demand (the rate at which your tub consumes FC). A higher Target reduces how often you need to add dichlor or bleach. The amount required to reach the Target is shown under Add Chemicals section.\n\nIf after testing CC, you see &quot;Hold this Target until CC Test &le; 0.5 ppm&quot;, add bleach or dichlor to maintain this shock-level Target FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm).')">?</button>
   </p>
-  <h3>Adjust FC
-    <button class="question" onclick="alert('Free Chlorine (FC) is the amount of chlorine available to sanitize the water. You may need to Adjust your FC higher than your ideal range, depending on how long you go between soaks, to compensate for Chlorine Demand (the rate at which your tub consumes FC). If your FC drops too low, bacteria can grow.')">?</button>
-  </h3>
-  <table class="recommendedTable">
-    <tr>
-      <th>
-        <button class="symbols center" onclick="fcTargetAdjust(-1)">&lt;</button>
-        <button class="symbols center" onclick="editFcTarget()">&#x270E</button>
-        <button class="symbols center" onclick="fcTargetAdjust(+1)">&gt;</button>
-      </th>
-      <th colspan="2">
-        <span class="textDisplays" id="fcTargetText"></span>
-        <button class="question" onclick="alert('If you see &quot;Hold this Target until CC Test &le; 0.5 ppm&quot;, do your best to maintain this level of FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm). Otherwise, use the Adjust buttons to set your own target FC. The recommended amount of Dichlor or Bleach to reach the target will be automatically calculated below.')">?</button>
-      </th>
-    </tr>
-    <tr>
-      <th>Target FC</th>
-      <th colspan="2">
-        Ideal Range (based on CYA)
-      </th>
-    </tr>
-    <tr>
-      <td><b class="numDisplays0" id="fcTarget"></b><span class="units">ppm</span></td>
-      <td><span class="numDisplays" id="fcMax"></span><span class="units">(Max)</span></td>
-      <td><span class="numDisplays" id="fcMin"></span><span class="units">(Min)</span></td>
-    </tr>
-    <tr>
-      <td><span class="textDisplays" id="dtNow"></span></td>
-      <td><span class="textDisplays" id="fcTargetStartIdeal"></span></td>
-      <td><span class="textDisplays" id="fcTargetEndIdeal"></span></td>
-    </tr>
-  </table>
-  <br>
-
-  <h3>Add Chemicals<button class="question" onclick="alert('Add the chemicals recommended below to correct any test values that are outside the ideal range and to reach the FC Target. Be sure to adjust the Strength of each chemical to match the Active Ingredient % on your bottles.')">?</button> /
+  
+  <h3>Add Chemicals<button class="question" onclick="alert('Add the chemicals recommended below to correct any test values that are outside the ideal range and to reach the Target FC. Be sure to adjust the Strength of each chemical to match the Active Ingredient % on your bottles.')">?</button> /
     <label class="inline" for="showAll">
       <input type="checkbox" id="showAll" onclick="storeShowAll()">
       <span>Show All</span>

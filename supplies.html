@@ -21,16 +21,18 @@
   <i class="center">For which of you, intending to maintain a hot tub, does not sit down first and count the supplies, whether he has enough to do it?</i>
 </header>
 <br>
-<body class="container fixedWidth"> 
+<body class="container fixedWidth" onclick="toggleMenu()"> 
   <section class="relative">
     <div class="menu-container-container">
       <div class="menu-container">
-        <button class="menu-button" onclick="toggleMenu()">
+        <button class="menu-button">
           <span></span>
           <span></span>
           <span></span>
         </button>
         <div class="dropdown-menu" id="dropdownMenu">
+          <h4>Click items to purchase from online retailers:</h4>
+          <br>
           <h4>Chemicals</h4>
           <a href="https://a.co/d/7CwQ0GI" target="_blank">Dichlor<br>- 99% Sodium Dichloro-s-Triazinetrione Dihydrate</a>
           <a href="https://www.homedepot.com/p/HDX-Chlorinating-Liquid-for-Swimming-Pool-Shock-1-Gallon-3-Pack-30128HDX/303115700" target="_blank">Bleach - 10% Sodium Hypochlorite</a>
@@ -62,7 +64,7 @@
         </div>
       </div>
     </div>
-    <img id="supplies-img" src="./images/ht-supplies-400.jpg" alt="Supplies" width="400" cursor="pointer" onclick="toggleMenu()">
+    <img id="supplies-img" src="./images/ht-supplies-400.jpg" alt="Supplies" width="400">
   </section>
   <!--section class="sectionLeft">
     <h2 class="banner">Chemicals</h2>
