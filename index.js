@@ -75,6 +75,7 @@ numVars['fcPrediction'] = 0;
 //dateVars['fcIdealStart'] = createDate(1, 0, 0);
 //numVars['fcDecay'] = 2;
 numVars['fcDecayK'] = 8.02e-9; // Default decay constant for 10 to 5 ppm FC loss in 1 day
+numVars['fcHalfLife'] = 1; // Default half-life in days
 numVars['fcTarget'] = 5;
 numVars['fcTargetOld'] = 5; // Store old value for comparison
 numVars['addDichlor'] = 0;
@@ -102,7 +103,7 @@ numVars['addPhUp'] = 0;
 numVars['taNewTestDisplay'] = 0;
 numVars['taLastValue'] = 50;
 dateVars['taLastTestDate'] = createDate(0, -2, 0);
-numVars['taDaysAgo'] = 60;
+/*numVars['taDaysAgo'] = 60;*/
 numVars['taTarget'] = 50;
 numVars['addTaUp'] = 0;
 
@@ -130,10 +131,10 @@ textVars['dichlorMessage'] = 'Dichlor';
 numVars['bleachStrength'] = 10;
 textVars['bleachMessage'] = 'Bleach';
 numVars['phTaDownStrength'] = 93;
-numVars['muriaticStrength'] = 31.45;
+numVars['muriaticStrength'] = 14.5;
 numVars['taUpStrength'] = 100;
 numVars['phUpStrength'] = 100;
-numVars['calciumStrength'] = 77;
+numVars['calciumStrength'] = 100;
 // numVars['boricAcidStrength'] = 98;
 
 /* Setup - Time Limits 
@@ -208,9 +209,9 @@ function init() {
     numVars['phDaysAgo'] = (date - dateVars['phLastTestDate']) / ONE_DAY;
     document.getElementById("phMeter").value = numVars['phDaysAgo'];
 
-    /* TA - Days Since Last Test */
+    /* TA - Days Since Last Test 
     numVars['taDaysAgo'] = (date - dateVars['taLastTestDate']) / ONE_DAY;
-    document.getElementById("taMeter").value = numVars['taDaysAgo'];
+    document.getElementById("taMeter").value = numVars['taDaysAgo'];*/
 
     /* CH - Days Since Last Test */
     numVars['chDaysAgo'] = (date - dateVars['chLastTestDate']) / ONE_DAY;
@@ -623,8 +624,12 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
             let N_t = newValue;
             let N_0 = numVars['fcLastValue']; // + numVars['fcAdded'];
             let k = Math.log(N_0 / N_t) / t;
+            let halfLife = Math.log(2) / k / ONE_DAY; // in days
             numVars['fcDecayK'] = k;
             localStorage.setItem('fcDecayK', numVars['fcDecayK']);
+            numVars['fcHalfLife'] = halfLife;
+            localStorage.setItem('fcHalfLife', numVars['fcHalfLife']);
+
             
 
             /*
@@ -718,7 +723,14 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     if (prefix == 'CA') {
         prefix = 'CYA';
     }
-    logActivity('Tested ' + prefix, formatNumber(newValue) + units);
+
+    if (sPrefix == 'fc') {
+        logActivity('Tested ' + prefix, formatNumber(newValue) + units, 'FC Half Life: ' + formatNumber(numVars['fcHalfLife']) + ' days');
+    } else {
+        logActivity('Tested ' + prefix, formatNumber(newValue) + units);
+    }
+
+    
     
     refresh();
 }

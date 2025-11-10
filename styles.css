@@ -220,58 +220,7 @@ footer {
   position: relative;
 }
 
-.menu-container-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
 
-.menu-container {
-    position: relative;
-}
-
-.menu-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-.menu-button span {
-    width: 30px;
-    height: 4px;
-    background: rgb(255, 255, 255);
-    margin: 4px 0;
-}
-
-h4 {
-    margin: 0;
-    padding: 0;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: 380px;
-    text-align: left;
-    background-color: white;
-    border: 1px solid #ccc;
-    z-index: 1;
-}
-
-.dropdown-menu a {
-    display: block;
-    padding: 3px;
-    text-decoration: none;
-    color: black;
-}
-
-.dropdown-menu a:hover {
-    background-color: #fad660;
-}
 
 .symbols {
   font-size: 13px; /*1.0em;*/
@@ -326,43 +275,37 @@ h4 {
   right: 382px;
 }
 
-/*
-.left {
-  font-size: 0.8em;
-  align-content: left;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0px;
 }
 
-.right {
-  font-size: 0.8em;
-  align-content: right;
-}
-  */
-
-/* TBD meter labels below do not show on iPhone Safari or Desktop Firefox 
-
-.meter7, .meter30 {
-  position: relative;
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 0px;
 }
 
-.meter7::before, .meter30::before {
-  content: '0';
-  font-size: 0.8em;
-  position: absolute;
-  top: -100%;
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
 }
 
-.meter7::after {
-  content: '7';
-  font-size: 0.8em;
-  position: absolute;
-  top: -100%;
-  right: 0;
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 200px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
 }
 
-.meter30::after {
-  content: '30';
-  font-size: 0.8em;
-  position: absolute;
-  top: -100%;
-  right: 0;
-}*/
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 100px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
