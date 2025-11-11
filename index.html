@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <!-- TODO: Add meta tags for SEO and PWA. Add Open Graph tags for social media sharing.
-  <meta name="description" content="Hot Tub Tools for managing your hot tub water chemistry.">
-  <meta name="keywords" content="hot tub, tools, water chemistry, maintenance,">
-  <meta name="author" content="Your Name">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="icon" href="./favicon.ico">
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <link rel="manifest" href="./manifest.json">
--->
+  <!-- TODO: Add Open Graph tags for social media sharing. -->
+  <meta name="description" content="Hot Tub web app for managing your hot tub water chemistry with the dichlor/bleach method.">
+  <meta name="keywords" content="hot tub, spa, water chemistry, maintenance, ph, free chlorine, combined chlorine, acid demand, base demand, volume, filter, total alkalinity, muriatic acid, calcium hardness, calcium chloride, cyanuric acid, dichlor, bleach, sodium Hypochlorite, sodium dichloro-s-triazinetrione dihydrate, sodium bisulfate, sodium bicarbonate, sodium carbonate, chlorine demand, breakpoint chlorination">
+
   <title>HTJ</title>
   <link rel="icon" href="./favicon.ico">
   <link rel="apple-touch-icon-precomposed" href="./favicon-152.png" sizes="152x152" type="image/png">
@@ -29,7 +24,7 @@
   </nav>
   <br>
   <img class="top-rounded" id="htj_logo" src="./images/htj-top-400.jpg" alt="HTJ" width="400">
-  <i class="center">Thou shalt never let the free chlorine fall below the Min.</i>
+  <i class="center">Thou shalt never let free chlorine fall below the minimum.</i>
 </header>
 <body class="container fixedWidth">
   <h3>Predicted FC
@@ -237,7 +232,7 @@
           </dialog>
         </td>
         <td><span class="small_left">Depends<br>on CYA </span></td>
-        <form onsubmit="updateTest('fc');return false"> <!--, 'fcDaysAgoLimit'-->
+        <form onsubmit="updateTest('fc');return false">
           <td><input class="inputBox" type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
           <td><meter class="meter7" id="fcMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td> 
           <td><button type="submit">Tested</button></td>
@@ -257,9 +252,9 @@
           </dialog>
         </td>
         <td><span class="units">&le; 0.5</span></td>
-        <form onsubmit="updateTest('cc');return false"> <!--, 'ccDaysAgoLimit'-->
+        <form onsubmit="updateTest('cc');return false"> 
           <td><input class="inputBox" type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
-          <td><meter id="ccMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="ccDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+          <td><meter id="ccMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td>
           <td><button type="submit">Tested</button></td>
         </form>
       </tr>
@@ -277,9 +272,9 @@
           </dialog>
         </td>
         <td><span class="units">7.4-7.8</span></td>
-        <form onsubmit="updateTest('ph');return false"> <!--, 'phDaysAgoLimit'-->
+        <form onsubmit="updateTest('ph');return false"> 
           <td><input class="inputBox" type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
-          <td><meter id="phMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter><!--<input class="numInputs2" type="number" id="phDaysAgoLimit" min="0" max="14" step="any" required><span class="units">days</span>--></td>
+          <td><meter id="phMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td>
           <td><button type="submit">Tested</button></td>
         </form>
       </tr>
@@ -356,9 +351,9 @@
           </dialog>
         </td>
         <td><span class="small_left">30-50</span></td>
-        <form onsubmit="updateTest('ca');return false"> <!--, 'caDaysAgoLimit'-->
+        <form onsubmit="updateTest('ca');return false"> 
           <td><input class="inputBox" type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-          <td><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="caDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+          <td><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
           <td><button type="submit">Tested</button></td>
         </form>
       </tr>
@@ -377,9 +372,9 @@
           </dialog>
         </td>
         <td><span class="small_left">150-250<br> </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
-        <form onsubmit="updateTest('ch');return false"> <!--, 'chDaysAgoLimit'-->
+        <form onsubmit="updateTest('ch');return false"> 
           <td><input class="inputBox" type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-          <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs2" type="number" id="chDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>
+          <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
           <td><button type="submit">Tested</button></td>
         </form>
       </tr>
@@ -398,7 +393,7 @@
           </dialog>
         </td>
         <td><span class="small_left">30-120<br> </span><span><button class="symbols" onclick="editTaTarget()">&#x270E</button></span></td>
-        <form onsubmit="updateTest('ta');return false"> <!--, 'taDaysAgoLimit'-->
+        <form onsubmit="updateTest('ta');return false"> 
           <td>
             <input class="inputBox" type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
             <input type="hidden" id="taNewTest">
@@ -407,7 +402,7 @@
               <span class="numDisplays0" id="taNewTestDisplay"></span>)
             </span>
           </td>
-          <td>(as needed)<!--meter id="taMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><input class="numInputs2" type="number" id="taDaysAgoLimit" min="0" max="90" step="any" required><span class="units">days</span>--></td>
+          <td>(as needed)</td>
           <td><button type="submit">Tested</button></td>
         </form>
       </tr>
@@ -423,7 +418,7 @@
         </td>
         <form onsubmit="confirmedSpaVolume();return false">
           <td><input class="numInputs0 inputBox" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gal</span></td>
-          <td><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="spaVolumeDaysAgoLimit" min="0" max="365" step="any" required><span class="units">days</span>--></td>
+          <td><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
           <td><button type="submit">Done</button></td>
         </form>
       </tr>
@@ -443,7 +438,7 @@
         </td>
         <td>Rinse/Replace</td>
         <form onsubmit="cleanedFilter();return false">
-          <td><meter id="filterMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter><!--<input class="numInputs0" type="number" id="filterCleanedDaysAgoLimit" min="0" max="60" step="any" required><span class="units">days</span>--></td>
+          <td><meter id="filterMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
           <td><button type="submit">Done</button></td>
         </form>
       </tr>
@@ -452,7 +447,7 @@
 </body>
 <footer>
   <img class="bottom-rounded" id="htj_logo" src="./images/htj-bottom-400.jpg" alt="HTJ" width="400">
-  <br><br>
+  <br>
   <span>Add an icon to your home screen on </span><a href="https://support.apple.com/guide/iphone/bookmark-a-website-iph42ab2f3a7/ios#aria-iph4f9a47bbc" target="_blank">Apple</a>
   <span> or </span><a href="https://support.google.com/chrome/answer/15085120?hl=en&co=GENIE.Platform%3DAndroid&oco=0" target="_blank">Android</a><span> devices.</span>
 </footer>

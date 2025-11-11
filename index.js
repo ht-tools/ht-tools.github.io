@@ -2,7 +2,7 @@
 const ONE_DAY = 1000 * 60 * 60 * 24; // milliseconds in one day
 const ONE_HOUR = 1000 * 60 * 60; // milliseconds in one hour
 const ONE_MINUTE = 1000 * 60; // milliseconds in one minute
-const ADJUST_FC_TEXT = 'Add Chemicals to hit Target'; //Adjust FC for Ideal Range at Next Use
+const ADJUST_FC_TEXT = 'Add Chemicals to hit Target'; 
 
 /* SET ALL DEFAULT VARIABLE VALUES */
 let textVars = {};
@@ -10,7 +10,6 @@ let numVars = {};
 let dateVars = {};
 let boolVars = {};
 
-//let testAndMaintainPrefixes = ['ca', 'ta', 'ch', 'spaVolume', 'filterCleaned', 'filterReplaced']; // fc, cc, ph always on
 let chemicalPrefixes = ['Dichlor', 'Bleach', 'PhTaDown', 'MuriaticAcid', 'TaUp', 'PhUp', 'Calcium'];
 
 /* Current DateTime */
@@ -38,7 +37,6 @@ boolVars['showch'] = true; // Always show CH
 boolVars['chVisible'] = false;
 boolVars['showSpaVolume'] = true; // Always show Spa Volume
 boolVars['showFilterCleaned'] = true; // Always show Filter Cleaned
-//boolVars['showFilterReplaced'] = false;
 boolVars['showDichlor'] = false;
 boolVars['DichlorVisible'] = false;
 boolVars['showBleach'] = false;
@@ -62,26 +60,20 @@ boolVars['adjustTA'] = false;
 numVars['caLastValue'] = 0;
 dateVars['caLastTestDate'] = createDate(0, -2, 0);
 numVars['caPrediction'] = 0;
-// numVars['caDecay'] = 0;
 numVars['caAdded'] = 0;
 numVars['caDaysAgo'] = 60;
-//numVars['caNegCorrection'] = 0;
 
 /* FC */
 numVars['fcLastValue'] = 0;
 dateVars['fcLastTestDate'] = createDate(-7, 0, 0); 
 dateVars['fcLastModifiedDate'] = createDate(-7, 0, 0);
 numVars['fcPrediction'] = 0;
-//dateVars['fcIdealStart'] = createDate(1, 0, 0);
-//numVars['fcDecay'] = 2;
 numVars['fcDecayK'] = 8.02e-9; // Default decay constant for 10 to 5 ppm FC loss in 1 day
 numVars['fcHalfLife'] = 1; // Default half-life in days
 numVars['fcTarget'] = 5;
 numVars['fcTargetOld'] = 5; // Store old value for comparison
 numVars['addDichlor'] = 0;
 numVars['fcAddBleach'] = 0;
-//numVars['fcAdded'] = 0;
-//numVars['fcNegCorrection'] = 0;
 numVars['fcMin'] = 3;
 numVars['fcMax'] = 5;
 
@@ -103,7 +95,6 @@ numVars['addPhUp'] = 0;
 numVars['taNewTestDisplay'] = 0;
 numVars['taLastValue'] = 50;
 dateVars['taLastTestDate'] = createDate(0, -2, 0);
-/*numVars['taDaysAgo'] = 60;*/
 numVars['taTarget'] = 50;
 numVars['addTaUp'] = 0;
 
@@ -117,10 +108,8 @@ numVars['addCalcium'] = 0;
 /* Maintenance */
 dateVars['spaVolumeLastConfirmed'] = createDate(0, -2, 0);
 dateVars['filterLastCleaned'] = createDate(0, -2, 0);
-//dateVars['filterLastReplaced'] = createDate(0, 0, -2);
 numVars['spaVolumeDaysAgo'] = 60;
 numVars['filterCleanedDaysAgo'] = 60;
-//numVars['filterReplacedDaysAgo'] = 700;
 
 /* Setup - Spa */
 numVars['spaVolume'] = 400;
@@ -135,19 +124,6 @@ numVars['muriaticStrength'] = 14.5;
 numVars['taUpStrength'] = 100;
 numVars['phUpStrength'] = 100;
 numVars['calciumStrength'] = 100;
-// numVars['boricAcidStrength'] = 98;
-
-/* Setup - Time Limits 
-numVars['caDaysAgoLimit'] = 30;
-numVars['fcDaysAgoLimit'] = 1;
-numVars['ccDaysAgoLimit'] = 7;
-numVars['phDaysAgoLimit'] = 1;
-numVars['taDaysAgoLimit'] = 14;
-numVars['chDaysAgoLimit'] = 30;
-numVars['spaVolumeDaysAgoLimit'] = 365;
-numVars['filterCleanedDaysAgoLimit'] = 21;
-numVars['filterReplacedDaysAgoLimit'] = 365;
-*/
 
 window.addEventListener('load', init, false); // Call init() when page loads
 
@@ -209,10 +185,6 @@ function init() {
     numVars['phDaysAgo'] = (date - dateVars['phLastTestDate']) / ONE_DAY;
     document.getElementById("phMeter").value = numVars['phDaysAgo'];
 
-    /* TA - Days Since Last Test 
-    numVars['taDaysAgo'] = (date - dateVars['taLastTestDate']) / ONE_DAY;
-    document.getElementById("taMeter").value = numVars['taDaysAgo'];*/
-
     /* CH - Days Since Last Test */
     numVars['chDaysAgo'] = (date - dateVars['chLastTestDate']) / ONE_DAY;
     document.getElementById("chMeter").value = numVars['chDaysAgo'];
@@ -223,15 +195,12 @@ function init() {
 
     numVars['filterCleanedDaysAgo'] = (date - dateVars['filterLastCleaned']) / ONE_DAY;
     document.getElementById("filterMeter").value = numVars['filterCleanedDaysAgo'];
-    //numVars['filterReplacedDaysAgo'] = (date - dateVars['filterLastReplaced']) / ONE_DAY;
-
+    
     /* CALCULATE ALL OTHER DEPENDENT VARIABLES */
 
     /* CYA - Current Prediction */
-    numVars['caPrediction'] = numVars['caLastValue'] + numVars['caAdded']; // + numVars['caNegCorrection'];// - (numVars['caDecay'] * numVars['caDaysAgo']) 
+    numVars['caPrediction'] = numVars['caLastValue'] + numVars['caAdded']; 
     if (numVars['caPrediction'] < 0) {
-        // numVars['caNegCorrection'] = numVars['caNegCorrection'] - numVars['caPrediction'];
-        // localStorage.setItem('caNegCorrection', numVars['caNegCorrection']);
         numVars['caPrediction'] = 0;
     }
     if (numVars['caPrediction'] > 90) {
@@ -321,7 +290,6 @@ function init() {
         dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMax'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
         dateEndIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMin'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
     } 
-    //textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString(); 
     textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
     let timeDelta = date.getTime() - dateEndIdeal.getTime(); //milliseconds since last test
     if (timeDelta > ONE_DAY) {
@@ -345,15 +313,6 @@ function init() {
     textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetStartIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit' 
     textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetEndIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit'
 
-/*
-    numVars['fcPrediction'] = numVars['fcLastValue'] - (numVars['fcDecay'] * numVars['fcDaysAgo']) + 
-        numVars['fcAdded'] + numVars['fcNegCorrection'];
-    if (numVars['fcPrediction'] < 0) {
-        numVars['fcNegCorrection'] = numVars['fcNegCorrection'] - numVars['fcPrediction'];
-        localStorage.setItem('fcNegCorrection', numVars['fcNegCorrection']);
-        numVars['fcPrediction'] = 0;
-    }
-*/
     /* Dichlor and Bleach Amount to Add*/
     let fcTargetDelta = numVars['fcTarget'] - numVars['fcPrediction'];
     if (fcTargetDelta < 0.5) {
@@ -361,34 +320,7 @@ function init() {
     }
     const fcAddDichlor = fcTargetDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength'];
     const fcAddBleach = fcTargetDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength'];
-    /*
-    let fcBreakpointDelta = numVars['ccLastValue'] * 10 - numVars['fcPrediction'];
-    if (fcBreakpointDelta < 0.5) {
-        fcBreakpointDelta = 0;
-    }
-    const ccAddDichlor = fcBreakpointDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength'];
-    const ccAddBleach = fcBreakpointDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength'];
     
-    let maxAddDichlor = 0;
-    if (fcAddDichlor > ccAddDichlor) {
-        maxAddDichlor = fcAddDichlor; // Use the FC amount if it is higher
-        textVars['dichlorMessage'] = 'Dichlor for FC';
-    } else {
-        maxAddDichlor = ccAddDichlor; // Use the CC amount if it is higher
-        textVars['dichlorMessage'] = 'Dichlor for 10x CC';
-    }
-    localStorage.setItem("dichlorMessage", textVars['dichlorMessage']);
-    
-    let maxAddBleach = 0;
-    if (fcAddBleach > ccAddBleach) {
-        maxAddBleach = fcAddBleach; // Use the FC amount if it is higher
-        textVars['bleachMessage'] = 'Bleach for FC';
-    } else {
-        maxAddBleach = ccAddBleach; // Use the CC amount if it is higher
-        textVars['bleachMessage'] = 'Bleach for 10x CC';
-    }
-    localStorage.setItem("bleachMessage", textVars['bleachMessage']);
-    */
     if (numVars['caPrediction'] <= 40) { // CYA is low enough to use Dichlor
         numVars['addDichlor'] = fcAddDichlor; // Use the max amount of Dichlor calculated
         numVars['addBleach'] = '0.00'; // Don't use bleach if CYA is low
@@ -458,8 +390,6 @@ function init() {
 
     inputBoxes = document.getElementsByClassName("numInputs1");
     for (box in inputBoxes) {
-        // inputBoxes[box].value = formatNumber(Number(numVars[inputBoxes[box].id])); //.toFixed(2);
-        // set inputBoxes[box].value equal to 1 decimal place, rounded to nearest 0.5
         inputBoxes[box].value = (Math.round(Number(numVars[inputBoxes[box].id]) * 2) / 2).toFixed(1);
     } 
 
@@ -477,7 +407,7 @@ function init() {
     /* POPULATE ALL NUMERIC INNER HTML */
     numDisplays = document.getElementsByClassName("numDisplays");
     for (display in numDisplays) {
-        numDisplays[display].innerHTML = formatNumber(Number(numVars[numDisplays[display].id])); //.toFixed(2);
+        numDisplays[display].innerHTML = formatNumber(Number(numVars[numDisplays[display].id])); 
     } 
 
     numDisplays = document.getElementsByClassName("numDisplays1");
@@ -497,11 +427,7 @@ function init() {
     } 
 
     // SELECT ROWS TO HIDE
-    /*
-    for (prefix in testAndMaintainPrefixes) {
-        displayTestAndMaintainRow(testAndMaintainPrefixes[prefix]);
-    }
-*/
+
     for (prefix in chemicalPrefixes) {
         displayChemicalRow(chemicalPrefixes[prefix]);
     }
@@ -528,29 +454,13 @@ function init() {
         setTimeout(function(){document.getElementById('bdRow').style.display = 'none'}, 2000);
     }
 
-    //hideTestHeader();
     hideChemicalHeader();
-    //hideMaintainHeader();
+    
     
     
 }
 
 // FUNCTIONS
-/*
-function hideTestHeader() {
-    if (    boolVars['caVisible'] || boolVars['fcVisible'] || boolVars['ccVisible'] || boolVars['phVisible'] || 
-            boolVars['adVisible'] || boolVars['bdVisible'] || boolVars['taVisible'] || boolVars['chVisible']) {
-        boolVars['testHeaderVisible'] = true;
-        document.getElementById('testHeaderRow').style.display = 'table-row';
-        setTimeout(function(){document.getElementById('testHeaderRow').style.opacity = 1}, 1);
-    }
-    else {
-        boolVars['testHeaderVisible'] = false;
-        document.getElementById('testHeaderRow').style.opacity = 0;
-        setTimeout(function(){document.getElementById('testHeaderRow').style.display = 'none'}, 2000);
-    }
-}
-*/
 function hideChemicalHeader() {
     if (    boolVars['DichlorVisible'] || boolVars['BleachVisible'] || boolVars['PhTaDownVisible'] || 
             boolVars['MuriaticAcidVisible'] || boolVars['TaUpVisible'] || boolVars['PhUpVisible'] || 
@@ -568,35 +478,6 @@ function hideChemicalHeader() {
     }
 }
 
-
-
-/*
-function hideMaintainHeader() {
-    if (boolVars['spaVolumeVisible'] || boolVars['filterCleanedVisible'] || boolVars['filterReplacedVisible']) {
-        boolVars['maintenanceHeaderVisible'] = true;
-        document.getElementById('maintainHeaderRow').style.display = 'table-row';
-        setTimeout(function(){document.getElementById('maintainHeaderRow').style.opacity = 1}, 1);
-    }
-    else {
-        boolVars['maintenanceHeaderVisible'] = false;
-        document.getElementById('maintainHeaderRow').style.opacity = 0;
-        setTimeout(function(){document.getElementById('maintainHeaderRow').style.display = 'none'}, 2000);
-    }
-}
-*/
-/*
-function displayTestAndMaintainRow(prefix) {
-    boolVars[prefix + 'Visible'] = boolVars['showAll'] || boolVars['show' + prefix] || numVars[prefix + 'DaysAgo'] > numVars[prefix + 'DaysAgoLimit'];
-    if (boolVars[prefix + 'Visible']) {
-        document.getElementById(prefix + 'Row').style.display = 'table-row';
-        setTimeout(function(){document.getElementById(prefix + 'Row').style.opacity = 1}, 1);
-    }
-    else {
-        document.getElementById(prefix + 'Row').style.opacity = 0;
-        setTimeout(function(){document.getElementById(prefix + 'Row').style.display = 'none'}, 2000);
-    }
-}
-*/
 function displayChemicalRow(prefix) {
     boolVars[prefix + 'Visible'] = boolVars['showAll'] || boolVars['show' + prefix] || numVars['add' + prefix] > 0;
     if (boolVars[prefix + 'Visible']) {
@@ -629,22 +510,8 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
             localStorage.setItem('fcDecayK', numVars['fcDecayK']);
             numVars['fcHalfLife'] = halfLife;
             localStorage.setItem('fcHalfLife', numVars['fcHalfLife']);
-
-            
-
-            /*
-            const deltaValue = numVars[sPrefix + 'LastValue'] - (newValue - numVars[sPrefix + 'Added']);
-            if (deltaValue >= 0) {
-                numVars[sPrefix + 'DaysAgo'] = (date - dateVars[sPrefix + 'LastTestDate']) / ONE_DAY;
-                numVars[sPrefix + 'Decay'] = (deltaValue / numVars[sPrefix + 'DaysAgo']);
-                if (numVars[sPrefix + 'Decay'] > 30) {
-                    numVars[sPrefix + 'Decay'] = 30;
-                }
-                localStorage.setItem(sPrefix + 'Decay', numVars[sPrefix + 'Decay']); 
-            }*/
         }
     }
-    
     
     numVars[sPrefix + 'LastValue'] = newValue;
     localStorage.setItem(sPrefix + 'LastValue', numVars[sPrefix + 'LastValue']);
@@ -660,15 +527,6 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     numVars[sPrefix + 'Added'] = 0; 
     localStorage.setItem(sPrefix + 'Added', numVars[sPrefix + 'Added']);
 
-    //numVars[sPrefix + 'NegCorrection'] = 0;
-    //localStorage.setItem(sPrefix + 'NegCorrection', numVars[sPrefix + 'NegCorrection']);
-        /*
-    if (sDaysAgoLimitId) {
-        const daysAgoLimit = document.getElementById(sDaysAgoLimitId);
-        numVars[daysAgoLimit.id] = daysAgoLimit.valueAsNumber;
-        localStorage.setItem(daysAgoLimit.id, numVars[daysAgoLimit.id]);
-    }
-*/
     if (sPrefix == 'cc') {
         if (numVars['ccLastValue'] > 0.5) {
             numVars['fcTarget'] = numVars['fcSlamTarget'];
@@ -729,9 +587,6 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
     } else {
         logActivity('Tested ' + prefix, formatNumber(newValue) + units);
     }
-
-    
-    
     refresh();
 }
 
@@ -744,18 +599,14 @@ function addedDichlor() {
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
-        //numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
         numVars['caAdded'] = numVars['caAdded'] + (fcDelta * 0.8);
-        //numVars['ccLastValue'] = 0; // Reset CC to 0 after adding Dichlor 
-
+        
         // N(t) = N0 * e^(-kt)
         // Add fcAdded to predicted value and store as LastTest value
         numVars['fcLastValue'] = numVars['fcPrediction'] + fcDelta; 
         dateVars['fcLastModifiedDate'] = new Date(); // milliseconds since epoch
 
-        //localStorage.setItem('fcAdded', numVars['fcAdded']);
         localStorage.setItem('caAdded', numVars['caAdded']);
-        //localStorage.setItem('ccLastValue', numVars['ccLastValue']);
         localStorage.setItem('fcLastValue', numVars['fcLastValue']);
         localStorage.setItem('fcLastModifiedDate', dateVars['fcLastModifiedDate']);
 
@@ -779,16 +630,12 @@ function addedBleach() {
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.51 / numVars['spaVolume'] * 400 / 10 * numVars['bleachStrength'];
-        //numVars['fcAdded'] = numVars['fcAdded'] + fcDelta;
-        //numVars['ccLastValue'] = 0; // Reset CC to 0 after adding Bleach
-
+        
         // N(t) = N0 * e^(-kt)
         // Add fcAdded to predicted value and store as LastTest value
         numVars['fcLastValue'] = numVars['fcPrediction'] + fcDelta; 
         dateVars['fcLastModifiedDate'] = new Date(); // milliseconds since epoch
 
-        //localStorage.setItem("fcAdded", numVars['fcAdded']);
-        //localStorage.setItem('ccLastValue', numVars['ccLastValue']);
         localStorage.setItem('fcLastValue', numVars['fcLastValue']);
         localStorage.setItem('fcLastModifiedDate', dateVars['fcLastModifiedDate']);
         
@@ -924,10 +771,6 @@ function addedCalcium() {
 function confirmedSpaVolume() {
     numVars['spaVolume'] = spaVolume.valueAsNumber;
     localStorage.setItem("spaVolume", numVars['spaVolume']);
-    /*
-    numVars['spaVolumeDaysAgoLimit'] = spaVolumeDaysAgoLimit.valueAsNumber;
-    localStorage.setItem('spaVolumeDaysAgoLimit', numVars['spaVolumeDaysAgoLimit']);
-*/
     localStorage.setItem('spaVolumeLastConfirmed', new Date());
     
     logActivity(
@@ -941,9 +784,6 @@ function confirmedSpaVolume() {
 // MAINTAIN - FILTER CLEANED
 
 function cleanedFilter() {
-    //numVars['filterCleanedDaysAgoLimit'] = filterCleanedDaysAgoLimit.valueAsNumber;
-    //localStorage.setItem('filterCleanedDaysAgoLimit',numVars['filterCleanedDaysAgoLimit']); 
-
     localStorage.setItem('filterLastCleaned', new Date());
     
     logActivity(
@@ -953,21 +793,6 @@ function cleanedFilter() {
     refresh();
 }
 
-// MAINTAIN - FILTER REPLACED
-/*
-function replacedFilter() {
-    numVars['filterReplacedDaysAgoLimit'] = filterReplacedDaysAgoLimit.valueAsNumber;
-    localStorage.setItem('filterReplacedDaysAgoLimit', numVars['filterReplacedDaysAgoLimit']); 
-    
-    localStorage.setItem("filterLastReplaced", new Date());
-    
-    logActivity(
-        'Replaced Filter'
-    );
-    
-    refresh();
-}
-*/
 // OTHER FUNCTIONS
 function refresh() {
     init();
