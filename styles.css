@@ -251,11 +251,11 @@ footer {
 
 dialog {
   width: 400px;
-  max-height: 800px;
+  max-height: 750px;
 }
 
 .column dialog img {
-  max-height: 700px;
+  max-height: 650px;
   width: auto;
 }
 
