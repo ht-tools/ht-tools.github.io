@@ -88,9 +88,6 @@ button {
   cursor: pointer;
 }
 
-dialog {
-  width: 400px;
-}
 
 .columnHeadings {
   display: flex;
@@ -250,6 +247,16 @@ footer {
   position: absolute;
   top: 238px;
   right: 382px;
+}
+
+dialog {
+  width: 400px;
+  max-height: 800px;
+}
+
+.column dialog img {
+  max-height: 700px;
+  width: auto;
 }
 
 .row {
