@@ -125,10 +125,15 @@ numVars['taUpStrength'] = 100;
 numVars['phUpStrength'] = 100;
 numVars['calciumStrength'] = 100;
 
+let timer = null;
+
 window.addEventListener('load', init, false); // Call init() when page loads
 
 /* FUNCTIONS */
 function init() {
+    if (timer) {
+        clearTimeout(timer);
+    }
     /* OVERWRITE DEFAULTS WITH ANY VALUES STORED IN THE BROWSER */
     for (var key in textVars) {
         var value = localStorage.getItem(key);
@@ -456,7 +461,7 @@ function init() {
 
     hideChemicalHeader();
     
-    
+    timer = setTimeout(init, ONE_MINUTE); // Refresh every 1 minute
     
 }
 
@@ -599,7 +604,7 @@ function addedDichlor() {
         // including correction for decay causing Predicted value to go negative,
         // immediately before adding the value in case it's been a while since the last refresh.
         const fcDelta = value / 0.1032 / numVars['spaVolume'] * 400 / 99 * numVars['dichlorStrength'];
-        numVars['caAdded'] = numVars['caAdded'] + (fcDelta * 0.8);
+        numVars['caAdded'] = numVars['caAdded'] + (fcDelta * 0.9);
         
         // N(t) = N0 * e^(-kt)
         // Add fcAdded to predicted value and store as LastTest value
@@ -613,7 +618,7 @@ function addedDichlor() {
         logActivity(
             'Added ' + numVars['dichlorStrength'] + '% Dichlor', 
             formatNumber(value) + ' oz', 
-            'Increased FC by ' + formatNumber(fcDelta) + ' ppm and CYA by ' + formatNumber(fcDelta * 0.8) + ' ppm. ' +
+            'Increased FC by ' + formatNumber(fcDelta) + ' ppm and CYA by ' + formatNumber(fcDelta * 0.9) + ' ppm. ' +
             'Estimated CYA is now ' + (Number(numVars['caLastValue']) + Number(numVars['caAdded'])).toFixed(0) + ' ppm.'
         );
         
