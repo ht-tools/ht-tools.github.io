@@ -34,12 +34,13 @@
   </dialog>
   
   <div class="fc-container">
-    <img id="fc_chart" src="./images/fc_high.png" alt="FC Chart" width="400">
+    <img id="fc_chart" src="./images/fc_too_high.png" alt="FC Chart" width="400">
     <button class="fc-target-up symbols center" onclick="fcTargetAdjust(+1)">&uarr;</button>
     <button class="fc-target-edit symbols center" onclick="editFcTarget()">&#x270E</button>
     <button class="fc-target-down symbols center" onclick="fcTargetAdjust(-1)">&darr;</button>
+    <span class="fc-max numDisplays" id="fcSlamTarget"></span>
     <b class="fc-target numDisplays0" id="fcTarget"></b>
-    <span class="fc-max numDisplays" id="fcMax"></span>
+    <span class="fc-high numDisplays" id="fcHigh"></span>
     <span class="fc-min numDisplays" id="fcMin"></span>
     <span class="textDisplays units fc-target-text" id="fcTargetText"></span>
     <button class="question fc-target-question" onclick="showDialog('fcTargetDialog')">?</button>

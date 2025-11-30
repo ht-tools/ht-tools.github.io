@@ -245,21 +245,27 @@ footer {
   left: 70px;
 }
 
-.fc-target {
+.fc-max {
   position: absolute;
-  top: 150px;
+  top: 107px;
   right: 382px;
 }
 
-.fc-max {
+.fc-target {
   position: absolute;
-  top: 195px;
+  top: 148px;
+  right: 382px;
+}
+
+.fc-high {
+  position: absolute;
+  top: 193px;
   right: 382px;
 }
 
 .fc-min {
   position: absolute;
-  top: 238px;
+  top: 235px;
   right: 382px;
 }
 

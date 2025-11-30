@@ -75,7 +75,8 @@ numVars['fcTargetOld'] = 5; // Store old value for comparison
 numVars['addDichlor'] = 0;
 numVars['fcAddBleach'] = 0;
 numVars['fcMin'] = 3;
-numVars['fcMax'] = 5;
+numVars['fcHigh'] = 5;
+numVars['fcSlamTarget'] = 10; // Same as FC Max
 
 /* CC */
 numVars['ccLastValue'] = 0;
@@ -208,62 +209,48 @@ function init() {
     if (numVars['caPrediction'] < 0) {
         numVars['caPrediction'] = 0;
     }
-    if (numVars['caPrediction'] > 90) {
-        numVars['fcMin'] = 11;
-        numVars['fcMax'] = 13;
+
+    numVars['fcSlamTarget'] = Number((Number(numVars['caPrediction']) * 0.4).toFixed(0)); // SLAM Target and Max FC based on CYA
+    if (numVars['fcSlamTarget'] < 10) {
+        numVars['fcSlamTarget'] = 10;
+    }
+    if (numVars['fcSlamTarget'] > 39) {
         numVars['fcSlamTarget'] = 39;
-    } else {
-        if (numVars['caPrediction'] > 80) {
-            numVars['fcMin'] = 10;
-            numVars['fcMax'] = 12;
-            numVars['fcSlamTarget'] = 35;
-        } else {
-            if (numVars['caPrediction'] > 70) {
-                numVars['fcMin'] = 9;
-                numVars['fcMax'] = 11;
-                numVars['fcSlamTarget'] = 31;
-            } else {
-                if (numVars['caPrediction'] > 60) {
-                    numVars['fcMin'] = 8;
-                    numVars['fcMax'] = 10;
-                    numVars['fcSlamTarget'] = 28;
-                } else {
-                    if (numVars['caPrediction'] > 50) {
-                        numVars['fcMin'] = 7;
-                        numVars['fcMax'] = 9;
-                        numVars['fcSlamTarget'] = 24;
-                    } else {
-                        if (numVars['caPrediction'] > 40) {
-                            numVars['fcMin'] = 6;
-                            numVars['fcMax'] = 8;
-                            numVars['fcSlamTarget'] = 20;
-                        } else {
-                            if (numVars['caPrediction'] > 30) {
-                                numVars['fcMin'] = 5;
-                                numVars['fcMax'] = 7;
-                                numVars['fcSlamTarget'] = 16;
-                            } else {
-                                if (numVars['caPrediction'] > 20) {
-                                    numVars['fcMin'] = 4;
-                                    numVars['fcMax'] = 6;
-                                    numVars['fcSlamTarget'] = 12;
-                                } else {
-                                    numVars['fcMin'] = 3;
-                                    numVars['fcMax'] = 5;
-                                    numVars['fcSlamTarget'] = 10;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
-    // Ensure Target FC is >= new FC Max value based on CYA
+    if (numVars['caPrediction'] > 90) {
+        numVars['fcMin'] = 11;
+        numVars['fcHigh'] = 13;
+    } else if (numVars['caPrediction'] > 80) {
+        numVars['fcMin'] = 10;
+        numVars['fcHigh'] = 12;
+    } else if (numVars['caPrediction'] > 70) {
+        numVars['fcMin'] = 9;
+        numVars['fcHigh'] = 11;
+    } else if (numVars['caPrediction'] > 60) {
+        numVars['fcMin'] = 8;
+        numVars['fcHigh'] = 10;
+    } else if (numVars['caPrediction'] > 50) {
+        numVars['fcMin'] = 7;
+        numVars['fcHigh'] = 9;
+    } else if (numVars['caPrediction'] > 40) {
+        numVars['fcMin'] = 6;
+        numVars['fcHigh'] = 8;
+    } else if (numVars['caPrediction'] > 30) {
+        numVars['fcMin'] = 5;
+        numVars['fcHigh'] = 7;
+    } else if (numVars['caPrediction'] > 20) {
+        numVars['fcMin'] = 4;
+        numVars['fcHigh'] = 6;
+    } else {
+        numVars['fcMin'] = 3;
+        numVars['fcHigh'] = 5;
+    }
+
+    // Ensure Target FC is >= new FC High value based on CYA
     if (textVars['fcTargetText'] == ADJUST_FC_TEXT) {
-        if (numVars['fcTarget'] < numVars['fcMax']) {
-            numVars['fcTarget'] = numVars['fcMax'];
+        if (numVars['fcTarget'] < numVars['fcHigh']) {
+            numVars['fcTarget'] = numVars['fcHigh'];
             numVars['fcTargetOld'] = numVars['fcTarget']; // Store old value for comparison
             localStorage.setItem("fcTargetOld", numVars['fcTargetOld']);
         }
@@ -272,18 +259,26 @@ function init() {
     }
     localStorage.setItem("fcTarget", numVars['fcTarget']);
 
+    if (numVars['fcTarget'] > numVars['fcSlamTarget']) {
+        document.getElementById("fcTarget").style.color = "red";
+    } else {
+        document.getElementById("fcTarget").style.color = "black";
+    }
+
     /* FC - Current Prediction */
     // N(t) = N0 * e^(-kt)
     nMilliseconds = numVars['fcModifiedDaysAgo'] * ONE_DAY; // milliseconds since last test
     numVars['fcPrediction'] = numVars['fcLastValue'] * Math.exp(-numVars['fcDecayK'] * nMilliseconds);
-    if (Number(numVars['fcPrediction']).toFixed(1) > numVars['fcTarget']) {
-        document.getElementById("fc_chart").src="./images/fc_high.png";
-    } else if (Number(numVars['fcPrediction']).toFixed(1) > numVars['fcMax']) {
+    if (Number(numVars['fcPrediction']).toFixed(1) > Number(numVars['fcSlamTarget']) ) {
+        document.getElementById("fc_chart").src="./images/fc_too_high.png";
+    } else if (Number(numVars['fcPrediction']).toFixed(1) > Number(numVars['fcTarget']) ) {
+        document.getElementById("fc_chart").src="./images/fc_max.png";
+    } else if (Number(numVars['fcPrediction']).toFixed(1) > Number(numVars['fcHigh']) ) {
         document.getElementById("fc_chart").src="./images/fc_target.png";
-    } else if (Number(numVars['fcPrediction']).toFixed(1) >= numVars['fcMin']) {
+    } else if (Number(numVars['fcPrediction']).toFixed(1) >= Number(numVars['fcMin']) ) {
         document.getElementById("fc_chart").src="./images/fc_ideal.png";
     } else {
-        document.getElementById("fc_chart").src="./images/fc_low.png";
+        document.getElementById("fc_chart").src="./images/fc_too_low.png";
     }
     
     // FC - Ideal Start and End Dates
@@ -292,7 +287,7 @@ function init() {
     let dateStartIdeal = new Date();
     let dateEndIdeal = new Date();
     if (Number(numVars['fcLastValue']) > 0) {
-        dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMax'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
+        dateStartIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcHigh'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
         dateEndIdeal = new Date(dateLastModified.getTime() + Math.log(numVars['fcMin'] / numVars['fcLastValue']) / -numVars['fcDecayK']);
     } 
     textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -313,7 +308,7 @@ function init() {
     
     // FC - TARGET - Start and End Dates
     // ln(N(t) / N0) / -k = t
-    let dateTargetStartIdeal = new Date(date.getTime() + Math.log(numVars['fcMax'] / numVars['fcTarget']) / -numVars['fcDecayK']);
+    let dateTargetStartIdeal = new Date(date.getTime() + Math.log(numVars['fcHigh'] / numVars['fcTarget']) / -numVars['fcDecayK']);
     let dateTargetEndIdeal = new Date(date.getTime() + Math.log(numVars['fcMin'] / numVars['fcTarget']) / -numVars['fcDecayK']);
     textVars['fcTargetStartIdeal'] = dateTargetStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetStartIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit' 
     textVars['fcTargetEndIdeal'] = dateTargetEndIdeal.toLocaleString([], { month: '2-digit', day: '2-digit'}) + ' ' + (dateTargetEndIdeal.getHours() >= 12 ? 'PM' : 'AM'); //hour: '2-digit', minute: '2-digit'
@@ -513,7 +508,7 @@ function updateTest(sPrefix/*, sDaysAgoLimitId = false*/) {
             let dateLastModified = new Date(dateVars['fcLastModifiedDate']);
             let t = date.getTime() - dateLastModified.getTime(); //milliseconds since last test
             let N_t = newValue;
-            let N_0 = numVars['fcLastValue']; // + numVars['fcAdded'];
+            let N_0 = numVars['fcLastValue']; 
             let k = Math.log(N_0 / N_t) / t;
             let halfLife = Math.log(2) / k / ONE_DAY; // in days
             numVars['fcDecayK'] = k;
@@ -856,8 +851,8 @@ function editChemStrength(sChemicalStrengthId) {
 
 function fcTargetAdjust(delta) {
     numVars['fcTarget'] = numVars['fcTarget'] + delta;
-    if (numVars['fcTarget'] < numVars['fcMax']) {
-        numVars['fcTarget'] = numVars['fcMax'];
+    if (numVars['fcTarget'] < numVars['fcHigh']) {
+        numVars['fcTarget'] = numVars['fcHigh'];
     }
     if (numVars['fcTarget'] > 70) {
         numVars['fcTarget'] = 70;
@@ -876,7 +871,7 @@ function editFcTarget() {
     let target = prompt("Please enter new Target FC.", numVars['fcTarget']);
     if (target) {
         target = parseInt(target);
-        if (target >= numVars['fcMax'] && target <= 70) {
+        if (target >= numVars['fcHigh'] && target <= 70) {
             numVars['fcTarget'] = target;
             textVars['fcTargetText'] = ADJUST_FC_TEXT;
             localStorage.setItem('fcTargetText', textVars['fcTargetText']);
@@ -886,7 +881,7 @@ function editFcTarget() {
             refresh();
         }
         else {
-            alert('Please enter a number between ' + numVars['fcMax'] + ' and 70.');
+            alert('Please enter a number between ' + numVars['fcHigh'] + ' and 70.');
         }
     }
 }
