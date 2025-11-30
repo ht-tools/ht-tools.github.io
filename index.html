@@ -41,18 +41,20 @@
     <b class="fc-target numDisplays0" id="fcTarget"></b>
     <span class="fc-max numDisplays" id="fcMax"></span>
     <span class="fc-min numDisplays" id="fcMin"></span>
-  </div>
-  <p>
-    <b class="numDisplays1" id="fcPrediction"></b><b class="units">ppm</b>. 
-    Below 'min' <span class="textDisplays" id="fcEndIdeal"></span>
-    <br>
-    <span class="textDisplays units" id="fcTargetText"></span>
-    <button class="question" onclick="showDialog('fcTargetDialog')">?</button>
+    <span class="textDisplays units fc-target-text" id="fcTargetText"></span>
+    <button class="question fc-target-question" onclick="showDialog('fcTargetDialog')">?</button>
     <dialog id="fcTargetDialog">
-      <p>Adjust the Target FC to compensate for Chlorine Demand (the rate at which your tub consumes FC). A higher Target reduces how often you need to add dichlor or bleach. The amount required to reach the Target is shown under Add Chemicals section.<br><br>If after testing CC, you see &quot;Hold this Target until CC Test &le; 0.5 ppm&quot;, add bleach or dichlor to maintain this shock-level Target FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm).</p>
+      <p>Adjust the Target FC to compensate for Chlorine Demand (the rate at which your tub consumes FC, indicated as Half Life). A higher Target reduces how often you need to add dichlor or bleach. The amount required to reach the Target is shown under the Add Chemicals section.<br><br>If after testing CC, you see &quot;Hold this Target until CC Test &le; 0.5 ppm&quot;, add bleach or dichlor to maintain this shock-level Target FC continuously (could take days), until you have eliminated Combined Chlorine (CC measures &le; 0.5 ppm).</p>
       <br>
       <button onclick="closeDialog('fcTargetDialog')">Close</button>
     </dialog>
+  </div>
+  <p>
+    <b>FC = </b><b class="numDisplays1" id="fcPrediction"></b><b class="units">ppm</b> | Half Life = <span class="numDisplays1" id="fcHalfLife"></span><span class="units">days</span> | CYA = <span class="numDisplays0" id="caPrediction"></span><span class="units">ppm</span>
+    <br>
+    (below 'min' <span class="textDisplays" id="fcEndIdeal"></span>)
+    <br>
+    
   </p>
 
   <h3>Add Chemicals<button class="question" onclick="showDialog('addChemDialog')">?</button> /
@@ -92,7 +94,7 @@
         </td>
         <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
         <form onsubmit="addedDichlor();return false">
-          <td><input class="numInputs2 inputBox" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
+          <td><input class="numInputs1 inputBox" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
           <td><button type="submit">Added</button></td>
         </form>
       </tr>
@@ -112,7 +114,7 @@
         </td>
         <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
         <form onsubmit="addedBleach();return false">
-          <td><input class="numInputs1 inputBox" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
+          <td><input class="numInputs5 inputBox" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
           <td><button type="submit">Added</button></td>
         </form>
       </tr>
@@ -132,7 +134,7 @@
         </td>
         <td><span class="numDisplays" id="phTaDownStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phTaDownStrength')">&#x270E</button></td>
         <form onsubmit="addedPhTaDown();return false">
-          <td><input class="numInputs2 inputBox" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+          <td><input class="numInputs1 inputBox" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
           <td><button type="submit">Added</button></td>
         </form>
       </tr>
@@ -155,7 +157,7 @@
         </td>
         <td><span class="numDisplays" id="taUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('taUpStrength')">&#x270E</button></td>
         <form onsubmit="addedTaUp();return false">
-          <td><input class="numInputs2 inputBox" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+          <td><input class="numInputs1 inputBox" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
           <td><button type="submit">Added</button></td>
         </form>
       </tr>
@@ -170,7 +172,7 @@
         </td>
         <td><span class="numDisplays" id="phUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phUpStrength')">&#x270E</button></td>
         <form onsubmit="addedPhUp();return false">
-          <td><input class="numInputs2 inputBox" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+          <td><input class="numInputs1 inputBox" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
           <td><button type="submit">Added</button></td>
         </form>
       </tr>
@@ -186,7 +188,7 @@
         </td>
         <td><span class="numDisplays" id="calciumStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('calciumStrength')">&#x270E</button></td>
         <form onsubmit="addedCalcium();return false">
-          <td><input class="numInputs2 inputBox" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+          <td><input class="numInputs1 inputBox" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
           <td><button type="submit">Added</button></td>
         </form>
       </tr>

@@ -26,6 +26,8 @@
 .top-rounded {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .bottom-rounded {
@@ -229,6 +231,18 @@ footer {
   position: absolute;
   top: 178px;
   right: 43px;
+}
+
+.fc-target-text {
+  position: absolute;
+  top: 140px;
+  left: 95px;
+}
+
+.fc-target-question {
+  position: absolute;
+  top: 140px;
+  left: 70px;
 }
 
 .fc-target {

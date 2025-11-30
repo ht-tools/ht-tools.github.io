@@ -298,17 +298,17 @@ function init() {
     textVars['fcStartIdeal'] = dateStartIdeal.toLocaleString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
     let timeDelta = date.getTime() - dateEndIdeal.getTime(); //milliseconds since last test
     if (timeDelta > ONE_DAY) {
-        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_DAY).toFixed(1) + ' days.';
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_DAY).toFixed(1) + ' days';
     } else if (timeDelta > ONE_HOUR) {
-        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_HOUR).toFixed(1) + ' hours.';
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_HOUR).toFixed(1) + ' hours';
     } else if (timeDelta > 0) { 
-        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_MINUTE).toFixed(0) + ' minutes.';
+        textVars['fcEndIdeal'] = 'for ' + (timeDelta / ONE_MINUTE).toFixed(0) + ' minutes';
     } else if (timeDelta < -ONE_DAY) {
-        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_DAY).toFixed(1) + ' days.';
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_DAY).toFixed(1) + ' days';
     } else if (timeDelta < -ONE_HOUR) {
-        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_HOUR).toFixed(1) + ' hours.';
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_HOUR).toFixed(1) + ' hours';
     } else {
-        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_MINUTE).toFixed(0) + ' minutes.';
+        textVars['fcEndIdeal'] = 'in ' + (-timeDelta / ONE_MINUTE).toFixed(0) + ' minutes';
     }
     
     // FC - TARGET - Start and End Dates
@@ -393,7 +393,7 @@ function init() {
         inputBoxes[box].value = formatNumber(Number(numVars[inputBoxes[box].id])); //.toFixed(2);
     } 
 
-    inputBoxes = document.getElementsByClassName("numInputs1");
+    inputBoxes = document.getElementsByClassName("numInputs5");
     for (box in inputBoxes) {
         inputBoxes[box].value = (Math.round(Number(numVars[inputBoxes[box].id]) * 2) / 2).toFixed(1);
     } 
@@ -402,6 +402,11 @@ function init() {
     for (box in inputBoxes) {
         inputBoxes[box].value = Number(numVars[inputBoxes[box].id]).toFixed(0);
     } 
+
+    inputBoxes = document.getElementsByClassName("numInputs1");
+    for (box in inputBoxes) {
+        inputBoxes[box].value = Number(numVars[inputBoxes[box].id]).toFixed(1);
+    }
 
     /* POPULATE ALL BOOLEAN CHECKBOXES */
     checkBoxes = document.querySelectorAll('input[type="checkbox"]');
