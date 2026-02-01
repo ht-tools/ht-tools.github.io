@@ -83,7 +83,8 @@ figure {
 }
 
 .action {
-  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
 }
 
 button {
@@ -174,7 +175,7 @@ footer a, footer span {
 
 footer {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 15px;
   margin-bottom: 15px;
 }
 
@@ -217,61 +218,65 @@ footer {
 
 .fc-target-up {
   position: absolute;
-  top: 115px;
+  top: 108px;
   right: 43px;
 }
 
 .fc-target-edit {
   position: absolute;
-  top: 147px;
+  top: 138px;
   right: 43px;
 }
 
 .fc-target-down {
   position: absolute;
-  top: 178px;
+  top: 168px;
   right: 43px;
 }
 
 .fc-target-text {
   position: absolute;
-  top: 140px;
+  top: 132px;
   left: 95px;
 }
 
 .fc-target-question {
   position: absolute;
-  top: 140px;
+  top: 132px;
   left: 70px;
 }
 
 .fc-max {
   position: absolute;
-  top: 107px;
-  right: 382px;
+  top: 100px;
+  right: 367px;
 }
 
 .fc-target {
   position: absolute;
-  top: 148px;
-  right: 382px;
+  top: 140px;
+  right: 367px;
 }
 
 .fc-high {
   position: absolute;
-  top: 193px;
-  right: 382px;
+  top: 182px;
+  right: 367px;
 }
 
 .fc-min {
   position: absolute;
-  top: 235px;
-  right: 382px;
+  top: 224px;
+  right: 367px;
 }
 
 dialog {
-  width: 400px;
+  width: 340px;
   max-height: 750px;
+}
+
+video {
+  width: 330px;
 }
 
 .column dialog img {
@@ -312,4 +317,21 @@ dialog {
     flex: 100%;
     max-width: 100%;
   }
+}
+
+.card {
+  background-color: white;
+  box-shadow: 0 5px 10px;
+  border-radius: 15px;
+  margin-top: 25px;
+  padding: 1px;
+  width: calc(100% - 15px);
+}
+
+#fc_chart {
+  width: 380px;
+}
+
+.recommendedTable {
+  margin:auto;
 }
