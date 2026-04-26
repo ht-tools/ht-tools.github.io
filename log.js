@@ -37,7 +37,6 @@ function createTable(data) {
   document.getElementById('jsonTable').appendChild(table);
 }
 
-
 // Function to clear the log
 function eraseLog() {
   if (confirm("Are you sure you want to erase the Log? This action cannot be undone.")) {

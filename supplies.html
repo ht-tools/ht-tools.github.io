@@ -10,17 +10,17 @@
   <link rel="stylesheet" href="./styles.css">
   <script src="./supplies.js" defer></script>
 </head>
-<header>
-  <img class="top-rounded" id="htj_logo" src="./htj-top-400.jpg" alt="HTJ" width="400">
-  <nav class="subheading">
-    | <a href="./dandr.html">Drain & Refill</a> 
-    | <a href="./index.html">Maintain</a> 
-    | <a href="./log.html">Log</a> 
-    | <b>Supplies</b> |
-  </nav>
-</header>
-<br>
 <body class="container fixedWidth">
+  <header>
+    <img class="top-rounded" src="./htj-top-400.jpg" alt="HTJ" width="400">
+    <nav class="subheading">
+      | <a href="./dandr.html">Drain & Refill</a> 
+      | <a href="./index.html">Maintain</a> 
+      | <a href="./log.html">Log</a> 
+      | <b>Supplies</b> |
+    </nav>
+  </header>
+  <br>
   <div class="row">
     <div class="column">
       <img src="./images/dichlor.jpg" alt="Dichlor" onclick="showDialog('dichlorDialog')" style="cursor:pointer;">
@@ -58,6 +58,12 @@
         <img src="./images/1cup.jpg" alt="1 cup Stainless Steel Measuring Cup for Dry Ingredients">
         <p>1 cup Stainless Steel Measuring Cup for Dry Ingredients</p>
         <span><button><a href="https://a.co/d/bZlCboX" target="_blank">Buy on Amazon</a></button></span><span>  <button onclick="closeDialog('measuringCupDialog')">Close</button></span>
+      </dialog>
+      <img src="./images/skimmer.jpg" alt="Skimmer Net for Removing Debris from Water" onclick="showDialog('skimmerDialog')" style="cursor:pointer;">
+      <dialog id="skimmerDialog">
+        <img src="./images/skimmer.jpg" alt="Skimmer Net for Removing Debris from Water">
+        <p>Skimmer Net for Removing Debris from Water</p>
+        <span><button><a href="https://a.co/d/bQ73xpr" target="_blank">Buy on Amazon</a></button></span><span>  <button onclick="closeDialog('skimmerDialog')">Close</button></span>
       </dialog>
     </div>
 
@@ -131,12 +137,12 @@
         <p>Scouring Pad for Scrubbing Inside of Hot Tub</p>
         <span><button><a href="https://a.co/d/6RF69he" target="_blank">Buy on Amazon</a></button></span><span>  <button onclick="closeDialog('scouringPadDialog')">Close</button></span>
       </dialog>
-      <img src="./images/skimmer.jpg" alt="Skimmer Net for Removing Debris from Water" onclick="showDialog('skimmerDialog')" style="cursor:pointer;">
-      <dialog id="skimmerDialog">
-        <img src="./images/skimmer.jpg" alt="Skimmer Net for Removing Debris from Water">
-        <p>Skimmer Net for Removing Debris from Water</p>
-        <span><button><a href="https://a.co/d/bQ73xpr" target="_blank">Buy on Amazon</a></button></span><span>  <button onclick="closeDialog('skimmerDialog')">Close</button></span>
-      </dialog>
+      <img src="./images/weekly.jpg" alt="Ahh-some Weekly Maintenance to destroy biofilms and other contaminants that are resistant to chlorine." onclick="showDialog('weeklyMaintenanceDialog')" style="cursor:pointer;">
+      <dialog id="weeklyMaintenanceDialog">
+        <img src="./images/weekly.jpg" alt="Ahh-some Weekly Maintenance to destroy biofilms and other contaminants that are resistant to chlorine.">
+        <p>Ahh-some Weekly Maintenance to destroy biofilms and other contaminants that are resistant to chlorine.</p>
+        <span><button><a href="https://a.co/d/00t5svcu" target="_blank">Buy on Amazon</a></button></span><span>  <button onclick="closeDialog('weeklyMaintenanceDialog')">Close</button></span>
+      </dialog>      
     </div>
 
     <div class="column">
@@ -178,8 +184,8 @@
       </dialog>
     </div>
   </div>
+  <footer>
+    <img class="bottom-rounded" src="./htj-bottom-400.jpg" alt="HTJ" width="400">
+  </footer>
 </body>
-<footer>
-  <img class="bottom-rounded" id="htj_logo" src="./htj-bottom-400.jpg" alt="HTJ" width="400">
-</footer>
 </html>

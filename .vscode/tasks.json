@@ -2,6 +2,32 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Start Python HTTP Server",
+            "type": "shell",
+            "command": "python3 -m http.server 8080",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "isBackground": true,
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Serving HTTP",
+                    "endsPattern": "^Serving HTTP"
+                }
+            }
+        },
+        {
             "label": "Start Live Server",
             "type": "shell",
             "command": "echo",

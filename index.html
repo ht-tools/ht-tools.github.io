@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- TODO: Add Open Graph tags for social media sharing. -->
   <meta name="description" content="Hot Tub web app for managing your hot tub water chemistry with the dichlor/bleach method.">
   <meta name="keywords" content="hot tub, spa, water chemistry, maintenance, ph, free chlorine, combined chlorine, acid demand, base demand, volume, filter, total alkalinity, muriatic acid, calcium hardness, calcium chloride, cyanuric acid, dichlor, bleach, sodium Hypochlorite, sodium dichloro-s-triazinetrione dihydrate, sodium bisulfate, sodium bicarbonate, sodium carbonate, chlorine demand, breakpoint chlorination">
@@ -14,27 +14,44 @@
   <link rel="stylesheet" href="./styles.css">
   <script src="./index.js" defer></script>
 </head>
-<header>
-  <img class="top-rounded" id="htj_logo" src="./htj-top-400.jpg" alt="HTJ" width="400">
-  <nav class="center"> 
-    | <a href="./dandr.html">Drain & Refill</a> 
-    | <b>Maintain</b> 
-    | <a href="./log.html">Log</a> 
-    | <a href="./supplies.html">Supplies</a> |
-  </nav>
-</header>
 <body class="container fixedWidth">
+  <header>
+    <img class="top-rounded" src="./htj-top-400.jpg" alt="HTJ" width="400">
+    <nav class="center"> 
+      | <a href="./dandr.html">Drain & Refill</a> 
+      | <b>Maintain</b> 
+      | <a href="./log.html">Log</a> 
+      | <a href="./supplies.html">Supplies</a> |
+    </nav>
+  </header>
   <div class="card">
     <h3>Predicted FC
       <button class="question" onclick="showDialog('fcPredictionDialog')">?</button>
     </h3>
     <dialog id="fcPredictionDialog">
-      <p>Free Chlorine (FC) is the amount of chlorine available to sanitize the water. If your FC drops below Min, bacteria can grow. The predicted value is based on the chlorine consumption between tests (Chlorine Demand) and any bleach or dichlor added. Tub usage may drastically affect FC. The predicted value allows you to test less often, but do not trust it. When in doubt, test the FC to be sure.</p>
+      <p>Free Chlorine (FC) is the amount of chlorine available to sanitize the water. If your FC drops below Min, bacteria can grow. The predicted value is based on the chlorine consumption between tests (Chlorine Demand) plus any bleach or dichlor added. Hot tub usage may drastically affect FC. The predicted value allows you to test less often, but do not trust it. When in doubt, test the FC to be sure.</p>
       <br>
       <button onclick="closeDialog('fcPredictionDialog')">Close</button>
     </dialog>
-    
-    <div class="fc-container">
+    <div class="chart-container">
+      <div class="chart-row">
+        <canvas id="chemistryChart" width="60" height="275" style="margin-top: 80px;"></canvas>
+        <img src="images/fc_chart.png" alt="FC Chart" style="max-height: 360px; width: auto;">
+        <div class="fc-indicator" id="fcIndicator" aria-live="polite">
+          <span class="fc-indicator-circle" id="fcIndicatorCircle">&#x2713;</span>
+          <span class="fc-indicator-value" id="fcIndicatorValue">0.0 ppm</span>
+        </div>
+      </div>
+        <p id="fc-column-label">FC</p>
+        <p id="cya-column-label">CYA</p>
+        <!--div class="slider-container">
+            <label class="slider-label" for="cyaInput">CYA Input (0-200):</label>
+            <input type="number" id="cyaInput" min="0" max="200" step="1" value="90">
+            <button id="cyaSubmit" type="button">Submit</button>
+            <div id="cyaResult" aria-live="polite"></div>
+        </div-->
+    </div>
+    <!--div class="fc-container">
       <img id="fc_chart" src="./images/fc_too_high.png" alt="FC Chart">
       <button class="fc-target-up symbols center" onclick="fcTargetAdjust(+1)">&uarr;</button>
       <button class="fc-target-edit symbols center" onclick="editFcTarget()">&#x270E</button>
@@ -50,23 +67,24 @@
         <br>
         <button onclick="closeDialog('fcTargetDialog')">Close</button>
       </dialog>
-    </div>
-    <p>
-      <b>FC = </b><b class="numDisplays1" id="fcPrediction"></b><b class="units">ppm</b> | Half Life = <span class="numDisplays1" id="fcHalfLife"></span><span class="units">days</span> | CYA = <span class="numDisplays0" id="caPrediction"></span><span class="units">ppm</span>
+    </div-->
+    <p class="units">
+      FC below Min <span class="textDisplays" id="fcEndIdeal"></span>
+      <!--br>
+      Target FC = <span class="numDisplays1" id="fcTarget"></span><span class="units">ppm</span> | CYA = <span class="numDisplays0" id="caPrediction"></span><span class="units">ppm</span>
       <br>
-      (below 'min' <span class="textDisplays" id="fcEndIdeal"></span>)
+      <span class="numDisplays" id="fcMin"></span>
       <br>
+      <span class="numDisplays" id="fcSlamTarget"></span>
+      <br-->
     </p>
   </div>
   <div class="card">
-    <h3>Add Chemicals<button class="question" onclick="showDialog('addChemDialog')">?</button> /
-      <label class="inline" for="showAll">
-        <input type="checkbox" id="showAll" onclick="storeShowAll()">
-        <span>Show All</span>
-      </label>
+    <h3>Add Chemicals<button class="question" onclick="showDialog('addChemDialog')">?</button>
+      
     </h3>
     <dialog id="addChemDialog">
-      <p>Add the chemicals recommended below to correct any test values that are outside the ideal range and to reach the Target FC. Be sure to adjust the Strength of each chemical to match the Active Ingredient % on your bottles.</p>
+      <p>Add the chemicals recommended below to correct any test values that are outside the ideal range and to reach the Target FC (Max by default). Be sure to adjust the Strength of each chemical to match the Active Ingredient % on your bottles.</p>
       <br>
       <button onclick="closeDialog('addChemDialog')">Close</button>
     </dialog>
@@ -96,7 +114,7 @@
           </td>
           <td><span class="numDisplays" id="dichlorStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('dichlorStrength')">&#x270E</button></td>
           <form onsubmit="addedDichlor();return false">
-            <td><input class="numInputs1 inputBox" type="number" id="addDichlor" min="0" max="100" step="0.01" required><span class="units">oz</span></td> 
+            <td><input class="numInputs1 inputBox" type="number" id="addDichlor" min="0" max="100" step="0.1" required><span class="units">oz</span></td> 
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -105,7 +123,7 @@
             Bleach
             <button class="question" onclick="showDialog('bleachDialog', 'bleachVideo')">?</button>
             <dialog id="bleachDialog">
-              <p>Sodium Hypochlorite (Bleach) is a liquid chlorine that does not contain Cyanuric Acid (CYA). Sodium Hypochlorite labeled for pools/spas is recommended but you can also use literal &quot;Bleach&quot;. If you use &quot;Bleach&quot;, be sure it contains no softeners, is not color-fast, and is unscented. Pay attention to the label strength.</p>
+              <p>Sodium Hypochlorite (Bleach) is a liquid chlorine that does not contain Cyanuric Acid (CYA). Sodium Hypochlorite labeled for pools/spas is recommended but you can also use household &quot;Bleach&quot;. If you use &quot;Bleach&quot;, be sure it contains no softeners, is not color-fast, and is unscented. Pay attention to the label strength.</p>
               <video playsinline webkit-playsinline loop id="bleachVideo">
                 <source src="./videos/bleach.mp4" type="video/mp4" />
                 <track src="./videos/bleach.vtt" kind="subtitles" srclang="en" label="English" default />
@@ -116,7 +134,7 @@
           </td>
           <td><span class="numDisplays" id="bleachStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('bleachStrength')">&#x270E</button></td>
           <form onsubmit="addedBleach();return false">
-            <td><input class="numInputs5 inputBox" type="number" id="addBleach" min="0" max="200" step="0.01" required><span class="units">fl oz</span></td>
+            <td><input class="numInputs5 inputBox" type="number" id="addBleach" min="0" max="200" step="0.1" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -136,15 +154,15 @@
           </td>
           <td><span class="numDisplays" id="phTaDownStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phTaDownStrength')">&#x270E</button></td>
           <form onsubmit="addedPhTaDown();return false">
-            <td><input class="numInputs1 inputBox" type="number" id="addPhTaDown" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs1 inputBox" type="number" id="addPhTaDown" min="0" max="100" step="0.1" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
         <tr id="MuriaticAcidRow">
-          <td>&#x2937 or Muriatic Acid</td>
+          <td>&#x2937; or Muriatic Acid</td>
           <td><span class="numDisplays" id="muriaticStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('muriaticStrength')">&#x270E</button></td>
           <form onsubmit="addedMuriaticAcid();return false">
-            <td><input class="numInputs2 inputBox" type="number" id="addMuriaticAcid" min="0" max="100" step="0.01" required><span class="units">fl oz</span></td>
+            <td><input class="numInputs2 inputBox" type="number" id="addMuriaticAcid" min="0" max="100" step="0.1" required><span class="units">fl oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -156,10 +174,11 @@
               <p>Sodium Bicarbonate (commonly known as Baking Soda or Sodium Hydrogen Carbonate) is used to raise Total Alkalinity (TA), but will also have some effect on pH.</p>
               <br>
               <button onclick="closeDialog('taUpDialog')">Close</button>
+            </dialog>
           </td>
           <td><span class="numDisplays" id="taUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('taUpStrength')">&#x270E</button></td>
           <form onsubmit="addedTaUp();return false">
-            <td><input class="numInputs1 inputBox" type="number" id="addTaUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs1 inputBox" type="number" id="addTaUp" min="0" max="100" step="0.1" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -171,10 +190,11 @@
               <p>Sodium Carbonate (Soda Ash) is used to raise pH, but will also have some effect on Total Alkalinity (TA).</p>
               <br>
               <button onclick="closeDialog('phUpDialog')">Close</button>
+            </dialog>
           </td>
           <td><span class="numDisplays" id="phUpStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('phUpStrength')">&#x270E</button></td>
           <form onsubmit="addedPhUp();return false">
-            <td><input class="numInputs1 inputBox" type="number" id="addPhUp" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs1 inputBox" type="number" id="addPhUp" min="0" max="100" step="0.1" required><span class="units">oz</span></td>
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -190,7 +210,21 @@
           </td>
           <td><span class="numDisplays" id="calciumStrength"></span><span class="units">% </span><button class="symbols" onclick="editChemStrength('calciumStrength')">&#x270E</button></td>
           <form onsubmit="addedCalcium();return false">
-            <td><input class="numInputs1 inputBox" type="number" id="addCalcium" min="0" max="100" step="0.01" required><span class="units">oz</span></td>
+            <td><input class="numInputs1 inputBox" type="number" id="addCalcium" min="0" max="100" step="0.1" required><span class="units">oz</span></td>
+            <td><button type="submit">Added</button></td>
+          </form>
+        </tr>
+        <tr id="AhhsomeRow">
+          <td colspan="3">
+            Ahh-some Weekly Maintenance
+            <button class="question" onclick="showDialog('ahhsomeDialog')">?</button>
+            <dialog id="ahhsomeDialog">
+              <p>Ahh-some 3-in-1 Weekly Maintenance should be added once per week to destroy biofilms and other contaminants that may be resistant to chlorine. Follow the manufacturer's instructions for proper dosage and application.</p>
+              <br>
+              <button onclick="closeDialog('ahhsomeDialog')">Close</button>
+            </dialog>
+          </td>
+          <form onsubmit="addedAhhsome();return false">
             <td><button type="submit">Added</button></td>
           </form>
         </tr>
@@ -201,7 +235,7 @@
   </div>
   <div class="card">
     <h3>
-      Test Daily / Weekly
+      Test Water
       <button class="question" onclick="showDialog('testDailyWeeklyDialog')">?</button>
     </h3>
     <dialog id="testDailyWeeklyDialog">
@@ -215,7 +249,7 @@
           <th>Test</th>
           <th>Ideal</th>
           <th>Test Result</th>
-          <th>Check In<br>&lt; 7 Days</th>
+          <th>Time to<br>Check</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -224,7 +258,7 @@
           <td>FC
             <button class="question" onclick="showDialog('testFcDialog', 'testFcVideo')">?</button>
             <dialog id="testFcDialog">
-              <p>Free Chlorine (FC) is the amount of chlorine available to sanitize the water. You may need to adjust your FC higher than your ideal range, depending on how long you go between soaks, to compensate for Chlorine Demand (the rate at which your tub consumes FC). If your FC drops too low, bacteria can grow.</p>
+              <p>Free Chlorine (FC) is the amount of chlorine available to sanitize the water. If your FC drops below Min, bacteria can grow.</p>
               <video playsinline webkit-playsinline loop id="testFcVideo">
                 <source src="./videos/test_fc_cc.mp4" type="video/mp4" />
                 <track src="./videos/test_fc_cc.vtt" kind="subtitles" srclang="en" label="English" default />
@@ -236,7 +270,7 @@
           <td><span class="small_left">Depends<br>on CYA </span></td>
           <form onsubmit="updateTest('fc');return false">
             <td><input class="inputBox" type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter class="meter7" id="fcMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td> 
+            <td><meter id="fcMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td> 
             <td><button type="submit">Tested</button></td>
           </form>  
         </tr>
@@ -244,7 +278,7 @@
           <td>CC
             <button class="question" onclick="showDialog('testCcDialog', 'testCcVideo')">?</button>
             <dialog id="testCcDialog">
-              <p>Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. If CC rises above 0.5 ppm, you should maintain the higher recommended Target FC until CC tests &le; 0.5 ppm. This is referred to as Breakpoint Chlorination.</p>
+              <p>Combined Chlorine (CC) represents the chlorine that is used up and already combined with contaminants in the water. CC is what can cause skin and eye irritation. If CC rises above 0.5 ppm, you should add bleach or dichlor more often to keep FC closer to the Max level more regularly which will destroy CC.</p>
               <video playsinline webkit-playsinline loop id="testCcVideo">
                 <source src="./videos/test_fc_cc.mp4" type="video/mp4" />
                 <track src="./videos/test_fc_cc.vtt" kind="subtitles" srclang="en" label="English" default />
@@ -256,7 +290,7 @@
           <td><span class="units">&le; 0.5</span></td>
           <form onsubmit="updateTest('cc');return false"> 
             <td><input class="inputBox" type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter id="ccMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td>
+            <td><meter id="ccMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -276,7 +310,7 @@
           <td><span class="units">7.4-7.8</span></td>
           <form onsubmit="updateTest('ph');return false"> 
             <td><input class="inputBox" type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
-            <td><meter id="phMeter" min="0" optimum="1" low="3" high="5" max="7" value="0"></meter></td>
+            <td><meter id="phMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -293,7 +327,7 @@
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('ad');return false">
             <td><input class="inputBox" type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>(as needed)</td>
+            <td>(if needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -310,35 +344,10 @@
           <td><span class="units">pH: 7.6</span></td>
           <form onsubmit="updateTest('bd');return false">
             <td><input class="inputBox" type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>(as needed)</td>
+            <td>(if needed)</td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
-      </tbody>
-    </table>
-    <br>
-  </div>
-  <div class="card">
-    <h3>
-      Test / Maintain Monthly
-      <button class="question" onclick="showDialog('testMonthlyDialog')">?</button>
-    </h3>
-    <dialog id="testMonthlyDialog">
-      <p>Use a Taylor K-2006 or similar test kit. Test strips are less accurate and are not recommended.</p>
-      <br>
-      <button onclick="closeDialog('testMonthlyDialog')">Close</button>
-    </dialog>
-    <table class="recommendedTable" id="recommendedMonthlyTests">
-      <thead>
-        <tr id="testMonthlyHeaderRow">
-          <th>Test</th>
-          <th>Ideal</th>
-          <th>Test Result</th>
-          <th>Check In<br>&lt; 30 Days</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
         <tr id="caRow">
           <td>
             CYA
@@ -356,37 +365,41 @@
           <td><span class="small_left">30-50</span></td>
           <form onsubmit="updateTest('ca');return false"> 
             <td><input class="inputBox" type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-            <td><meter class="meter30" id="caMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
+            <td><meter class="meter30" id="caMeter" min="0" optimum="0" low="7" high="13" max="14" value="0"></meter></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
-        <tr id="chRow">
-          <td>
-            CH
-            <button class="question" onclick="showDialog('chDialog', 'chVideo')">?</button>
-            <dialog id="chDialog">
-                <p>Calcium Hardness (CH) represents the amount of calcium in the water. If CH is too low, it can cause corrosion of metal parts. If CH is too high, it can cause scale buildup and cloudy water.</p>
-                <video playsinline webkit-playsinline loop id="chVideo">
-                  <source src="./videos/test_ch.mp4" type="video/mp4" />
-                  <track src="./videos/test_ch.vtt" kind="subtitles" srclang="en" label="English" default />
-                </video>
-                <br>
-                <button onclick="closeDialog('chDialog')">Close</button>
-            </dialog>
-          </td>
-          <td><span class="small_left">150-250<br> </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
-          <form onsubmit="updateTest('ch');return false"> 
-            <td><input class="inputBox" type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-            <td><meter id="chMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
-            <td><button type="submit">Tested</button></td>
-          </form>
+      </tbody>
+    </table>
+    <br>
+  </div>
+  <div class="card">
+    <h3>
+      Monthly Maintenance
+      <!--button class="question" onclick="showDialog('testMonthlyDialog')">?</button-->
+    </h3>
+    <!--dialog id="testMonthlyDialog">
+      <p>Use a Taylor K-2006 or similar test kit. Test strips are less accurate and are not recommended.</p>
+      <br>
+      <button onclick="closeDialog('testMonthlyDialog')">Close</button>
+    </dialog-->
+    <table class="recommendedTable" id="recommendedMonthlyTests">
+      <thead>
+        <tr id="testMonthlyHeaderRow">
+          <th>Test</th>
+          <th>Ideal</th>
+          <th>Test Result</th>
+          <th>Time to<br>Check</th>
+          <th>Action</th>
         </tr>
-        <tr class="underline" id="taRow">
+      </thead>
+      <tbody>
+        <tr id="taRow">
           <td>
             TA
             <button class="question" onclick="showDialog('taDialog', 'taVideo')">?</button>
             <dialog id="taDialog">
-                <p>Total Alkalinity (TA) represents the ability of the water to resist acidification. If TA is too high, the pH will drift up. If TA is too low, the pH will drift down. You should adjust TA first, give time for the water to settle (several hours), then test and adjust pH. If pH consistently drifts up (or down) over a week or two, consider testing and adjusting TA. Otherwise, pH adjustments should be sufficient. If pH has been stable in the ideal range, but your TA tests high or low, consider adjusting your TA Target Value to match your current Corrected Test Value. Corrected TA has been adjusted to compensate for false-high readings due to CYA level.</p>
+                <p>Total Alkalinity (TA) represents the ability of the water to resist acidification. If TA is too high, the pH will drift up. If TA is too low, the pH will drift down. You should adjust TA first, wait two hours, then test and adjust pH. If pH consistently drifts up (or down) over several weeks, consider testing and adjusting TA. Otherwise, focus solely on pH. If pH has been stable in the ideal range, but your TA tests high or low, edit your Target TA to match your current (Corrected) Test Value. Corrected TA has been adjusted to compensate for false-high readings due to CYA level.</p>
                 <video playsinline webkit-playsinline loop id="taVideo">
                   <source src="./videos/test_ta.mp4" type="video/mp4" />
                   <track src="./videos/test_ta.vtt" kind="subtitles" srclang="en" label="English" default />
@@ -405,7 +418,28 @@
                 <span class="numDisplays0" id="taNewTestDisplay"></span>)
               </span>
             </td>
-            <td>(as needed)</td>
+            <td>(if needed)</td>
+            <td><button type="submit">Tested</button></td>
+          </form>
+        </tr>
+        <tr class="underline" id="chRow">
+          <td>
+            CH
+            <button class="question" onclick="showDialog('chDialog', 'chVideo')">?</button>
+            <dialog id="chDialog">
+                <p>Calcium Hardness (CH) represents the amount of calcium in the water. If CH is too low, it can cause corrosion of metal parts. If CH is too high, it can cause scale buildup and cloudy water.</p>
+                <video playsinline webkit-playsinline loop id="chVideo">
+                  <source src="./videos/test_ch.mp4" type="video/mp4" />
+                  <track src="./videos/test_ch.vtt" kind="subtitles" srclang="en" label="English" default />
+                </video>
+                <br>
+                <button onclick="closeDialog('chDialog')">Close</button>
+            </dialog>
+          </td>
+          <td><span class="small_left">150-250<br> </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
+          <form onsubmit="updateTest('ch');return false"> 
+            <td><input class="inputBox" type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
+            <td><meter id="chMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
             <td><button type="submit">Tested</button></td>
           </form>
         </tr>
@@ -421,7 +455,7 @@
           </td>
           <form onsubmit="confirmedSpaVolume();return false">
             <td><input class="numInputs0 inputBox" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gal</span></td>
-            <td><meter class="meter30" id="svMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
+            <td><meter class="meter30" id="svMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
             <td><button type="submit">Done</button></td>
           </form>
         </tr>
@@ -441,7 +475,7 @@
           </td>
           <td>Rinse/Replace</td>
           <form onsubmit="cleanedFilter();return false">
-            <td><meter id="filterMeter" min="0" optimum="1" low="21" high="28" max="30" value="0"></meter></td>
+            <td><meter id="filterMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
             <td><button type="submit">Done</button></td>
           </form>
         </tr>
@@ -449,11 +483,65 @@
     </table>
     <br>
   </div>
+  <div class="card">
+    <h3>
+      Settings
+    </h3>
+    <p>
+      <label class="inline" for="showAll">
+        <input type="checkbox" id="showAll" onclick="storeShowAll()">
+        <span>Show all Chemicals and Tests</span>
+      </label>
+      <br>
+      <span class="inline-edit-target-row"><button class="fc-target-edit symbols center" onclick="editFcTarget()">&#x270E</button><span>Edit Target FC</span></span>
+    </p>
+    
+  </div>
+  <!-- Edit Chemical Strength Dialog -->
+  <dialog id="editChemStrengthDialog">
+    <p><strong>Active Ingredient %</strong><br>Enter value from chemical bottle.</p>
+    <input type="number" id="editChemStrengthInput" min="1" max="100" step="0.1" style="width:100%; box-sizing:border-box;">
+    <p id="editChemStrengthError" style="color:red; display:none; margin:0.5em 0 0;"></p>
+    <br>
+    <button onclick="submitChemStrength()">OK</button>
+    <button onclick="closeDialog('editChemStrengthDialog')">Cancel</button>
+  </dialog>
+
+  <!-- Edit FC Target Dialog -->
+  <dialog id="editFcTargetDialog">
+    <p><strong>Target FC</strong><br>Enter new target free chlorine.</p>
+    <input type="number" id="editFcTargetInput" min="1" max="70" step="1" style="width:100%; box-sizing:border-box;">
+    <p id="editFcTargetError" style="color:red; display:none; margin:0.5em 0 0;"></p>
+    <br>
+    <button onclick="submitFcTarget()">OK</button>
+    <button onclick="closeDialog('editFcTargetDialog')">Cancel</button>
+  </dialog>
+
+  <!-- Edit TA Target Dialog -->
+  <dialog id="editTaTargetDialog">
+    <p><strong>Target TA</strong><br>Enter new target total alkalinity.</p>
+    <input type="number" id="editTaTargetInput" min="30" max="120" step="1" style="width:100%; box-sizing:border-box;">
+    <p id="editTaTargetError" style="color:red; display:none; margin:0.5em 0 0;"></p>
+    <br>
+    <button onclick="submitTaTarget()">OK</button>
+    <button onclick="closeDialog('editTaTargetDialog')">Cancel</button>
+  </dialog>
+
+  <!-- Edit CH Target Dialog -->
+  <dialog id="editChTargetDialog">
+    <p><strong>Target CH</strong><br>Enter new target calcium hardness.</p>
+    <input type="number" id="editChTargetInput" min="150" max="250" step="1" style="width:100%; box-sizing:border-box;">
+    <p id="editChTargetError" style="color:red; display:none; margin:0.5em 0 0;"></p>
+    <br>
+    <button onclick="submitChTarget()">OK</button>
+    <button onclick="closeDialog('editChTargetDialog')">Cancel</button>
+  </dialog>
+
+  <footer>
+    <img class="bottom-rounded" src="./htj-bottom-400.jpg" alt="HTJ" width="400">
+    <br>
+    <span>Add an icon to your home screen on </span><a href="https://support.apple.com/guide/iphone/bookmark-a-website-iph42ab2f3a7/ios#aria-iph4f9a47bbc" target="_blank" rel="noopener">Apple</a>
+    <span> or </span><a href="https://support.google.com/chrome/answer/15085120?hl=en&co=GENIE.Platform%3DAndroid&oco=0" target="_blank" rel="noopener">Android</a><span> devices.</span>
+  </footer>
 </body>
-<footer>
-  <img class="bottom-rounded" id="htj_logo" src="./htj-bottom-400.jpg" alt="HTJ" width="400">
-  <br>
-  <span>Add an icon to your home screen on </span><a href="https://support.apple.com/guide/iphone/bookmark-a-website-iph42ab2f3a7/ios#aria-iph4f9a47bbc" target="_blank">Apple</a>
-  <span> or </span><a href="https://support.google.com/chrome/answer/15085120?hl=en&co=GENIE.Platform%3DAndroid&oco=0" target="_blank">Android</a><span> devices.</span>
-</footer>
 </html>

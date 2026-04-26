@@ -27,7 +27,7 @@ function dandrStore() {
     for (let i = 1; i < 20; i++) {
         strItem = "step" + i;
         inputElement = document.getElementById(strItem);
-        checked = inputElement.checked;
+        let checked = inputElement.checked;
         localStorage.setItem(strItem, checked);
     } 
 }
