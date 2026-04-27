@@ -68,7 +68,7 @@
         <button onclick="closeDialog('fcTargetDialog')">Close</button>
       </dialog>
     </div-->
-    <p class="units">
+    <p>
       FC below Min <span class="textDisplays" id="fcEndIdeal"></span>
       <!--br>
       Target FC = <span class="numDisplays1" id="fcTarget"></span><span class="units">ppm</span> | CYA = <span class="numDisplays0" id="caPrediction"></span><span class="units">ppm</span>
@@ -248,8 +248,8 @@
         <tr id="testWeeklyHeaderRow">
           <th>Test</th>
           <th>Ideal</th>
-          <th>Test Result</th>
           <th>Time to<br>Check</th>
+          <th>Test Result</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -268,10 +268,10 @@
             </dialog>
           </td>
           <td><span class="small_left">Depends<br>on CYA </span></td>
+          <td><meter id="fcMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td> 
           <form onsubmit="updateTest('fc');return false">
             <td><input class="inputBox" type="number" id="fcNewTest" min="0" max="100" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter id="fcMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td> 
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>  
         </tr>
         <tr id="ccRow">
@@ -288,10 +288,10 @@
             </dialog>
           </td>
           <td><span class="units">&le; 0.5</span></td>
+          <td><meter id="ccMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
           <form onsubmit="updateTest('cc');return false"> 
             <td><input class="inputBox" type="number" id="ccNewTest" min="0" max="7" step="0.1" required><span class="units">ppm</span></td>
-            <td><meter id="ccMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr id="phRow">
@@ -308,10 +308,10 @@
             </dialog>
           </td>
           <td><span class="units">7.4-7.8</span></td>
+          <td><meter id="phMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
           <form onsubmit="updateTest('ph');return false"> 
             <td><input class="inputBox" type="number" id="phNewTest" min="7" max="8" step="0.1" required></td>
-            <td><meter id="phMeter" min="0" optimum="0" low="3" high="6" max="7" value="0"></meter></td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr id="adRow">
@@ -325,10 +325,10 @@
             </dialog>
           </td>
           <td><span class="units">pH: 7.6</span></td>
+          <td>(if needed)</td>
           <form onsubmit="updateTest('ad');return false">
             <td><input class="inputBox" type="number" id="adNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>(if needed)</td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr id="bdRow">
@@ -342,10 +342,10 @@
             </dialog>
           </td>
           <td><span class="units">pH: 7.6</span></td>
+          <td>(if needed)</td>
           <form onsubmit="updateTest('bd');return false">
             <td><input class="inputBox" type="number" id="bdNewTest" min="0" max="30" step="1" required><span class="units">drops</span></td>
-            <td>(if needed)</td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr id="caRow">
@@ -363,10 +363,10 @@
             </dialog>
           </td>
           <td><span class="small_left">30-50</span></td>
+          <td><meter id="caMeter" min="0" optimum="0" low="7" high="13" max="14" value="0"></meter></td>
           <form onsubmit="updateTest('ca');return false"> 
             <td><input class="inputBox" type="number" id="caNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-            <td><meter class="meter30" id="caMeter" min="0" optimum="0" low="7" high="13" max="14" value="0"></meter></td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
       </tbody>
@@ -388,8 +388,8 @@
         <tr id="testMonthlyHeaderRow">
           <th>Test</th>
           <th>Ideal</th>
-          <th>Test Result</th>
           <th>Time to<br>Check</th>
+          <th>Test Result</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -409,6 +409,7 @@
             </dialog>
           </td>
           <td><span class="small_left">30-120<br> </span><span><button class="symbols" onclick="editTaTarget()">&#x270E</button></span></td>
+          <td>(if needed)</td>
           <form onsubmit="updateTest('ta');return false"> 
             <td>
               <input class="inputBox" type="number" id="taUncorrectedTest"  min="0" max="500" step="1" required oninput="updateTaCorrectedTest()">
@@ -418,8 +419,7 @@
                 <span class="numDisplays0" id="taNewTestDisplay"></span>)
               </span>
             </td>
-            <td>(if needed)</td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr class="underline" id="chRow">
@@ -437,10 +437,10 @@
             </dialog>
           </td>
           <td><span class="small_left">150-250<br> </span><span><button class="symbols" onclick="editChTarget()">&#x270E</button></span></td>
+          <td><meter id="chMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
           <form onsubmit="updateTest('ch');return false"> 
             <td><input class="inputBox" type="number" id="chNewTest" min="0" max="400" step="1" required><span class="units">ppm</span></td>
-            <td><meter id="chMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
-            <td><button type="submit">Tested</button></td>
+            <td><button type="submit">Update</button></td>
           </form>
         </tr>
         <tr id="spaVolumeRow">
@@ -453,9 +453,9 @@
               <button onclick="closeDialog('volumeDialog')">Close</button>
             </dialog>
           </td>
+          <td><meter id="svMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
           <form onsubmit="confirmedSpaVolume();return false">
             <td><input class="numInputs0 inputBox" type="number" id="spaVolume" min="0" max="100000" step="1" required><span class="units">gal</span></td>
-            <td><meter class="meter30" id="svMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
             <td><button type="submit">Done</button></td>
           </form>
         </tr>
@@ -473,11 +473,13 @@
               <button onclick="closeDialog('filterDialog', 'filterVideo')">Close</button>
             </dialog>
           </td>
+          <td><meter id="filterMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
           <td>Rinse/Replace</td>
-          <form onsubmit="cleanedFilter();return false">
-            <td><meter id="filterMeter" min="0" optimum="0" low="21" high="28" max="30" value="0"></meter></td>
-            <td><button type="submit">Done</button></td>
-          </form>
+          <td>
+            <form onsubmit="cleanedFilter();return false">
+              <button type="submit">Done</button>
+            </form>
+          </td>
         </tr>
       </tbody>
     </table>

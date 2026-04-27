@@ -196,7 +196,21 @@ input {
 }
 
 input[type="number"] {
-  width: 50px;
+  width: 44px;
+}
+
+/* Hide number spinners on desktop browsers while keeping numeric validation. */
+@media (hover: hover) and (pointer: fine) {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 }
 
 /* iOS Safari zooms focused inputs when computed font-size is below 16px. */
