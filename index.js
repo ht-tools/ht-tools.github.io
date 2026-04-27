@@ -576,7 +576,7 @@ function init() {
     const fcAddDichlor = fcTargetDelta * 0.1032 * numVars['spaVolume'] / 400 * 99 / numVars['dichlorStrength'];
     const fcAddBleach = fcTargetDelta * 0.51 * numVars['spaVolume'] / 400 * 10 / numVars['bleachStrength'];
     
-    if (numVars['caPrediction'] <= 40) { // CYA is low enough to use Dichlor
+    if (numVars['caPrediction'] < 40) { // CYA is low enough to use Dichlor
         numVars['addDichlor'] = fcAddDichlor; // Use the max amount of Dichlor calculated
         numVars['addBleach'] = 0; // Don't use bleach if CYA is low
     }
