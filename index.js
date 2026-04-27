@@ -728,7 +728,7 @@ function init() {
 function hideChemicalHeader() {
     if (    boolVars['DichlorVisible'] || boolVars['BleachVisible'] || boolVars['PhTaDownVisible'] || 
             boolVars['MuriaticAcidVisible'] || boolVars['TaUpVisible'] || boolVars['PhUpVisible'] || 
-            boolVars['CalciumVisible']) {
+            boolVars['CalciumVisible'] || boolVars['AhhsomeVisible']) {
         boolVars['chemicalHeaderVisible'] = true;
         document.getElementById('chemicalHeaderRow').style.display = 'table-row';
         setTimeout(function(){document.getElementById('chemicalHeaderRow').style.opacity = 1}, 1);

@@ -199,14 +199,27 @@ input[type="number"] {
   width: 50px;
 }
 
+/* iOS Safari zooms focused inputs when computed font-size is below 16px. */
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px;
+}
+
 /* Custom purple checkbox matching .question style */
 input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
   display: inline-block;
   position: relative;
-  width: 1.15em;
-  height: 1.15em;
+  width: 1.3em;
+  height: 1.3em;
   background: linear-gradient(160deg, #aa7af0 0%, #8a5fda 40%, #7248bf 100%);
   border: 1px solid #5a3798;
   border-radius: 4px;
@@ -230,8 +243,8 @@ input[type="checkbox"]::after {
   position: absolute;
   left: 50%;
   top: 46%;
-  width: 0.52em;
-  height: 0.28em;
+  width: 0.58em;
+  height: 0.32em;
   border-left: 2px solid #ead7ff;
   border-bottom: 2px solid #ead7ff;
   transform: translate(-50%, -50%) rotate(-45deg) scale(0);
@@ -265,7 +278,7 @@ label {
 /* dandr.html pattern: checkbox followed immediately by a sibling label */
 input[type="checkbox"] + label {
   display: block;
-  margin-left: calc(1.15em + 6px);
+  margin-left: calc(1.3em + 11px);
   /*vertical-align: middle;*/
 }
 
